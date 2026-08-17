@@ -23,14 +23,17 @@ payload-flattening-threshold: 2
 
 ###
 ``` yaml
-commit: 72f52bc8847a889488da885f40d6871a89e0470b
+commit: 1e266b907c29660101d5c8293af2abb073413794
 input-file:
-  - https://github.com/Azure/azure-rest-api-specs/blob/$(commit)/specification/recoveryservices/resource-manager/Microsoft.RecoveryServices/stable/2024-04-01/registeredidentities.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/$(commit)/specification/recoveryservices/resource-manager/Microsoft.RecoveryServices/stable/2024-04-01/replicationusages.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/$(commit)/specification/recoveryservices/resource-manager/Microsoft.RecoveryServices/stable/2024-04-01/vaults.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/$(commit)/specification/recoveryservices/resource-manager/Microsoft.RecoveryServices/stable/2024-04-01/vaultusages.json
+  - https://github.com/Azure/azure-rest-api-specs/blob/$(commit)/specification/recoveryservices/resource-manager/Microsoft.RecoveryServices/RecoveryServices/stable/2026-01-01/openapi.json
 
 output-folder: Generated
 
 namespace: Microsoft.Azure.Management.RecoveryServices
+
+directive:
+  - from: swagger-document
+    where: $.definitions["CloudError"]
+    transform: >
+      $["x-ms-client-name"] = "CloudErrorRecoveryService";
 ```

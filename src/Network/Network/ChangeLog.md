@@ -19,6 +19,132 @@
 --->
 
 ## Upcoming Release
+* Added support to associate a DDoS custom policy (DCP) with a supported Public IP address attachment.
+    - Added the `-DdosCustomPolicyId` parameter to `Set-AzPublicIpAddress`.
+    - Added the `-RemoveDdosCustomPolicy` switch to remove an existing association.
+    - DDoS custom policy association does not require a specific DDoS protection mode.
+* Added `RoutingConfiguration`, `VirtualHubVnetConnection`, and `VirtualHubVnetConnectionId` parameters to `Add-AzRouteServerPeer` and `Update-AzRouteServerPeer`.
+    - Enabled configuring inbound and outbound route maps for Route Server BGP peer connections.
+    - Enabled specifying a hub virtual network connection for the peer (by object or resource id).
+* Added `RoutingConfiguration` parameter to `New-AzVirtualNetworkGatewayConnection` and `Set-AzVirtualNetworkGatewayConnection`.
+    - Enabled configuring inbound and outbound route maps for Virtual Network Gateway connections.
+
+## Version 8.1.0
+* Added new cmdlets for ConnectionPolicy management under VirtualHub
+    - `Get-AzConnectionPolicy`: Retrieve one or all ConnectionPolicy resources under a VirtualHub
+    - `New-AzConnectionPolicy`: Create a new ConnectionPolicy under a VirtualHub
+    - `Set-AzConnectionPolicy`: Update an existing ConnectionPolicy under a VirtualHub
+    - `Remove-AzConnectionPolicy`: Delete a ConnectionPolicy from a VirtualHub
+* Added Managed HSM support to Application Gateway SSL certificate cmdlets (`New-AzApplicationGatewaySslCertificate`, `Set-AzApplicationGatewaySslCertificate`, `Add-AzApplicationGatewaySslCertificate`) with `-HsmKeyId` and `-HsmPublicCertData` parameters.
+* Updated Virtual Network and Virtual Network Appliance cmdlets to use new properties.
+    - `New-AzVirtualNetwork`: Added `-SummarizedGatewayPrefix` parameter to specify summarized gateway prefixes advertised for the virtual network, and exposed `SummarizedGatewayPrefixes` on the returned object.
+    - `New-AzVirtualNetworkAppliance`: Added `-PrivateIPAddressVersion` parameter (IPv4, DualStack) to support dual-stack Virtual Network Appliances, and exposed `PrivateIPAddressVersion` on the returned object.
+* Added support for equal-cost multi-path (ECMP) routing in route tables
+    - Added the `VirtualApplianceEcmp` next hop type to `New-AzRouteConfig`, `Add-AzRouteConfig`, and `Set-AzRouteConfig`
+    - Extended the `-NextHopIpAddress` parameter to accept a list of next hop IP addresses (2 to 64) for ECMP routes when the next hop type is `VirtualApplianceEcmp`
+    - Added the `NextHop` property to the route output returned by `Get-AzRouteTable`
+* Added DisablePeeringRoute support for Route Table
+    - Added `-DisablePeeringRoute` parameter to `New-AzRouteTable` cmdlet
+    - Supported values are `None` and `All`
+* Added property 'Nat64' to NatGateway and support for it in the following cmdlets:
+    - `New-AzNatGateway`
+    - `Set-AzNatGateway`
+* Fixed `Get-AzPrivateDnsZoneGroup` list mode passing the resource group and private endpoint names to the SDK in the wrong order, which caused a `ResourceGroupNotFound` error when listing private DNS zone groups without the `-Name` parameter.
+* Added properties `ServiceTag`, `ReadinessState`, `Description`, and `OutboundSupported` to `Get-AzNetworkSecurityPerimeterAssociableResourceType` response.
+* Removed validations to allow newly added AuxiliarySkus in New-AzNetworkInterface command without needing to add them in ValidateSet.
+* Added new cmdlets for DDoS Custom Policy management
+    - `New-AzDdosCustomPolicy`: Create a new DDoS custom policy with detection rules
+    - `New-AzDdosCustomPolicy` requires at least one detection rule at creation time
+    - `New-AzDdosCustomPolicyDetectionRule`: Create a DDoS custom policy detection rule
+    - `Add-AzDdosCustomPolicyDetectionRule`: Add a detection rule to an in-memory DDoS custom policy before persisting it with `Set-AzDdosCustomPolicy`
+    - `Get-AzDdosCustomPolicy`: Retrieve a DDoS custom policy by resource group and name
+    - `Remove-AzDdosCustomPolicy`: Remove a DDoS custom policy
+    - `Remove-AzDdosCustomPolicyDetectionRule` and `Set-AzDdosCustomPolicy`: Support the load balancer style workflow to mutate a local policy object and then persist it
+    - Supports multiple detection rules with configurable traffic type (Tcp, Udp, TcpSyn) and packets per second thresholds
+* Updated the API version of `Microsoft.HardwareSecurityModules/cloudHsmClusters` to `2025-03-31` for Private Link Common Cmdlets
+* Onboarded `Microsoft.HardwareSecurityModules/paymentHsmClusters` to Private Link Common Cmdlets
+* Fixed an issue where `VerifyClientAuthMode` was not preserved during PowerShell and SDK model conversions for Application Gateway client authentication configuration
+* Added cmdlets for cloud service public IP address operations:
+    - `Invoke-AzPublicIpAddressCloudServiceReservation`: reserve a cloud service public IP or roll back to dynamic allocation (`-IsRollback`).
+    - `Invoke-AzPublicIpAddressDisassociateCloudServiceReservedIp`: disassociate a standalone reserved public IP from a cloud service public IP. Use `-PublicIpArmId` for the Azure Resource Manager (ARM) resource ID of the standalone public IP.
+
+## Version 8.0.1
+* Onboarded `Microsoft.HorizonDB/clusters` to Private Link Common Cmdlets
+
+## Version 8.0.0
+* Added ChangeSafety Support
+* Changed `UserAssignedIdentityId` type to string[]
+
+## Version 7.27.0
+* Added support to associate a DDoS custom policy with a Load Balancer frontend IP configuration.
+    - Added the `-DdosCustomPolicyId` parameter to `New-AzLoadBalancerFrontendIpConfig`, `Add-AzLoadBalancerFrontendIpConfig`, and `Set-AzLoadBalancerFrontendIpConfig`.
+    - Added the `-RemoveDdosCustomPolicy` switch to `Set-AzLoadBalancerFrontendIpConfig`.
+
+## Version 7.26.0
+* Onboarded `Microsoft.KubernetesConfiguration/privateLinkScopes` to Private Link Common Cmdlets
+* Added EdgeZone (Extended Location) parameter support for Azure Firewall
+    - Added `-EdgeZone` parameter to `New-AzFirewall` cmdlet
+    - When `-EdgeZone` is specified, availability zones are not supported for Azure Firewall resources
+
+## Version 7.25.1
+* Onboarded `Microsoft.DataReplication/replicationVaults` to Private Link Common Cmdlets
+* Onboarded `Microsoft.DurableTask/schedulers` to Private Link Common Cmdlets
+
+## Version 7.25.0
+* Added `-IpVersionType` parameter to `New-AzPrivateEndpoint` cmdlet to specify the IP version type for private IPs of the private endpoint. Allowed values are IPv4, IPv6, or DualStack.
+* Added new cmdlets for VirtualNetworkAppliance resource:
+    - `Get-AzVirtualNetworkAppliance`: Get a Virtual Network Appliance resource by name, resource group, or list all.
+    - `New-AzVirtualNetworkAppliance`: Create a new Virtual Network Appliance resource.
+    - `Remove-AzVirtualNetworkAppliance`: Remove a Virtual Network Appliance resource.
+    - `Update-AzVirtualNetworkAppliance`: Update tags on a Virtual Network Appliance resource.
+
+## Version 7.24.1
+* Onboarded `Microsoft.Security/privateLinks` to Private Link Common Cmdlets
+
+## Version 7.24.0
+* Added support for `RecordType` property in `New-AzNetworkWatcherFlowLog` and `Set-AzNetworkWatcherFlowLog` cmdlets.
+* Added property "NvaInterfaceConfiguration" to Network Virtual Appliances, as well as support for them in following cmdlets:
+    - `New-AzNetworkVirtualAppliance`
+    - `Get-AzNetworkVirtualAppliance`
+* Added cmdlet to take the NvaInterfaceConfigurations properties on the Network Virtual Appliance:
+    - `New-AzNvaInterfaceConfiguration`  to build individual interface configuration for network virtual appliance.
+* Removed the None from the accepted value for the property 'Sensitivity'
+    - Updated `New-AzApplicationGatewayFirewallPolicyManagedRuleOverride` cmdlet
+
+## Version 7.23.1
+* Onboarded `Microsoft.Security/privateLinks` to Private Link Common Cmdlets
+
+## Version 7.23.0
+* Added 'GeoLocationXFFHeader' and 'ClientAddrXFFHeader' as valid VariableNames in `NewAzureApplicationGatewayFirewallCustomRuleGroupByVariable`.
+* Bug fix for `AzureFirewallPolicy` to ensure `BasePolicy` is properly set via `Set-AzFirewallPolicy` cmdlet either via pipe or direct value.
+
+## Version 7.22.0
+
+* Added new RouteTableUsageMode property for Network Manager Routing Configuration
+  - Updated `New-AzNetworkManagerRoutingConfiguration` cmdlet
+  - Updated `Set-AzNetworkManagerRoutingConfiguration` cmdlet
+* Added certificate-based authentication support for VPN Gateway connections
+    - New cmdlet `New-AzVirtualNetworkGatewayCertificateAuthentication` to create certificate authentication configuration
+    - Added `-AuthenticationType` and `-CertificateAuthentication` parameters to `New-AzVirtualNetworkGatewayConnection` and `Set-AzVirtualNetworkGatewayConnection`
+    - Added `-UserAssignedIdentityId` parameter to `Set-AzVirtualNetworkGateway` and `New-AzVirtualNetworkGateway` for managed identity configuration
+* Upgraded the api version from 2024-10-01 to 2025-01-01
+* Added property 'EnableL4ClientIpPreservation' to Application Gateway Backend Settings, as well as support for them in the following cmdlets:
+    - `New-AzApplicationGatewayBackendSetting`
+    - `Add-AzApplicationGatewayBackendSetting`
+    - `Set-AzApplicationGatewayBackendSetting`
+* Added property 'EnableProbeProxyProtocolHeader' to Application Gateway Probes, as well as support for them in the following cmdlets:
+    - `Set-AzApplicationGatewayProbeConfig`
+	- `Add-AzApplicationGatewayProbeConfig`
+	- `New-AzApplicationGatewayProbeConfig`
+
+## Version 7.21.0
+* Added deprecation warning for cmdlet `Invoke-AzFirewallPacketCapture`
+* Added new cmdlet for Invoke PacketCaptureOperation on Azure Firewall
+* Updated cmdlet to add the mandatory property of 'Operation' and made all other properties not mandatory for Azure Firewall Packet Capture Parameters. Updated corresponding cmdlets.
+* Added new cmdlet for List NetworkSecurityPerimeter ServiceTags
+* Added properties 'DedicatedBackendConnection', 'ValidateCertChainAndExpiry', 'ValidateSNI', and 'SniName' to Application Gateway Backend HTTP Settings, as well as support for them in the following cmdlets:
+* Added cmdlet 'Get-AzAllVirtualNetworkGatewayRadiusServerSecret' to fetch list of VirtualNetworkGateway VpnClientConfiguration Radius servers and corresponding radius secrets.
+* Added cmdlet 'Get-AzAllVpnServerConfigurationRadiusServerSecret ' to fetch list of VirtualWan VpnServerConfiguration Radius servers and corresponding radius secrets.
 
 ## Version 7.20.0
 * Added cmdlet `Get-AzVirtualNetworkGatewayFailoverSingleTestDetail` to retrieve details of a single failover test on a virtual network gateway.
@@ -53,7 +179,7 @@
 * Added properties 'ContinuousCapture', 'LocalPath', and 'CaptureSetting' reference in Packet capture V2 command, as well as support for it for the following cmdlets:
     - `New-AzNetworkWatcherPacketCaptureV2`
 * Onboarded Application Gateway WAF Exceptions cmdlet.
-    - `New-AzApplicationGatewayFirewallPolicyException` 
+    - `New-AzApplicationGatewayFirewallPolicyException`
 
 ## Version 7.17.0
 * Added properties 'PublicIpAddressesV6', 'PublicIpPrefixesV6', and 'SourceVirtualNetwork' to NatGateway, as well as support for it for the following cmdlets:

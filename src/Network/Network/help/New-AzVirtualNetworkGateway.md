@@ -30,8 +30,9 @@ New-AzVirtualNetworkGateway -Name <String> -ResourceGroupName <String> -Location
  [-AadTenantUri <String>] [-AadAudienceId <String>] [-AadIssuerUri <String>] [-CustomRoute <String[]>]
  [-VpnGatewayGeneration <String>] [-VirtualNetworkGatewayPolicyGroup <PSVirtualNetworkGatewayPolicyGroup[]>]
  [-ClientConnectionConfiguration <PSClientConnectionConfiguration[]>] [-AsJob] [-AdminState <String>]
- [-ResiliencyModel <String>] [-MinScaleUnit <Int32>] [-MaxScaleUnit <Int32>]
- [-DefaultProfile <IAzureContextContainer>] [-WhatIf] [-Confirm]
+ [-ResiliencyModel <String>] [-MinScaleUnit <Int32>] [-MaxScaleUnit <Int32>] [-UserAssignedIdentityId <String>]
+ [-Identity <PSManagedServiceIdentity>] [-DefaultProfile <IAzureContextContainer>]
+ [-WhatIf] [-Confirm] [-AcquirePolicyToken] [-ChangeReference <String>]
  [<CommonParameters>]
 ```
 
@@ -234,6 +235,21 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
+### -AcquirePolicyToken
+Acquire an Azure Policy token automatically for this resource operation.
+
+```yaml
+Type: System.Management.Automation.SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -AdminState
 Property to indicate if the Express Route Gateway serves traffic when there are multiple Express Route Gateways in the vnet: Enabled/Disabled
 
@@ -276,6 +292,21 @@ Required: False
 Position: Named
 Default value: None
 Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -ChangeReference
+The change reference resource ID for this resource operation.
+
+```yaml
+Type: System.String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
@@ -491,6 +522,21 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
+### -Identity
+The managed identity configuration for the virtual network gateway.
+
+```yaml
+Type: Microsoft.Azure.Commands.Network.Models.PSManagedServiceIdentity
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
 ### -IpConfigurationBgpPeeringAddresses
 The BgpPeeringAddresses for Virtual network gateway bgpsettings.
 
@@ -693,6 +739,21 @@ A hashtable which represents resource tags.
 Type: System.Collections.Hashtable
 Parameter Sets: (All)
 Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -UserAssignedIdentityId
+ResourceId of the user assigned identity to be assigned to virtual network gateway.
+
+```yaml
+Type: System.String
+Parameter Sets: (All)
+Aliases: UserAssignedIdentity
 
 Required: False
 Position: Named

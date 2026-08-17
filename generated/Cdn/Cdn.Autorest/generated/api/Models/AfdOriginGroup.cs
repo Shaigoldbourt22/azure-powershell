@@ -14,48 +14,66 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models
     public partial class AfdOriginGroup :
         Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IAfdOriginGroup,
         Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IAfdOriginGroupInternal,
-        Microsoft.Azure.PowerShell.Cmdlets.Cdn.Runtime.IValidates,
-        Microsoft.Azure.PowerShell.Cmdlets.Cdn.Runtime.IHeaderSerializable
+        Microsoft.Azure.PowerShell.Cmdlets.Cdn.Runtime.IValidates
     {
         /// <summary>
         /// Backing field for Inherited model <see cref= "Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IProxyResource" />
         /// </summary>
         private Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IProxyResource __proxyResource = new Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.ProxyResource();
 
+        /// <summary>
+        /// The scope used when requesting token from Microsoft Entra. For example, for Azure Blob Storage, scope could be "https://storage.azure.com/.default".
+        /// </summary>
         [Microsoft.Azure.PowerShell.Cmdlets.Cdn.Origin(Microsoft.Azure.PowerShell.Cmdlets.Cdn.PropertyOrigin.Inlined)]
-        public string DeploymentStatus { get => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IAfdStatePropertiesInternal)Property).DeploymentStatus; }
+        public string AuthenticationScope { get => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IAfdOriginGroupPropertiesInternal)Property).AuthenticationScope; set => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IAfdOriginGroupPropertiesInternal)Property).AuthenticationScope = value ?? null; }
+
+        /// <summary>
+        /// The HTTP request header where the origin authentication token will be placed when forwarding the request to the origin.
+        /// If not specified, the service will use the `Authorization` header for backward compatibility.
+        /// </summary>
+        [Microsoft.Azure.PowerShell.Cmdlets.Cdn.Origin(Microsoft.Azure.PowerShell.Cmdlets.Cdn.PropertyOrigin.Inlined)]
+        public string AuthenticationTokenDestinationHeader { get => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IAfdOriginGroupPropertiesInternal)Property).AuthenticationTokenDestinationHeader; set => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IAfdOriginGroupPropertiesInternal)Property).AuthenticationTokenDestinationHeader = value ?? null; }
+
+        /// <summary>The type of the authentication for the origin.</summary>
+        [Microsoft.Azure.PowerShell.Cmdlets.Cdn.Origin(Microsoft.Azure.PowerShell.Cmdlets.Cdn.PropertyOrigin.Inlined)]
+        public string AuthenticationType { get => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IAfdOriginGroupPropertiesInternal)Property).AuthenticationType; set => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IAfdOriginGroupPropertiesInternal)Property).AuthenticationType = value ?? null; }
+
+        [Microsoft.Azure.PowerShell.Cmdlets.Cdn.Origin(Microsoft.Azure.PowerShell.Cmdlets.Cdn.PropertyOrigin.Inlined)]
+        public string DeploymentStatus { get => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IAfdOriginGroupPropertiesInternal)Property).DeploymentStatus; }
 
         /// <summary>
         /// Health probe settings to the origin that is used to determine the health of the origin.
         /// </summary>
         [Microsoft.Azure.PowerShell.Cmdlets.Cdn.Origin(Microsoft.Azure.PowerShell.Cmdlets.Cdn.PropertyOrigin.Inlined)]
-        public Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IHealthProbeParameters HealthProbeSetting { get => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IAfdOriginGroupUpdatePropertiesParametersInternal)Property).HealthProbeSetting; set => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IAfdOriginGroupUpdatePropertiesParametersInternal)Property).HealthProbeSetting = value ?? null /* model class */; }
+        public Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IHealthProbeParameters HealthProbeSetting { get => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IAfdOriginGroupPropertiesInternal)Property).HealthProbeSetting; set => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IAfdOriginGroupPropertiesInternal)Property).HealthProbeSetting = value ?? null /* model class */; }
 
-        /// <summary>Resource ID.</summary>
+        /// <summary>
+        /// Fully qualified resource ID for the resource. E.g. "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}"
+        /// </summary>
         [Microsoft.Azure.PowerShell.Cmdlets.Cdn.Origin(Microsoft.Azure.PowerShell.Cmdlets.Cdn.PropertyOrigin.Inherited)]
         public string Id { get => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IResourceInternal)__proxyResource).Id; }
 
         /// <summary>Load balancing settings for a backend pool</summary>
         [Microsoft.Azure.PowerShell.Cmdlets.Cdn.Origin(Microsoft.Azure.PowerShell.Cmdlets.Cdn.PropertyOrigin.Inlined)]
-        public Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.ILoadBalancingSettingsParameters LoadBalancingSetting { get => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IAfdOriginGroupUpdatePropertiesParametersInternal)Property).LoadBalancingSetting; set => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IAfdOriginGroupUpdatePropertiesParametersInternal)Property).LoadBalancingSetting = value ?? null /* model class */; }
+        public Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.ILoadBalancingSettingsParameters LoadBalancingSetting { get => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IAfdOriginGroupPropertiesInternal)Property).LoadBalancingSetting; set => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IAfdOriginGroupPropertiesInternal)Property).LoadBalancingSetting = value ?? null /* model class */; }
 
-        /// <summary>Backing field for <see cref="Location" /> property.</summary>
-        private string _location;
+        /// <summary>Internal Acessors for Authentication</summary>
+        Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IOriginAuthenticationProperties Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IAfdOriginGroupInternal.Authentication { get => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IAfdOriginGroupPropertiesInternal)Property).Authentication; set => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IAfdOriginGroupPropertiesInternal)Property).Authentication = value ?? null /* model class */; }
 
-        [Microsoft.Azure.PowerShell.Cmdlets.Cdn.Origin(Microsoft.Azure.PowerShell.Cmdlets.Cdn.PropertyOrigin.Owned)]
-        public string Location { get => this._location; set => this._location = value; }
+        /// <summary>Internal Acessors for AuthenticationUserAssignedIdentity</summary>
+        Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IResourceReference Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IAfdOriginGroupInternal.AuthenticationUserAssignedIdentity { get => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IAfdOriginGroupPropertiesInternal)Property).AuthenticationUserAssignedIdentity; set => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IAfdOriginGroupPropertiesInternal)Property).AuthenticationUserAssignedIdentity = value ?? null /* model class */; }
 
         /// <summary>Internal Acessors for DeploymentStatus</summary>
-        string Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IAfdOriginGroupInternal.DeploymentStatus { get => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IAfdStatePropertiesInternal)Property).DeploymentStatus; set => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IAfdStatePropertiesInternal)Property).DeploymentStatus = value ?? null; }
+        string Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IAfdOriginGroupInternal.DeploymentStatus { get => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IAfdOriginGroupPropertiesInternal)Property).DeploymentStatus; set => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IAfdOriginGroupPropertiesInternal)Property).DeploymentStatus = value ?? null; }
 
         /// <summary>Internal Acessors for ProfileName</summary>
-        string Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IAfdOriginGroupInternal.ProfileName { get => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IAfdOriginGroupUpdatePropertiesParametersInternal)Property).ProfileName; set => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IAfdOriginGroupUpdatePropertiesParametersInternal)Property).ProfileName = value ?? null; }
+        string Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IAfdOriginGroupInternal.ProfileName { get => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IAfdOriginGroupPropertiesInternal)Property).ProfileName; set => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IAfdOriginGroupPropertiesInternal)Property).ProfileName = value ?? null; }
 
         /// <summary>Internal Acessors for Property</summary>
         Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IAfdOriginGroupProperties Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IAfdOriginGroupInternal.Property { get => (this._property = this._property ?? new Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.AfdOriginGroupProperties()); set { {_property = value;} } }
 
         /// <summary>Internal Acessors for ProvisioningState</summary>
-        string Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IAfdOriginGroupInternal.ProvisioningState { get => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IAfdStatePropertiesInternal)Property).ProvisioningState; set => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IAfdStatePropertiesInternal)Property).ProvisioningState = value ?? null; }
+        string Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IAfdOriginGroupInternal.ProvisioningState { get => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IAfdOriginGroupPropertiesInternal)Property).ProvisioningState; set => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IAfdOriginGroupPropertiesInternal)Property).ProvisioningState = value ?? null; }
 
         /// <summary>Internal Acessors for Id</summary>
         string Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IResourceInternal.Id { get => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IResourceInternal)__proxyResource).Id; set => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IResourceInternal)__proxyResource).Id = value ?? null; }
@@ -87,13 +105,13 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models
         /// <summary>Internal Acessors for Type</summary>
         string Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IResourceInternal.Type { get => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IResourceInternal)__proxyResource).Type; set => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IResourceInternal)__proxyResource).Type = value ?? null; }
 
-        /// <summary>Resource name.</summary>
+        /// <summary>The name of the resource</summary>
         [Microsoft.Azure.PowerShell.Cmdlets.Cdn.Origin(Microsoft.Azure.PowerShell.Cmdlets.Cdn.PropertyOrigin.Inherited)]
         public string Name { get => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IResourceInternal)__proxyResource).Name; }
 
         /// <summary>The name of the profile which holds the origin group.</summary>
         [Microsoft.Azure.PowerShell.Cmdlets.Cdn.Origin(Microsoft.Azure.PowerShell.Cmdlets.Cdn.PropertyOrigin.Inlined)]
-        public string ProfileName { get => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IAfdOriginGroupUpdatePropertiesParametersInternal)Property).ProfileName; }
+        public string ProfileName { get => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IAfdOriginGroupPropertiesInternal)Property).ProfileName; }
 
         /// <summary>Backing field for <see cref="Property" /> property.</summary>
         private Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IAfdOriginGroupProperties _property;
@@ -104,7 +122,7 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models
 
         /// <summary>Provisioning status</summary>
         [Microsoft.Azure.PowerShell.Cmdlets.Cdn.Origin(Microsoft.Azure.PowerShell.Cmdlets.Cdn.PropertyOrigin.Inlined)]
-        public string ProvisioningState { get => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IAfdStatePropertiesInternal)Property).ProvisioningState; }
+        public string ProvisioningState { get => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IAfdOriginGroupPropertiesInternal)Property).ProvisioningState; }
 
         /// <summary>Gets the resource group name</summary>
         [Microsoft.Azure.PowerShell.Cmdlets.Cdn.Origin(Microsoft.Azure.PowerShell.Cmdlets.Cdn.PropertyOrigin.Owned)]
@@ -115,24 +133,26 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models
         /// Whether to allow session affinity on this host. Valid options are 'Enabled' or 'Disabled'
         /// </summary>
         [Microsoft.Azure.PowerShell.Cmdlets.Cdn.Origin(Microsoft.Azure.PowerShell.Cmdlets.Cdn.PropertyOrigin.Inlined)]
-        public string SessionAffinityState { get => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IAfdOriginGroupUpdatePropertiesParametersInternal)Property).SessionAffinityState; set => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IAfdOriginGroupUpdatePropertiesParametersInternal)Property).SessionAffinityState = value ?? null; }
+        public string SessionAffinityState { get => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IAfdOriginGroupPropertiesInternal)Property).SessionAffinityState; set => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IAfdOriginGroupPropertiesInternal)Property).SessionAffinityState = value ?? null; }
 
-        /// <summary>Read only system data</summary>
+        /// <summary>
+        /// Azure Resource Manager metadata containing createdBy and modifiedBy information.
+        /// </summary>
         [Microsoft.Azure.PowerShell.Cmdlets.Cdn.Origin(Microsoft.Azure.PowerShell.Cmdlets.Cdn.PropertyOrigin.Inherited)]
         [Microsoft.Azure.PowerShell.Cmdlets.Cdn.DoNotFormat]
         internal Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.ISystemData SystemData { get => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IResourceInternal)__proxyResource).SystemData; set => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IResourceInternal)__proxyResource).SystemData = value ?? null /* model class */; }
 
-        /// <summary>The timestamp of resource creation (UTC)</summary>
+        /// <summary>The timestamp of resource creation (UTC).</summary>
         [Microsoft.Azure.PowerShell.Cmdlets.Cdn.Origin(Microsoft.Azure.PowerShell.Cmdlets.Cdn.PropertyOrigin.Inherited)]
         [Microsoft.Azure.PowerShell.Cmdlets.Cdn.DoNotFormat]
         public global::System.DateTime? SystemDataCreatedAt { get => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IResourceInternal)__proxyResource).SystemDataCreatedAt; }
 
-        /// <summary>An identifier for the identity that created the resource</summary>
+        /// <summary>The identity that created the resource.</summary>
         [Microsoft.Azure.PowerShell.Cmdlets.Cdn.Origin(Microsoft.Azure.PowerShell.Cmdlets.Cdn.PropertyOrigin.Inherited)]
         [Microsoft.Azure.PowerShell.Cmdlets.Cdn.DoNotFormat]
         public string SystemDataCreatedBy { get => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IResourceInternal)__proxyResource).SystemDataCreatedBy; }
 
-        /// <summary>The type of identity that created the resource</summary>
+        /// <summary>The type of identity that created the resource.</summary>
         [Microsoft.Azure.PowerShell.Cmdlets.Cdn.Origin(Microsoft.Azure.PowerShell.Cmdlets.Cdn.PropertyOrigin.Inherited)]
         [Microsoft.Azure.PowerShell.Cmdlets.Cdn.DoNotFormat]
         public string SystemDataCreatedByType { get => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IResourceInternal)__proxyResource).SystemDataCreatedByType; }
@@ -142,12 +162,12 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models
         [Microsoft.Azure.PowerShell.Cmdlets.Cdn.DoNotFormat]
         public global::System.DateTime? SystemDataLastModifiedAt { get => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IResourceInternal)__proxyResource).SystemDataLastModifiedAt; }
 
-        /// <summary>An identifier for the identity that last modified the resource</summary>
+        /// <summary>The identity that last modified the resource.</summary>
         [Microsoft.Azure.PowerShell.Cmdlets.Cdn.Origin(Microsoft.Azure.PowerShell.Cmdlets.Cdn.PropertyOrigin.Inherited)]
         [Microsoft.Azure.PowerShell.Cmdlets.Cdn.DoNotFormat]
         public string SystemDataLastModifiedBy { get => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IResourceInternal)__proxyResource).SystemDataLastModifiedBy; }
 
-        /// <summary>The type of identity that last modified the resource</summary>
+        /// <summary>The type of identity that last modified the resource.</summary>
         [Microsoft.Azure.PowerShell.Cmdlets.Cdn.Origin(Microsoft.Azure.PowerShell.Cmdlets.Cdn.PropertyOrigin.Inherited)]
         [Microsoft.Azure.PowerShell.Cmdlets.Cdn.DoNotFormat]
         public string SystemDataLastModifiedByType { get => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IResourceInternal)__proxyResource).SystemDataLastModifiedByType; }
@@ -157,25 +177,22 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models
         /// is added. Default is 10 mins. This property is currently not supported.
         /// </summary>
         [Microsoft.Azure.PowerShell.Cmdlets.Cdn.Origin(Microsoft.Azure.PowerShell.Cmdlets.Cdn.PropertyOrigin.Inlined)]
-        public int? TrafficRestorationTimeToHealedOrNewEndpointsInMinute { get => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IAfdOriginGroupUpdatePropertiesParametersInternal)Property).TrafficRestorationTimeToHealedOrNewEndpointsInMinute; set => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IAfdOriginGroupUpdatePropertiesParametersInternal)Property).TrafficRestorationTimeToHealedOrNewEndpointsInMinute = value ?? default(int); }
+        public int? TrafficRestorationTimeToHealedOrNewEndpointsInMinute { get => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IAfdOriginGroupPropertiesInternal)Property).TrafficRestorationTimeToHealedOrNewEndpointsInMinute; set => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IAfdOriginGroupPropertiesInternal)Property).TrafficRestorationTimeToHealedOrNewEndpointsInMinute = value ?? default(int); }
 
-        /// <summary>Resource type.</summary>
+        /// <summary>
+        /// The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
+        /// </summary>
         [Microsoft.Azure.PowerShell.Cmdlets.Cdn.Origin(Microsoft.Azure.PowerShell.Cmdlets.Cdn.PropertyOrigin.Inherited)]
         public string Type { get => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IResourceInternal)__proxyResource).Type; }
+
+        /// <summary>Resource ID.</summary>
+        [Microsoft.Azure.PowerShell.Cmdlets.Cdn.Origin(Microsoft.Azure.PowerShell.Cmdlets.Cdn.PropertyOrigin.Inlined)]
+        public string UserAssignedIdentityId { get => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IAfdOriginGroupPropertiesInternal)Property).UserAssignedIdentityId; set => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IAfdOriginGroupPropertiesInternal)Property).UserAssignedIdentityId = value ?? null; }
 
         /// <summary>Creates an new <see cref="AfdOriginGroup" /> instance.</summary>
         public AfdOriginGroup()
         {
 
-        }
-
-        /// <param name="headers"></param>
-        void Microsoft.Azure.PowerShell.Cmdlets.Cdn.Runtime.IHeaderSerializable.ReadHeaders(global::System.Net.Http.Headers.HttpResponseHeaders headers)
-        {
-            if (headers.TryGetValues("location", out var __locationHeader0))
-            {
-                ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IAfdOriginGroupInternal)this).Location = System.Linq.Enumerable.FirstOrDefault(__locationHeader0) is string __headerLocationHeader0 ? __headerLocationHeader0 : (string)null;
-            }
         }
 
         /// <summary>Validates that this object meets the validation criteria.</summary>
@@ -196,6 +213,47 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models
         Microsoft.Azure.PowerShell.Cmdlets.Cdn.Runtime.IJsonSerializable,
         Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IProxyResource
     {
+        /// <summary>
+        /// The scope used when requesting token from Microsoft Entra. For example, for Azure Blob Storage, scope could be "https://storage.azure.com/.default".
+        /// </summary>
+        [Microsoft.Azure.PowerShell.Cmdlets.Cdn.Runtime.Info(
+        Required = false,
+        ReadOnly = false,
+        Read = true,
+        Create = true,
+        Update = true,
+        Description = @"The scope used when requesting token from Microsoft Entra. For example, for Azure Blob Storage, scope could be ""https://storage.azure.com/.default"".",
+        SerializedName = @"scope",
+        PossibleTypes = new [] { typeof(string) })]
+        string AuthenticationScope { get; set; }
+        /// <summary>
+        /// The HTTP request header where the origin authentication token will be placed when forwarding the request to the origin.
+        /// If not specified, the service will use the `Authorization` header for backward compatibility.
+        /// </summary>
+        [Microsoft.Azure.PowerShell.Cmdlets.Cdn.Runtime.Info(
+        Required = false,
+        ReadOnly = false,
+        Read = true,
+        Create = true,
+        Update = true,
+        Description = @"The HTTP request header where the origin authentication token will be placed when forwarding the request to the origin. If not specified, the service will use the `Authorization` header for backward compatibility.",
+        SerializedName = @"tokenDestinationHeader",
+        PossibleTypes = new [] { typeof(string) })]
+        [global::Microsoft.Azure.PowerShell.Cmdlets.Cdn.PSArgumentCompleterAttribute("Authorization", "X-Azure-Authorization")]
+        string AuthenticationTokenDestinationHeader { get; set; }
+        /// <summary>The type of the authentication for the origin.</summary>
+        [Microsoft.Azure.PowerShell.Cmdlets.Cdn.Runtime.Info(
+        Required = false,
+        ReadOnly = false,
+        Read = true,
+        Create = true,
+        Update = true,
+        Description = @"The type of the authentication for the origin.",
+        SerializedName = @"type",
+        PossibleTypes = new [] { typeof(string) })]
+        [global::Microsoft.Azure.PowerShell.Cmdlets.Cdn.PSArgumentCompleterAttribute("SystemAssignedIdentity", "UserAssignedIdentity")]
+        string AuthenticationType { get; set; }
+
         [Microsoft.Azure.PowerShell.Cmdlets.Cdn.Runtime.Info(
         Required = false,
         ReadOnly = true,
@@ -231,17 +289,6 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models
         SerializedName = @"loadBalancingSettings",
         PossibleTypes = new [] { typeof(Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.ILoadBalancingSettingsParameters) })]
         Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.ILoadBalancingSettingsParameters LoadBalancingSetting { get; set; }
-
-        [Microsoft.Azure.PowerShell.Cmdlets.Cdn.Runtime.Info(
-        Required = false,
-        ReadOnly = false,
-        Read = true,
-        Create = true,
-        Update = true,
-        Description = @"",
-        SerializedName = @"location",
-        PossibleTypes = new [] { typeof(string) })]
-        string Location { get; set; }
         /// <summary>The name of the profile which holds the origin group.</summary>
         [Microsoft.Azure.PowerShell.Cmdlets.Cdn.Runtime.Info(
         Required = false,
@@ -293,6 +340,17 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models
         SerializedName = @"trafficRestorationTimeToHealedOrNewEndpointsInMinutes",
         PossibleTypes = new [] { typeof(int) })]
         int? TrafficRestorationTimeToHealedOrNewEndpointsInMinute { get; set; }
+        /// <summary>Resource ID.</summary>
+        [Microsoft.Azure.PowerShell.Cmdlets.Cdn.Runtime.Info(
+        Required = false,
+        ReadOnly = false,
+        Read = true,
+        Create = true,
+        Update = true,
+        Description = @"Resource ID.",
+        SerializedName = @"id",
+        PossibleTypes = new [] { typeof(string) })]
+        string UserAssignedIdentityId { get; set; }
 
     }
     /// AFDOrigin group comprising of origins is used for load balancing to origins when the content cannot be served from Azure
@@ -300,6 +358,26 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models
     internal partial interface IAfdOriginGroupInternal :
         Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IProxyResourceInternal
     {
+        /// <summary>Authentication settings for origin in origin group.</summary>
+        Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IOriginAuthenticationProperties Authentication { get; set; }
+        /// <summary>
+        /// The scope used when requesting token from Microsoft Entra. For example, for Azure Blob Storage, scope could be "https://storage.azure.com/.default".
+        /// </summary>
+        string AuthenticationScope { get; set; }
+        /// <summary>
+        /// The HTTP request header where the origin authentication token will be placed when forwarding the request to the origin.
+        /// If not specified, the service will use the `Authorization` header for backward compatibility.
+        /// </summary>
+        [global::Microsoft.Azure.PowerShell.Cmdlets.Cdn.PSArgumentCompleterAttribute("Authorization", "X-Azure-Authorization")]
+        string AuthenticationTokenDestinationHeader { get; set; }
+        /// <summary>The type of the authentication for the origin.</summary>
+        [global::Microsoft.Azure.PowerShell.Cmdlets.Cdn.PSArgumentCompleterAttribute("SystemAssignedIdentity", "UserAssignedIdentity")]
+        string AuthenticationType { get; set; }
+        /// <summary>
+        /// The user assigned managed identity to use for the origin authentication if type is UserAssignedIdentity.
+        /// </summary>
+        Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IResourceReference AuthenticationUserAssignedIdentity { get; set; }
+
         [global::Microsoft.Azure.PowerShell.Cmdlets.Cdn.PSArgumentCompleterAttribute("NotStarted", "InProgress", "Succeeded", "Failed")]
         string DeploymentStatus { get; set; }
         /// <summary>
@@ -308,8 +386,6 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models
         Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IHealthProbeParameters HealthProbeSetting { get; set; }
         /// <summary>Load balancing settings for a backend pool</summary>
         Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.ILoadBalancingSettingsParameters LoadBalancingSetting { get; set; }
-
-        string Location { get; set; }
         /// <summary>The name of the profile which holds the origin group.</summary>
         string ProfileName { get; set; }
         /// <summary>The JSON object that contains the properties of the origin group.</summary>
@@ -327,6 +403,8 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models
         /// is added. Default is 10 mins. This property is currently not supported.
         /// </summary>
         int? TrafficRestorationTimeToHealedOrNewEndpointsInMinute { get; set; }
+        /// <summary>Resource ID.</summary>
+        string UserAssignedIdentityId { get; set; }
 
     }
 }

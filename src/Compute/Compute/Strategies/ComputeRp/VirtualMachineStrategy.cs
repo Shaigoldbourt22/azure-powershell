@@ -1,4 +1,4 @@
-﻿// ----------------------------------------------------------------------------------
+// ----------------------------------------------------------------------------------
 //
 // Copyright Microsoft Corporation
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -85,7 +85,10 @@ namespace Microsoft.Azure.Commands.Compute.Strategies.ComputeRp
             string[] includeZone = null,
             string[] excludeZone = null,
             bool? alignRegionalDisksToVMZone = null,
-            bool? enableProxyAgent = null
+            bool? enableProxyAgent = null,
+            bool? addProxyAgentExtension = null,
+            string scheduledEventsApiVersion = null,
+            bool? enableAllInstancesDown = null
             )
             => Strategy.CreateResourceConfig(
                 resourceGroup: resourceGroup,
@@ -163,7 +166,7 @@ namespace Microsoft.Azure.Commands.Compute.Strategies.ComputeRp
                             EncryptionAtHost = encryptionAtHostPresent,
                             UefiSettings = (enableVtpm != null || enableSecureBoot != null) ? new UefiSettings(enableSecureBoot, enableVtpm) : null,
                             SecurityType = securityType,
-                            ProxyAgentSettings = enableProxyAgent == true ? new ProxyAgentSettings(enableProxyAgent) : null,
+                            ProxyAgentSettings = (enableProxyAgent != null || addProxyAgentExtension != null) ? new ProxyAgentSettings(enabled: enableProxyAgent, addProxyAgentExtension: addProxyAgentExtension): null,
                         },
                         CapacityReservation = string.IsNullOrEmpty(capacityReservationGroupId) ? null : new CapacityReservationProfile
                         {
@@ -177,6 +180,20 @@ namespace Microsoft.Azure.Commands.Compute.Strategies.ComputeRp
                             ZonePlacementPolicy = zonePlacementPolicy,
                             IncludeZones = includeZone,
                             ExcludeZones = excludeZone
+                        },
+                        ScheduledEventsPolicy = (string.IsNullOrEmpty(scheduledEventsApiVersion) && enableAllInstancesDown == null) ? null : new ScheduledEventsPolicy
+                        {
+                            ScheduledEventsAdditionalPublishingTargets = string.IsNullOrEmpty(scheduledEventsApiVersion) ? null : new ScheduledEventsAdditionalPublishingTargets
+                            {
+                                EventGridAndResourceGraph = new EventGridAndResourceGraph
+                                {
+                                    ScheduledEventsApiVersion = scheduledEventsApiVersion
+                                }
+                            },
+                            AllInstancesDown = enableAllInstancesDown == null ? null : new AllInstancesDown
+                            {
+                                AutomaticallyApprove = enableAllInstancesDown
+                            }
                         }
                     };
                     if(auxAuthHeader != null)

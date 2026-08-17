@@ -11,8 +11,7 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models
     public partial class SecurityPolicy :
         Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.ISecurityPolicy,
         Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.ISecurityPolicyInternal,
-        Microsoft.Azure.PowerShell.Cmdlets.Cdn.Runtime.IValidates,
-        Microsoft.Azure.PowerShell.Cmdlets.Cdn.Runtime.IHeaderSerializable
+        Microsoft.Azure.PowerShell.Cmdlets.Cdn.Runtime.IValidates
     {
         /// <summary>
         /// Backing field for Inherited model <see cref= "Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IProxyResource" />
@@ -22,15 +21,11 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models
         [Microsoft.Azure.PowerShell.Cmdlets.Cdn.Origin(Microsoft.Azure.PowerShell.Cmdlets.Cdn.PropertyOrigin.Inlined)]
         public string DeploymentStatus { get => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IAfdStatePropertiesInternal)Property).DeploymentStatus; }
 
-        /// <summary>Resource ID.</summary>
+        /// <summary>
+        /// Fully qualified resource ID for the resource. E.g. "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}"
+        /// </summary>
         [Microsoft.Azure.PowerShell.Cmdlets.Cdn.Origin(Microsoft.Azure.PowerShell.Cmdlets.Cdn.PropertyOrigin.Inherited)]
         public string Id { get => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IResourceInternal)__proxyResource).Id; }
-
-        /// <summary>Backing field for <see cref="Location" /> property.</summary>
-        private string _location;
-
-        [Microsoft.Azure.PowerShell.Cmdlets.Cdn.Origin(Microsoft.Azure.PowerShell.Cmdlets.Cdn.PropertyOrigin.Owned)]
-        public string Location { get => this._location; set => this._location = value; }
 
         /// <summary>Internal Acessors for Id</summary>
         string Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IResourceInternal.Id { get => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IResourceInternal)__proxyResource).Id; set => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IResourceInternal)__proxyResource).Id = value ?? null; }
@@ -74,7 +69,7 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models
         /// <summary>Internal Acessors for ProvisioningState</summary>
         string Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.ISecurityPolicyInternal.ProvisioningState { get => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IAfdStatePropertiesInternal)Property).ProvisioningState; set => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IAfdStatePropertiesInternal)Property).ProvisioningState = value ?? null; }
 
-        /// <summary>Resource name.</summary>
+        /// <summary>The name of the resource</summary>
         [Microsoft.Azure.PowerShell.Cmdlets.Cdn.Origin(Microsoft.Azure.PowerShell.Cmdlets.Cdn.PropertyOrigin.Inherited)]
         public string Name { get => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IResourceInternal)__proxyResource).Name; }
 
@@ -102,22 +97,24 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models
         [Microsoft.Azure.PowerShell.Cmdlets.Cdn.FormatTable]
         public string ResourceGroupName { get => (new global::System.Text.RegularExpressions.Regex("^/subscriptions/(?<subscriptionId>[^/]+)/resourceGroups/(?<resourceGroupName>[^/]+)/providers/", global::System.Text.RegularExpressions.RegexOptions.IgnoreCase).Match(this.Id).Success ? new global::System.Text.RegularExpressions.Regex("^/subscriptions/(?<subscriptionId>[^/]+)/resourceGroups/(?<resourceGroupName>[^/]+)/providers/", global::System.Text.RegularExpressions.RegexOptions.IgnoreCase).Match(this.Id).Groups["resourceGroupName"].Value : null); }
 
-        /// <summary>Read only system data</summary>
+        /// <summary>
+        /// Azure Resource Manager metadata containing createdBy and modifiedBy information.
+        /// </summary>
         [Microsoft.Azure.PowerShell.Cmdlets.Cdn.Origin(Microsoft.Azure.PowerShell.Cmdlets.Cdn.PropertyOrigin.Inherited)]
         [Microsoft.Azure.PowerShell.Cmdlets.Cdn.DoNotFormat]
         internal Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.ISystemData SystemData { get => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IResourceInternal)__proxyResource).SystemData; set => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IResourceInternal)__proxyResource).SystemData = value ?? null /* model class */; }
 
-        /// <summary>The timestamp of resource creation (UTC)</summary>
+        /// <summary>The timestamp of resource creation (UTC).</summary>
         [Microsoft.Azure.PowerShell.Cmdlets.Cdn.Origin(Microsoft.Azure.PowerShell.Cmdlets.Cdn.PropertyOrigin.Inherited)]
         [Microsoft.Azure.PowerShell.Cmdlets.Cdn.DoNotFormat]
         public global::System.DateTime? SystemDataCreatedAt { get => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IResourceInternal)__proxyResource).SystemDataCreatedAt; }
 
-        /// <summary>An identifier for the identity that created the resource</summary>
+        /// <summary>The identity that created the resource.</summary>
         [Microsoft.Azure.PowerShell.Cmdlets.Cdn.Origin(Microsoft.Azure.PowerShell.Cmdlets.Cdn.PropertyOrigin.Inherited)]
         [Microsoft.Azure.PowerShell.Cmdlets.Cdn.DoNotFormat]
         public string SystemDataCreatedBy { get => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IResourceInternal)__proxyResource).SystemDataCreatedBy; }
 
-        /// <summary>The type of identity that created the resource</summary>
+        /// <summary>The type of identity that created the resource.</summary>
         [Microsoft.Azure.PowerShell.Cmdlets.Cdn.Origin(Microsoft.Azure.PowerShell.Cmdlets.Cdn.PropertyOrigin.Inherited)]
         [Microsoft.Azure.PowerShell.Cmdlets.Cdn.DoNotFormat]
         public string SystemDataCreatedByType { get => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IResourceInternal)__proxyResource).SystemDataCreatedByType; }
@@ -127,28 +124,21 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models
         [Microsoft.Azure.PowerShell.Cmdlets.Cdn.DoNotFormat]
         public global::System.DateTime? SystemDataLastModifiedAt { get => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IResourceInternal)__proxyResource).SystemDataLastModifiedAt; }
 
-        /// <summary>An identifier for the identity that last modified the resource</summary>
+        /// <summary>The identity that last modified the resource.</summary>
         [Microsoft.Azure.PowerShell.Cmdlets.Cdn.Origin(Microsoft.Azure.PowerShell.Cmdlets.Cdn.PropertyOrigin.Inherited)]
         [Microsoft.Azure.PowerShell.Cmdlets.Cdn.DoNotFormat]
         public string SystemDataLastModifiedBy { get => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IResourceInternal)__proxyResource).SystemDataLastModifiedBy; }
 
-        /// <summary>The type of identity that last modified the resource</summary>
+        /// <summary>The type of identity that last modified the resource.</summary>
         [Microsoft.Azure.PowerShell.Cmdlets.Cdn.Origin(Microsoft.Azure.PowerShell.Cmdlets.Cdn.PropertyOrigin.Inherited)]
         [Microsoft.Azure.PowerShell.Cmdlets.Cdn.DoNotFormat]
         public string SystemDataLastModifiedByType { get => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IResourceInternal)__proxyResource).SystemDataLastModifiedByType; }
 
-        /// <summary>Resource type.</summary>
+        /// <summary>
+        /// The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
+        /// </summary>
         [Microsoft.Azure.PowerShell.Cmdlets.Cdn.Origin(Microsoft.Azure.PowerShell.Cmdlets.Cdn.PropertyOrigin.Inherited)]
         public string Type { get => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IResourceInternal)__proxyResource).Type; }
-
-        /// <param name="headers"></param>
-        void Microsoft.Azure.PowerShell.Cmdlets.Cdn.Runtime.IHeaderSerializable.ReadHeaders(global::System.Net.Http.Headers.HttpResponseHeaders headers)
-        {
-            if (headers.TryGetValues("location", out var __locationHeader0))
-            {
-                ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.ISecurityPolicyInternal)this).Location = System.Linq.Enumerable.FirstOrDefault(__locationHeader0) is string __headerLocationHeader0 ? __headerLocationHeader0 : (string)null;
-            }
-        }
 
         /// <summary>Creates an new <see cref="SecurityPolicy" /> instance.</summary>
         public SecurityPolicy()
@@ -184,17 +174,6 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models
         PossibleTypes = new [] { typeof(string) })]
         [global::Microsoft.Azure.PowerShell.Cmdlets.Cdn.PSArgumentCompleterAttribute("NotStarted", "InProgress", "Succeeded", "Failed")]
         string DeploymentStatus { get;  }
-
-        [Microsoft.Azure.PowerShell.Cmdlets.Cdn.Runtime.Info(
-        Required = false,
-        ReadOnly = false,
-        Read = true,
-        Create = true,
-        Update = true,
-        Description = @"",
-        SerializedName = @"location",
-        PossibleTypes = new [] { typeof(string) })]
-        string Location { get; set; }
         /// <summary>object which contains security policy parameters</summary>
         [Microsoft.Azure.PowerShell.Cmdlets.Cdn.Runtime.Info(
         Required = false,
@@ -237,8 +216,6 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models
     {
         [global::Microsoft.Azure.PowerShell.Cmdlets.Cdn.PSArgumentCompleterAttribute("NotStarted", "InProgress", "Succeeded", "Failed")]
         string DeploymentStatus { get; set; }
-
-        string Location { get; set; }
         /// <summary>object which contains security policy parameters</summary>
         Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.ISecurityPolicyPropertiesParameters Parameter { get; set; }
         /// <summary>The name of the profile which holds the security policy.</summary>

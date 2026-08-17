@@ -105,6 +105,13 @@ namespace Microsoft.Azure.Commands.RecoveryServices
         [ValidateSet("Disabled", "Unlocked")]
         public ImmutabilityState? ImmutabilityState { get; set; }
 
+        /// <summary>
+        /// Gets or sets the cost management granularity for the vault.
+        /// </summary>
+        [Parameter(Mandatory = false, HelpMessage = "Cost Management Granularity for the vault. Allowed values are \"VaultLevel\", \"ProtectedItemLevel\", \"ProtectedItemWithParentTag\".")]
+        [ValidateSet("VaultLevel", "ProtectedItemLevel", "ProtectedItemWithParentTag")]
+        public CostManagementGranularity? CostManagementGranularity { get; set; }
+
         #endregion
 
         /// <summary>
@@ -166,6 +173,16 @@ namespace Microsoft.Azure.Commands.RecoveryServices
                         Logger.Instance.WriteWarning(String.Format(Resources.PublicNetworkAccessEnabledByDefault));
                     }
 
+                    if (vaultCreateArgs.Properties.CostManagementSettings == null) { vaultCreateArgs.Properties.CostManagementSettings = new CostManagementSettings(); }
+                    if (CostManagementGranularity != null)
+                    {
+                        vaultCreateArgs.Properties.CostManagementSettings.GranularityLevel = CostManagementGranularity.ToString();
+                    }
+                    else
+                    {
+                        vaultCreateArgs.Properties.CostManagementSettings.GranularityLevel = "VaultLevel";
+                    }
+
                     if (ImmutabilityState != null)
                     {                        
                         if (vaultCreateArgs.Properties.SecuritySettings == null) { vaultCreateArgs.Properties.SecuritySettings = new SecuritySettings(); }
@@ -174,6 +191,21 @@ namespace Microsoft.Azure.Commands.RecoveryServices
                         if (ImmutabilityState != 0)
                             vaultCreateArgs.Properties.SecuritySettings.ImmutabilitySettings.State = ImmutabilityState.ToString();
                     }
+
+                    // Set default soft delete settings
+                    if (vaultCreateArgs.Properties.SecuritySettings == null) 
+                    { 
+                        vaultCreateArgs.Properties.SecuritySettings = new SecuritySettings(); 
+                    }
+                    if (vaultCreateArgs.Properties.SecuritySettings.SoftDeleteSettings == null) 
+                    { 
+                        vaultCreateArgs.Properties.SecuritySettings.SoftDeleteSettings = new ServiceClientModel.SoftDeleteSettings(); 
+                    }
+                    
+                    // Set default values for soft delete settings
+                    vaultCreateArgs.Properties.SecuritySettings.SoftDeleteSettings.SoftDeleteState = ServiceClientModel.SoftDeleteState.AlwaysON;
+                    vaultCreateArgs.Properties.SecuritySettings.SoftDeleteSettings.SoftDeleteRetentionPeriodInDays = 14;
+                    vaultCreateArgs.Properties.SecuritySettings.SoftDeleteSettings.EnhancedSecurityState = ServiceClientModel.EnhancedSecurityState.AlwaysON;
 
                     Vault response = RecoveryServicesClient.CreateVault(this.ResourceGroupName, this.Name, vaultCreateArgs);
 

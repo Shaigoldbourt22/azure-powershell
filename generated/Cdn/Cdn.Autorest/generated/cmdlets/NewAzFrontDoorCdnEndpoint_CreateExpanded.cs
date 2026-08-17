@@ -21,7 +21,7 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Cdn.Cmdlets
     [global::System.Management.Automation.OutputType(typeof(Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IAfdEndpoint))]
     [global::Microsoft.Azure.PowerShell.Cmdlets.Cdn.Description(@"create a new AzureFrontDoor endpoint with the specified endpoint name under the specified subscription, resource group and profile.")]
     [global::Microsoft.Azure.PowerShell.Cmdlets.Cdn.Generated]
-    [global::Microsoft.Azure.PowerShell.Cmdlets.Cdn.HttpPath(Path = "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/afdEndpoints/{endpointName}", ApiVersion = "2025-04-15")]
+    [global::Microsoft.Azure.PowerShell.Cmdlets.Cdn.HttpPath(Path = "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/afdEndpoints/{endpointName}", ApiVersion = "2026-04-01-preview")]
     public partial class NewAzFrontDoorCdnEndpoint_CreateExpanded : global::System.Management.Automation.PSCmdlet,
         Microsoft.Azure.PowerShell.Cmdlets.Cdn.Runtime.IEventListener,
         Microsoft.Azure.PowerShell.Cmdlets.Cdn.Runtime.IContext
@@ -115,6 +115,20 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Cdn.Cmdlets
         [global::Microsoft.Azure.PowerShell.Cmdlets.Cdn.Category(global::Microsoft.Azure.PowerShell.Cmdlets.Cdn.ParameterCategory.Path)]
         public string EndpointName { get => this._endpointName; set => this._endpointName = value; }
 
+        /// <summary>
+        /// Set to Disabled by default. If set to Enabled, only custom domains with mTLS enabled can be added to child Route resources.
+        /// </summary>
+        [global::System.Management.Automation.Parameter(Mandatory = false, HelpMessage = "Set to Disabled by default. If set to Enabled, only custom domains with mTLS enabled can be added to child Route resources.")]
+        [global::Microsoft.Azure.PowerShell.Cmdlets.Cdn.Category(global::Microsoft.Azure.PowerShell.Cmdlets.Cdn.ParameterCategory.Body)]
+        [Microsoft.Azure.PowerShell.Cmdlets.Cdn.Runtime.Info(
+        Required = false,
+        ReadOnly = false,
+        Description = @"Set to Disabled by default. If set to Enabled, only custom domains with mTLS enabled can be added to child Route resources.",
+        SerializedName = @"enforceMtls",
+        PossibleTypes = new [] { typeof(string) })]
+        [global::Microsoft.Azure.PowerShell.Cmdlets.Cdn.PSArgumentCompleterAttribute("Enabled", "Disabled")]
+        public string EnforceMtl { get => _endpointBody.EnforceMtl ?? null; set => _endpointBody.EnforceMtl = value; }
+
         /// <summary>Accessor for extensibleParameters.</summary>
         public global::System.Collections.Generic.IDictionary<global::System.String,global::System.Object> ExtensibleParameters { get => _extensibleParameters ; }
 
@@ -133,13 +147,13 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Cdn.Cmdlets
         /// <summary>Accessor for our copy of the InvocationInfo.</summary>
         public global::System.Management.Automation.InvocationInfo InvocationInformation { get => __invocationInfo = __invocationInfo ?? this.MyInvocation ; set { __invocationInfo = value; } }
 
-        /// <summary>Resource location.</summary>
-        [global::System.Management.Automation.Parameter(Mandatory = true, HelpMessage = "Resource location.")]
+        /// <summary>The geo-location where the resource lives</summary>
+        [global::System.Management.Automation.Parameter(Mandatory = true, HelpMessage = "The geo-location where the resource lives")]
         [global::Microsoft.Azure.PowerShell.Cmdlets.Cdn.Category(global::Microsoft.Azure.PowerShell.Cmdlets.Cdn.ParameterCategory.Body)]
         [Microsoft.Azure.PowerShell.Cmdlets.Cdn.Runtime.Info(
         Required = true,
         ReadOnly = false,
-        Description = @"Resource location.",
+        Description = @"The geo-location where the resource lives",
         SerializedName = @"location",
         PossibleTypes = new [] { typeof(string) })]
         public string Location { get => _endpointBody.Location ?? null; set => _endpointBody.Location = value; }
@@ -169,13 +183,13 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Cdn.Cmdlets
         private string _profileName;
 
         /// <summary>
-        /// Name of the Azure Front Door Standard or Azure Front Door Premium which is unique within the resource group.
+        /// Name of the Azure Front Door Standard or Azure Front Door Premium or CDN profile which is unique within the resource group.
         /// </summary>
-        [global::System.Management.Automation.Parameter(Mandatory = true, HelpMessage = "Name of the Azure Front Door Standard or Azure Front Door Premium which is unique within the resource group.")]
+        [global::System.Management.Automation.Parameter(Mandatory = true, HelpMessage = "Name of the Azure Front Door Standard or Azure Front Door Premium or CDN profile which is unique within the resource group.")]
         [Microsoft.Azure.PowerShell.Cmdlets.Cdn.Runtime.Info(
         Required = true,
         ReadOnly = false,
-        Description = @"Name of the Azure Front Door Standard or Azure Front Door Premium which is unique within the resource group.",
+        Description = @"Name of the Azure Front Door Standard or Azure Front Door Premium or CDN profile which is unique within the resource group.",
         SerializedName = @"profileName",
         PossibleTypes = new [] { typeof(string) })]
         [global::Microsoft.Azure.PowerShell.Cmdlets.Cdn.Category(global::Microsoft.Azure.PowerShell.Cmdlets.Cdn.ParameterCategory.Path)]
@@ -200,12 +214,12 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Cdn.Cmdlets
         /// <summary>Backing field for <see cref="ResourceGroupName" /> property.</summary>
         private string _resourceGroupName;
 
-        /// <summary>Name of the Resource group within the Azure subscription.</summary>
-        [global::System.Management.Automation.Parameter(Mandatory = true, HelpMessage = "Name of the Resource group within the Azure subscription.")]
+        /// <summary>The name of the resource group. The name is case insensitive.</summary>
+        [global::System.Management.Automation.Parameter(Mandatory = true, HelpMessage = "The name of the resource group. The name is case insensitive.")]
         [Microsoft.Azure.PowerShell.Cmdlets.Cdn.Runtime.Info(
         Required = true,
         ReadOnly = false,
-        Description = @"Name of the Resource group within the Azure subscription.",
+        Description = @"The name of the resource group. The name is case insensitive.",
         SerializedName = @"resourceGroupName",
         PossibleTypes = new [] { typeof(string) })]
         [global::Microsoft.Azure.PowerShell.Cmdlets.Cdn.Category(global::Microsoft.Azure.PowerShell.Cmdlets.Cdn.ParameterCategory.Path)]
@@ -214,12 +228,12 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Cdn.Cmdlets
         /// <summary>Backing field for <see cref="SubscriptionId" /> property.</summary>
         private string _subscriptionId;
 
-        /// <summary>Azure Subscription ID.</summary>
-        [global::System.Management.Automation.Parameter(Mandatory = true, HelpMessage = "Azure Subscription ID.")]
+        /// <summary>The ID of the target subscription. The value must be an UUID.</summary>
+        [global::System.Management.Automation.Parameter(Mandatory = true, HelpMessage = "The ID of the target subscription. The value must be an UUID.")]
         [Microsoft.Azure.PowerShell.Cmdlets.Cdn.Runtime.Info(
         Required = true,
         ReadOnly = false,
-        Description = @"Azure Subscription ID.",
+        Description = @"The ID of the target subscription. The value must be an UUID.",
         SerializedName = @"subscriptionId",
         PossibleTypes = new [] { typeof(string) })]
         [Microsoft.Azure.PowerShell.Cmdlets.Cdn.Runtime.DefaultInfo(
@@ -247,12 +261,12 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Cdn.Cmdlets
         /// happens on that response. Implement this method in a partial class to enable this behavior
         /// </summary>
         /// <param name="responseMessage">the raw response message as an global::System.Net.Http.HttpResponseMessage.</param>
-        /// <param name="response">the body result as a <see cref="Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IAfdErrorResponse">Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IAfdErrorResponse</see>
+        /// <param name="response">the body result as a <see cref="Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IErrorResponse">Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IErrorResponse</see>
         /// from the remote call</param>
         /// <param name="returnNow">/// Determines if the rest of the onDefault method should be processed, or if the method should
         /// return immediately (set to true to skip further processing )</param>
 
-        partial void overrideOnDefault(global::System.Net.Http.HttpResponseMessage responseMessage, global::System.Threading.Tasks.Task<Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IAfdErrorResponse> response, ref global::System.Threading.Tasks.Task<bool> returnNow);
+        partial void overrideOnDefault(global::System.Net.Http.HttpResponseMessage responseMessage, global::System.Threading.Tasks.Task<Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IErrorResponse> response, ref global::System.Threading.Tasks.Task<bool> returnNow);
 
         /// <summary>
         /// <c>overrideOnOk</c> will be called before the regular onOk has been processed, allowing customization of what happens
@@ -568,12 +582,12 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Cdn.Cmdlets
         /// a delegate that is called when the remote service returns default (any response code not handled elsewhere).
         /// </summary>
         /// <param name="responseMessage">the raw response message as an global::System.Net.Http.HttpResponseMessage.</param>
-        /// <param name="response">the body result as a <see cref="Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IAfdErrorResponse">Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IAfdErrorResponse</see>
+        /// <param name="response">the body result as a <see cref="Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IErrorResponse">Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IErrorResponse</see>
         /// from the remote call</param>
         /// <returns>
         /// A <see cref="global::System.Threading.Tasks.Task" /> that will be complete when handling of the method is completed.
         /// </returns>
-        private async global::System.Threading.Tasks.Task onDefault(global::System.Net.Http.HttpResponseMessage responseMessage, global::System.Threading.Tasks.Task<Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IAfdErrorResponse> response)
+        private async global::System.Threading.Tasks.Task onDefault(global::System.Net.Http.HttpResponseMessage responseMessage, global::System.Threading.Tasks.Task<Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IErrorResponse> response)
         {
             using( NoSynchronizationContext )
             {
@@ -590,7 +604,7 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Cdn.Cmdlets
                 if ((null == code || null == message))
                 {
                     // Unrecognized Response. Create an error record based on what we have.
-                    var ex = new Microsoft.Azure.PowerShell.Cmdlets.Cdn.Runtime.RestException<Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IAfdErrorResponse>(responseMessage, await response);
+                    var ex = new Microsoft.Azure.PowerShell.Cmdlets.Cdn.Runtime.RestException<Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IErrorResponse>(responseMessage, await response);
                     WriteError( new global::System.Management.Automation.ErrorRecord(ex, ex.Code, global::System.Management.Automation.ErrorCategory.InvalidOperation, new {  })
                     {
                       ErrorDetails = new global::System.Management.Automation.ErrorDetails(ex.Message) { RecommendedAction = ex.Action }

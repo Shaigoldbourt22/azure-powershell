@@ -15,10 +15,12 @@ Create a new origin group within the specified profile.
 ### CreateExpanded (Default)
 ```
 New-AzFrontDoorCdnOriginGroup -OriginGroupName <String> -ProfileName <String> -ResourceGroupName <String>
- [-SubscriptionId <String>] [-HealthProbeSetting <IHealthProbeParameters>]
+ [-SubscriptionId <String>] [-AuthenticationScope <String>] [-AuthenticationTokenDestinationHeader <String>]
+ [-AuthenticationType <String>] [-HealthProbeSetting <IHealthProbeParameters>]
  [-LoadBalancingSetting <ILoadBalancingSettingsParameters>] [-SessionAffinityState <String>]
- [-TrafficRestorationTimeToHealedOrNewEndpointsInMinute <Int32>] [-DefaultProfile <PSObject>] [-AsJob]
- [-NoWait] [-WhatIf] [-Confirm] [<CommonParameters>]
+ [-TrafficRestorationTimeToHealedOrNewEndpointsInMinute <Int32>] [-UserAssignedIdentityId <String>]
+ [-DefaultProfile <PSObject>] [-AsJob] [-NoWait] [-WhatIf] [-Confirm]
+ [<CommonParameters>]
 ```
 
 ### CreateViaJsonString
@@ -38,8 +40,10 @@ New-AzFrontDoorCdnOriginGroup -OriginGroupName <String> -ProfileName <String> -R
 ### CreateViaIdentityProfileExpanded
 ```
 New-AzFrontDoorCdnOriginGroup -OriginGroupName <String> -ProfileInputObject <ICdnIdentity>
- [-HealthProbeSetting <IHealthProbeParameters>] [-LoadBalancingSetting <ILoadBalancingSettingsParameters>]
- [-SessionAffinityState <String>] [-TrafficRestorationTimeToHealedOrNewEndpointsInMinute <Int32>]
+ [-AuthenticationScope <String>] [-AuthenticationTokenDestinationHeader <String>]
+ [-AuthenticationType <String>] [-HealthProbeSetting <IHealthProbeParameters>]
+ [-LoadBalancingSetting <ILoadBalancingSettingsParameters>] [-SessionAffinityState <String>]
+ [-TrafficRestorationTimeToHealedOrNewEndpointsInMinute <Int32>] [-UserAssignedIdentityId <String>]
  [-DefaultProfile <PSObject>] [-AsJob] [-NoWait] [-WhatIf] [-Confirm]
  [<CommonParameters>]
 ```
@@ -79,6 +83,53 @@ Run the command as a job
 ```yaml
 Type: System.Management.Automation.SwitchParameter
 Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -AuthenticationScope
+The scope used when requesting token from Microsoft Entra.
+For example, for Azure Blob Storage, scope could be "https://storage.azure.com/.default".
+
+```yaml
+Type: System.String
+Parameter Sets: CreateExpanded, CreateViaIdentityProfileExpanded
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -AuthenticationTokenDestinationHeader
+The HTTP request header where the origin authentication token will be placed when forwarding the request to the origin.
+If not specified, the service will use the `Authorization` header for backward compatibility.
+
+```yaml
+Type: System.String
+Parameter Sets: CreateExpanded, CreateViaIdentityProfileExpanded
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -AuthenticationType
+The type of the authentication for the origin.
+
+```yaml
+Type: System.String
+Parameter Sets: CreateExpanded, CreateViaIdentityProfileExpanded
 Aliases:
 
 Required: False
@@ -225,7 +276,7 @@ Accept wildcard characters: False
 ```
 
 ### -ProfileName
-Name of the Azure Front Door Standard or Azure Front Door Premium which is unique within the resource group.
+Name of the Azure Front Door Standard or Azure Front Door Premium or CDN profile which is unique within the resource group.
 
 ```yaml
 Type: System.String
@@ -240,7 +291,8 @@ Accept wildcard characters: False
 ```
 
 ### -ResourceGroupName
-Name of the Resource group within the Azure subscription.
+The name of the resource group.
+The name is case insensitive.
 
 ```yaml
 Type: System.String
@@ -271,7 +323,8 @@ Accept wildcard characters: False
 ```
 
 ### -SubscriptionId
-Azure Subscription ID.
+The ID of the target subscription.
+The value must be an UUID.
 
 ```yaml
 Type: System.String
@@ -292,6 +345,21 @@ This property is currently not supported.
 
 ```yaml
 Type: System.Int32
+Parameter Sets: CreateExpanded, CreateViaIdentityProfileExpanded
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -UserAssignedIdentityId
+Resource ID.
+
+```yaml
+Type: System.String
 Parameter Sets: CreateExpanded, CreateViaIdentityProfileExpanded
 Aliases:
 

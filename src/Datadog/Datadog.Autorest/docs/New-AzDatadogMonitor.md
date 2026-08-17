@@ -8,17 +8,20 @@ schema: 2.0.0
 # New-AzDatadogMonitor
 
 ## SYNOPSIS
-create a monitor resource.
+Create a monitor resource.
 
 ## SYNTAX
 
 ### CreateExpanded (Default)
 ```
 New-AzDatadogMonitor -Name <String> -ResourceGroupName <String> [-SubscriptionId <String>]
- [-EnableSystemAssignedIdentity] [-Location <String>] [-MonitoringStatus <String>]
- [-OrganizationApiKey <String>] [-OrganizationApplicationKey <String>] [-OrganizationEnterpriseAppId <String>]
- [-OrganizationLinkingAuthCode <String>] [-OrganizationLinkingClientId <String>]
- [-OrganizationRedirectUri <String>] [-SkuName <String>] [-Tag <Hashtable>] [-UserInfoEmailAddress <String>]
+ [-EnableSystemAssignedIdentity] [-Location <String>] [-MarketplaceOfferDetailOfferId <String>]
+ [-MarketplaceOfferDetailPublisherId <String>] [-MonitoringStatus <String>]
+ [-OrganizationApiKey <SecureString>] [-OrganizationApplicationKey <SecureString>] [-OrganizationCspm]
+ [-OrganizationEnterpriseAppId <String>] [-OrganizationId <String>]
+ [-OrganizationLinkingAuthCode <SecureString>] [-OrganizationLinkingClientId <SecureString>]
+ [-OrganizationName <String>] [-OrganizationRedirectUri <String>] [-OrganizationResourceCollection]
+ [-SaaSDataSaaSresourceId <String>] [-SkuName <String>] [-Tag <Hashtable>] [-UserInfoEmailAddress <String>]
  [-UserInfoName <String>] [-UserInfoPhoneNumber <String>] [-DefaultProfile <PSObject>] [-AsJob] [-NoWait]
  [-Confirm] [-WhatIf] [<CommonParameters>]
 ```
@@ -26,11 +29,15 @@ New-AzDatadogMonitor -Name <String> -ResourceGroupName <String> [-SubscriptionId
 ### CreateViaIdentityExpanded
 ```
 New-AzDatadogMonitor -InputObject <IDatadogIdentity> [-EnableSystemAssignedIdentity] [-Location <String>]
- [-MonitoringStatus <String>] [-OrganizationApiKey <String>] [-OrganizationApplicationKey <String>]
- [-OrganizationEnterpriseAppId <String>] [-OrganizationLinkingAuthCode <String>]
- [-OrganizationLinkingClientId <String>] [-OrganizationRedirectUri <String>] [-SkuName <String>]
- [-Tag <Hashtable>] [-UserInfoEmailAddress <String>] [-UserInfoName <String>] [-UserInfoPhoneNumber <String>]
- [-DefaultProfile <PSObject>] [-AsJob] [-NoWait] [-Confirm] [-WhatIf] [<CommonParameters>]
+ [-MarketplaceOfferDetailOfferId <String>] [-MarketplaceOfferDetailPublisherId <String>]
+ [-MonitoringStatus <String>] [-OrganizationApiKey <SecureString>]
+ [-OrganizationApplicationKey <SecureString>] [-OrganizationCspm] [-OrganizationEnterpriseAppId <String>]
+ [-OrganizationId <String>] [-OrganizationLinkingAuthCode <SecureString>]
+ [-OrganizationLinkingClientId <SecureString>] [-OrganizationName <String>]
+ [-OrganizationRedirectUri <String>] [-OrganizationResourceCollection] [-SaaSDataSaaSresourceId <String>]
+ [-SkuName <String>] [-Tag <Hashtable>] [-UserInfoEmailAddress <String>] [-UserInfoName <String>]
+ [-UserInfoPhoneNumber <String>] [-DefaultProfile <PSObject>] [-AsJob] [-NoWait] [-Confirm] [-WhatIf]
+ [<CommonParameters>]
 ```
 
 ### CreateViaJsonFilePath
@@ -48,7 +55,7 @@ New-AzDatadogMonitor -Name <String> -ResourceGroupName <String> -JsonString <Str
 ```
 
 ## DESCRIPTION
-create a monitor resource.
+Create a monitor resource.
 
 ## EXAMPLES
 
@@ -159,7 +166,37 @@ Accept wildcard characters: False
 ```
 
 ### -Location
-.
+The geo-location where the resource lives
+
+```yaml
+Type: System.String
+Parameter Sets: CreateExpanded, CreateViaIdentityExpanded
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -MarketplaceOfferDetailOfferId
+The offer ID (e.g., "dd_liftr_v3_decoupled").
+
+```yaml
+Type: System.String
+Parameter Sets: CreateExpanded, CreateViaIdentityExpanded
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -MarketplaceOfferDetailPublisherId
+The publisher ID (e.g., "datadog1591740804488").
 
 ```yaml
 Type: System.String
@@ -222,7 +259,7 @@ Accept wildcard characters: False
 Api key associated to the Datadog organization.
 
 ```yaml
-Type: System.String
+Type: System.Security.SecureString
 Parameter Sets: CreateExpanded, CreateViaIdentityExpanded
 Aliases:
 
@@ -237,7 +274,23 @@ Accept wildcard characters: False
 Application key associated to the Datadog organization.
 
 ```yaml
-Type: System.String
+Type: System.Security.SecureString
+Parameter Sets: CreateExpanded, CreateViaIdentityExpanded
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -OrganizationCspm
+The configuration which describes the state of cloud security posture management.
+This collects configuration information for all resources in a subscription and track conformance to industry benchmarks.
+
+```yaml
+Type: System.Management.Automation.SwitchParameter
 Parameter Sets: CreateExpanded, CreateViaIdentityExpanded
 Aliases:
 
@@ -263,11 +316,26 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -OrganizationLinkingAuthCode
-The auth code used to linking to an existing datadog organization.
+### -OrganizationId
+Id of the Datadog organization.
 
 ```yaml
 Type: System.String
+Parameter Sets: CreateExpanded, CreateViaIdentityExpanded
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -OrganizationLinkingAuthCode
+The auth code used to linking to an existing Datadog organization.
+
+```yaml
+Type: System.Security.SecureString
 Parameter Sets: CreateExpanded, CreateViaIdentityExpanded
 Aliases:
 
@@ -282,6 +350,21 @@ Accept wildcard characters: False
 The client_id from an existing in exchange for an auth token to link organization.
 
 ```yaml
+Type: System.Security.SecureString
+Parameter Sets: CreateExpanded, CreateViaIdentityExpanded
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -OrganizationName
+Name of the Datadog organization.
+
+```yaml
 Type: System.String
 Parameter Sets: CreateExpanded, CreateViaIdentityExpanded
 Aliases:
@@ -294,10 +377,26 @@ Accept wildcard characters: False
 ```
 
 ### -OrganizationRedirectUri
-The redirect uri for linking.
+The redirect URI for linking.
 
 ```yaml
 Type: System.String
+Parameter Sets: CreateExpanded, CreateViaIdentityExpanded
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -OrganizationResourceCollection
+The configuration which describes the state of resource collection.
+This collects configuration information for all resources in a subscription.
+
+```yaml
+Type: System.Management.Automation.SwitchParameter
 Parameter Sets: CreateExpanded, CreateViaIdentityExpanded
 Aliases:
 
@@ -324,8 +423,24 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -SaaSDataSaaSresourceId
+SaaS resource id
+
+```yaml
+Type: System.String
+Parameter Sets: CreateExpanded, CreateViaIdentityExpanded
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -SkuName
-Name of the SKU.
+Name of the SKU in {PlanId} format.
+For Terraform, the only allowed value is 'Linked'.
 
 ```yaml
 Type: System.String
@@ -355,7 +470,7 @@ Accept wildcard characters: False
 ```
 
 ### -Tag
-Dictionary of \<string\>
+Resource tags.
 
 ```yaml
 Type: System.Collections.Hashtable

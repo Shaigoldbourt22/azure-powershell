@@ -59,6 +59,7 @@ namespace Microsoft.Azure.Commands.Management.Storage
             internal const string Hot = "Hot";
             internal const string Cool = "Cool";
             internal const string Cold = "Cold";
+            internal const string Smart = "Smart";
         }
         protected struct AzureBlobType
         {
@@ -98,6 +99,12 @@ namespace Microsoft.Azure.Commands.Management.Storage
             internal const string StorageFileDataSmbShareContributor = "StorageFileDataSmbShareContributor";
             internal const string StorageFileDataSmbShareElevatedContributor = "StorageFileDataSmbShareElevatedContributor";
             internal const string StorageFileDataSmbShareOwner = "StorageFileDataSmbShareOwner";
+        }
+
+        protected struct AccountFailoverType
+        {
+            internal const string Planned = "Planned";
+            internal const string Unplanned = "Unplanned";
         }
 
         public IStorageManagementClient StorageClient

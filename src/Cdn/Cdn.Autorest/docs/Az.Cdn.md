@@ -1,6 +1,6 @@
 ---
 Module Name: Az.Cdn
-Module Guid: 017e09b7-e5d5-439a-b393-82dab6354cb3
+Module Guid: ead40551-b7cf-4116-bc7c-ef684cadec24
 Download Help Link: https://learn.microsoft.com/powershell/module/az.cdn
 Help Version: 1.0.0.0
 Locale: en-US
@@ -11,11 +11,17 @@ Locale: en-US
 Microsoft Azure PowerShell: Cdn cmdlets
 
 ## Az.Cdn Cmdlets
+### [Add-AzCdnEdgeActionAttachment](Add-AzCdnEdgeActionAttachment.md)
+A long-running operation for adding an EdgeAction attachment.
+
 ### [Clear-AzCdnEndpointContent](Clear-AzCdnEndpointContent.md)
 Removes a content from CDN.
 
 ### [Clear-AzFrontDoorCdnEndpointContent](Clear-AzFrontDoorCdnEndpointContent.md)
 Removes a content from AzureFrontDoor.
+
+### [Deploy-AzCdnEdgeActionVersionCode](Deploy-AzCdnEdgeActionVersionCode.md)
+A long-running operation to deploy versioncode to EdgeActionVersion resource.
 
 ### [Disable-AzCdnCustomDomainCustomHttps](Disable-AzCdnCustomDomainCustomHttps.md)
 Disable https delivery of the custom domain.
@@ -29,6 +35,18 @@ Commit the migrated Azure Front Door(Standard/Premium) profile..
 ### [Get-AzCdnCustomDomain](Get-AzCdnCustomDomain.md)
 Gets an existing custom domain within an endpoint.
 
+### [Get-AzCdnEdgeAction](Get-AzCdnEdgeAction.md)
+Get EdgeAction resource
+
+### [Get-AzCdnEdgeActionExecutionFilter](Get-AzCdnEdgeActionExecutionFilter.md)
+Get EdgeActionExecutionFilter resource
+
+### [Get-AzCdnEdgeActionVersion](Get-AzCdnEdgeActionVersion.md)
+Get EdgeActionVersion resource
+
+### [Get-AzCdnEdgeActionVersionCode](Get-AzCdnEdgeActionVersionCode.md)
+A long-running operation to get versioncode deployed to EdgeActionVersion resource.
+
 ### [Get-AzCdnEdgeNode](Get-AzCdnEdgeNode.md)
 Edgenodes are the global Point of Presence (POP) locations used to deliver CDN content to end users.
 
@@ -37,6 +55,9 @@ Gets an existing CDN endpoint with the specified endpoint name under the specifi
 
 ### [Get-AzCdnEndpointResourceUsage](Get-AzCdnEndpointResourceUsage.md)
 Checks the quota and usage of geo filters and custom domains under the given endpoint.
+
+### [Get-AzCdnManagedRuleSet](Get-AzCdnManagedRuleSet.md)
+Lists all available managed rule sets.
 
 ### [Get-AzCdnOrigin](Get-AzCdnOrigin.md)
 Gets an existing origin within an endpoint.
@@ -73,7 +94,7 @@ Gets an existing origin within an origin group.
 Gets an existing origin group within a profile.
 
 ### [Get-AzFrontDoorCdnOriginGroupResourceUsage](Get-AzFrontDoorCdnOriginGroupResourceUsage.md)
-Checks the quota and actual usage of endpoints under the given Azure Front Door profile..
+Checks the quota and actual usage of endpoints under the given Azure Front Door profile.
 
 ### [Get-AzFrontDoorCdnProfile](Get-AzFrontDoorCdnProfile.md)
 Gets an Azure Front Door Standard or Azure Front Door Premium or CDN profile with the specified profile name under the specified subscription and resource group.
@@ -91,7 +112,7 @@ Gets an existing delivery rule within a rule set.
 Gets an existing AzureFrontDoor rule set with the specified rule set name under the specified subscription, resource group and profile.
 
 ### [Get-AzFrontDoorCdnRuleSetResourceUsage](Get-AzFrontDoorCdnRuleSetResourceUsage.md)
-Checks the quota and actual usage of endpoints under the given Azure Front Door profile..
+Checks the quota and actual usage of endpoints under the given Azure Front Door profile.
 
 ### [Get-AzFrontDoorCdnSecret](Get-AzFrontDoorCdnSecret.md)
 Gets an existing Secret within a profile.
@@ -172,6 +193,15 @@ Create an in-memory object for DeliveryRuleUrlFileNameCondition.
 
 ### [New-AzCdnDeliveryRuleUrlPathConditionObject](New-AzCdnDeliveryRuleUrlPathConditionObject.md)
 Create an in-memory object for DeliveryRuleUrlPathCondition.
+
+### [New-AzCdnEdgeAction](New-AzCdnEdgeAction.md)
+Create EdgeAction resource
+
+### [New-AzCdnEdgeActionExecutionFilter](New-AzCdnEdgeActionExecutionFilter.md)
+Create EdgeActionExecutionFilter resource
+
+### [New-AzCdnEdgeActionVersion](New-AzCdnEdgeActionVersion.md)
+Create EdgeActionVersion version
 
 ### [New-AzCdnEndpoint](New-AzCdnEndpoint.md)
 Create a new CDN endpoint with the specified endpoint name under the specified subscription, resource group and profile.
@@ -327,7 +357,7 @@ Create an in-memory object for DeliveryRuleRouteConfigurationOverrideAction.
 Create an in-memory object for DeliveryRuleServerPortCondition.
 
 ### [New-AzFrontDoorCdnRuleSet](New-AzFrontDoorCdnRuleSet.md)
-Create a new rule set within the specified profile.
+Create or create a batch rule set within the specified profile along with the rules associate to it.
 
 ### [New-AzFrontDoorCdnRuleSocketAddrConditionObject](New-AzFrontDoorCdnRuleSocketAddrConditionObject.md)
 Create an in-memory object for DeliveryRuleSocketAddrCondition.
@@ -379,6 +409,18 @@ Create an in-memory object for SecurityPolicyWebApplicationFirewallParameters.
 
 ### [Remove-AzCdnCustomDomain](Remove-AzCdnCustomDomain.md)
 Deletes an existing custom domain within an endpoint.
+
+### [Remove-AzCdnEdgeAction](Remove-AzCdnEdgeAction.md)
+Delete EdgeAction resource
+
+### [Remove-AzCdnEdgeActionAttachment](Remove-AzCdnEdgeActionAttachment.md)
+A long-running operation for deleting an EdgeAction attachment that returns no content.
+
+### [Remove-AzCdnEdgeActionExecutionFilter](Remove-AzCdnEdgeActionExecutionFilter.md)
+Delete EdgeActionExecutionFilter resource
+
+### [Remove-AzCdnEdgeActionVersion](Remove-AzCdnEdgeActionVersion.md)
+Delete EdgeActionVersion resource
 
 ### [Remove-AzCdnEndpoint](Remove-AzCdnEndpoint.md)
 Deletes an existing CDN endpoint with the specified endpoint name under the specified subscription, resource group and profile.
@@ -469,6 +511,15 @@ Validates the custom domain mapping to ensure it maps to the correct Azure Front
 ### [Test-AzFrontDoorCdnProfileMigration](Test-AzFrontDoorCdnProfileMigration.md)
 Check if a classic AFD instance can be migrated to Azure Front Door(Standard/Premium) profile.
 
+### [Update-AzCdnEdgeAction](Update-AzCdnEdgeAction.md)
+Update EdgeAction resource
+
+### [Update-AzCdnEdgeActionExecutionFilter](Update-AzCdnEdgeActionExecutionFilter.md)
+Update EdgeActionExecutionFilter resource
+
+### [Update-AzCdnEdgeActionVersion](Update-AzCdnEdgeActionVersion.md)
+Update EdgeActionVersion resource
+
 ### [Update-AzCdnEndpoint](Update-AzCdnEndpoint.md)
 Update an existing CDN endpoint with the specified endpoint name under the specified subscription, resource group and profile.
 Only tags can be updated after creating an endpoint.
@@ -515,6 +566,9 @@ Update an existing route with the specified route name under the specified subsc
 
 ### [Update-AzFrontDoorCdnRule](Update-AzFrontDoorCdnRule.md)
 Update an existing delivery rule within a rule set.
+
+### [Update-AzFrontDoorCdnRuleSet](Update-AzFrontDoorCdnRuleSet.md)
+Update or update a batch rule set within the specified profile along with the rules associate to it.
 
 ### [Update-AzFrontDoorCdnSecret](Update-AzFrontDoorCdnSecret.md)
 Update a new Secret within the specified profile.

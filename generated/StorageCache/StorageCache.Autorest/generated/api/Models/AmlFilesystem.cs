@@ -46,6 +46,11 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.StorageCache.Models
         [Microsoft.Azure.PowerShell.Cmdlets.StorageCache.DoNotFormat]
         public string ClientInfoMountCommand { get => ((Microsoft.Azure.PowerShell.Cmdlets.StorageCache.Models.IAmlFilesystemPropertiesInternal)Property).ClientInfoMountCommand; }
 
+        /// <summary>The unique identifier of the AML file system cluster.</summary>
+        [Microsoft.Azure.PowerShell.Cmdlets.StorageCache.Origin(Microsoft.Azure.PowerShell.Cmdlets.StorageCache.PropertyOrigin.Inlined)]
+        [Microsoft.Azure.PowerShell.Cmdlets.StorageCache.DoNotFormat]
+        public string ClusterUuid { get => ((Microsoft.Azure.PowerShell.Cmdlets.StorageCache.Models.IAmlFilesystemPropertiesInternal)Property).ClusterUuid; }
+
         /// <summary>Recommended AKS Persistent Volume for the CSI driver, in Base64 encoded YAML</summary>
         [Microsoft.Azure.PowerShell.Cmdlets.StorageCache.Origin(Microsoft.Azure.PowerShell.Cmdlets.StorageCache.PropertyOrigin.Inlined)]
         [Microsoft.Azure.PowerShell.Cmdlets.StorageCache.DoNotFormat]
@@ -62,6 +67,13 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.StorageCache.Models
         [Microsoft.Azure.PowerShell.Cmdlets.StorageCache.Origin(Microsoft.Azure.PowerShell.Cmdlets.StorageCache.PropertyOrigin.Inlined)]
         [Microsoft.Azure.PowerShell.Cmdlets.StorageCache.DoNotFormat]
         public string ContainerStorageInterfaceStorageClass { get => ((Microsoft.Azure.PowerShell.Cmdlets.StorageCache.Models.IAmlFilesystemPropertiesInternal)Property).ContainerStorageInterfaceStorageClass; }
+
+        /// <summary>
+        /// The current storage capacity of the AML file system, in TiB. This reflects the actual capacity including any expansions.
+        /// </summary>
+        [Microsoft.Azure.PowerShell.Cmdlets.StorageCache.Origin(Microsoft.Azure.PowerShell.Cmdlets.StorageCache.PropertyOrigin.Inlined)]
+        [Microsoft.Azure.PowerShell.Cmdlets.StorageCache.DoNotFormat]
+        public float? CurrentStorageCapacityTiB { get => ((Microsoft.Azure.PowerShell.Cmdlets.StorageCache.Models.IAmlFilesystemPropertiesInternal)Property).CurrentStorageCapacityTiB; }
 
         /// <summary>
         /// Subnet used for managing the AML file system and for client-facing operations. This subnet should have at least a /24
@@ -163,6 +175,9 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.StorageCache.Models
         /// <summary>Internal Acessors for ClientInfoMountCommand</summary>
         string Microsoft.Azure.PowerShell.Cmdlets.StorageCache.Models.IAmlFilesystemInternal.ClientInfoMountCommand { get => ((Microsoft.Azure.PowerShell.Cmdlets.StorageCache.Models.IAmlFilesystemPropertiesInternal)Property).ClientInfoMountCommand; set => ((Microsoft.Azure.PowerShell.Cmdlets.StorageCache.Models.IAmlFilesystemPropertiesInternal)Property).ClientInfoMountCommand = value ?? null; }
 
+        /// <summary>Internal Acessors for ClusterUuid</summary>
+        string Microsoft.Azure.PowerShell.Cmdlets.StorageCache.Models.IAmlFilesystemInternal.ClusterUuid { get => ((Microsoft.Azure.PowerShell.Cmdlets.StorageCache.Models.IAmlFilesystemPropertiesInternal)Property).ClusterUuid; set => ((Microsoft.Azure.PowerShell.Cmdlets.StorageCache.Models.IAmlFilesystemPropertiesInternal)Property).ClusterUuid = value ?? null; }
+
         /// <summary>Internal Acessors for ContainerStorageInterfacePersistentVolume</summary>
         string Microsoft.Azure.PowerShell.Cmdlets.StorageCache.Models.IAmlFilesystemInternal.ContainerStorageInterfacePersistentVolume { get => ((Microsoft.Azure.PowerShell.Cmdlets.StorageCache.Models.IAmlFilesystemPropertiesInternal)Property).ContainerStorageInterfacePersistentVolume; set => ((Microsoft.Azure.PowerShell.Cmdlets.StorageCache.Models.IAmlFilesystemPropertiesInternal)Property).ContainerStorageInterfacePersistentVolume = value ?? null; }
 
@@ -171,6 +186,9 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.StorageCache.Models
 
         /// <summary>Internal Acessors for ContainerStorageInterfaceStorageClass</summary>
         string Microsoft.Azure.PowerShell.Cmdlets.StorageCache.Models.IAmlFilesystemInternal.ContainerStorageInterfaceStorageClass { get => ((Microsoft.Azure.PowerShell.Cmdlets.StorageCache.Models.IAmlFilesystemPropertiesInternal)Property).ContainerStorageInterfaceStorageClass; set => ((Microsoft.Azure.PowerShell.Cmdlets.StorageCache.Models.IAmlFilesystemPropertiesInternal)Property).ContainerStorageInterfaceStorageClass = value ?? null; }
+
+        /// <summary>Internal Acessors for CurrentStorageCapacityTiB</summary>
+        float? Microsoft.Azure.PowerShell.Cmdlets.StorageCache.Models.IAmlFilesystemInternal.CurrentStorageCapacityTiB { get => ((Microsoft.Azure.PowerShell.Cmdlets.StorageCache.Models.IAmlFilesystemPropertiesInternal)Property).CurrentStorageCapacityTiB; set => ((Microsoft.Azure.PowerShell.Cmdlets.StorageCache.Models.IAmlFilesystemPropertiesInternal)Property).CurrentStorageCapacityTiB = value ?? default(float); }
 
         /// <summary>Internal Acessors for EncryptionSetting</summary>
         Microsoft.Azure.PowerShell.Cmdlets.StorageCache.Models.IAmlFilesystemEncryptionSettings Microsoft.Azure.PowerShell.Cmdlets.StorageCache.Models.IAmlFilesystemInternal.EncryptionSetting { get => ((Microsoft.Azure.PowerShell.Cmdlets.StorageCache.Models.IAmlFilesystemPropertiesInternal)Property).EncryptionSetting; set => ((Microsoft.Azure.PowerShell.Cmdlets.StorageCache.Models.IAmlFilesystemPropertiesInternal)Property).EncryptionSetting = value ?? null /* model class */; }
@@ -219,6 +237,12 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.StorageCache.Models
 
         /// <summary>Internal Acessors for ProvisioningState</summary>
         string Microsoft.Azure.PowerShell.Cmdlets.StorageCache.Models.IAmlFilesystemInternal.ProvisioningState { get => ((Microsoft.Azure.PowerShell.Cmdlets.StorageCache.Models.IAmlFilesystemPropertiesInternal)Property).ProvisioningState; set => ((Microsoft.Azure.PowerShell.Cmdlets.StorageCache.Models.IAmlFilesystemPropertiesInternal)Property).ProvisioningState = value ?? null; }
+
+        /// <summary>Internal Acessors for RootSquashSetting</summary>
+        Microsoft.Azure.PowerShell.Cmdlets.StorageCache.Models.IAmlFilesystemRootSquashSettings Microsoft.Azure.PowerShell.Cmdlets.StorageCache.Models.IAmlFilesystemInternal.RootSquashSetting { get => ((Microsoft.Azure.PowerShell.Cmdlets.StorageCache.Models.IAmlFilesystemPropertiesInternal)Property).RootSquashSetting; set => ((Microsoft.Azure.PowerShell.Cmdlets.StorageCache.Models.IAmlFilesystemPropertiesInternal)Property).RootSquashSetting = value ?? null /* model class */; }
+
+        /// <summary>Internal Acessors for RootSquashSettingStatus</summary>
+        string Microsoft.Azure.PowerShell.Cmdlets.StorageCache.Models.IAmlFilesystemInternal.RootSquashSettingStatus { get => ((Microsoft.Azure.PowerShell.Cmdlets.StorageCache.Models.IAmlFilesystemPropertiesInternal)Property).RootSquashSettingStatus; set => ((Microsoft.Azure.PowerShell.Cmdlets.StorageCache.Models.IAmlFilesystemPropertiesInternal)Property).RootSquashSettingStatus = value ?? null; }
 
         /// <summary>Internal Acessors for Sku</summary>
         Microsoft.Azure.PowerShell.Cmdlets.StorageCache.Models.ISkuName Microsoft.Azure.PowerShell.Cmdlets.StorageCache.Models.IAmlFilesystemInternal.Sku { get => (this._sku = this._sku ?? new Microsoft.Azure.PowerShell.Cmdlets.StorageCache.Models.SkuName()); set { {_sku = value;} } }
@@ -280,6 +304,35 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.StorageCache.Models
         public string ResourceGroupName { get => (new global::System.Text.RegularExpressions.Regex("^/subscriptions/(?<subscriptionId>[^/]+)/resourceGroups/(?<resourceGroupName>[^/]+)/providers/", global::System.Text.RegularExpressions.RegexOptions.IgnoreCase).Match(this.Id).Success ? new global::System.Text.RegularExpressions.Regex("^/subscriptions/(?<subscriptionId>[^/]+)/resourceGroups/(?<resourceGroupName>[^/]+)/providers/", global::System.Text.RegularExpressions.RegexOptions.IgnoreCase).Match(this.Id).Groups["resourceGroupName"].Value : null); }
 
         /// <summary>
+        /// Squash mode of the AML file system. 'All': User and Group IDs on files will be squashed to the provided values for all
+        /// users on non-trusted systems. 'RootOnly': User and Group IDs on files will be squashed to provided values for solely the
+        /// root user on non-trusted systems. 'None': No squashing of User and Group IDs is performed for any users on any systems.
+        /// </summary>
+        [Microsoft.Azure.PowerShell.Cmdlets.StorageCache.Origin(Microsoft.Azure.PowerShell.Cmdlets.StorageCache.PropertyOrigin.Inlined)]
+        [Microsoft.Azure.PowerShell.Cmdlets.StorageCache.DoNotFormat]
+        public string RootSquashSettingMode { get => ((Microsoft.Azure.PowerShell.Cmdlets.StorageCache.Models.IAmlFilesystemPropertiesInternal)Property).RootSquashSettingMode; set => ((Microsoft.Azure.PowerShell.Cmdlets.StorageCache.Models.IAmlFilesystemPropertiesInternal)Property).RootSquashSettingMode = value ?? null; }
+
+        /// <summary>Semicolon separated NID IP Address list(s) to be added to the TrustedSystems.</summary>
+        [Microsoft.Azure.PowerShell.Cmdlets.StorageCache.Origin(Microsoft.Azure.PowerShell.Cmdlets.StorageCache.PropertyOrigin.Inlined)]
+        [Microsoft.Azure.PowerShell.Cmdlets.StorageCache.DoNotFormat]
+        public string RootSquashSettingNoSquashNidList { get => ((Microsoft.Azure.PowerShell.Cmdlets.StorageCache.Models.IAmlFilesystemPropertiesInternal)Property).RootSquashSettingNoSquashNidList; set => ((Microsoft.Azure.PowerShell.Cmdlets.StorageCache.Models.IAmlFilesystemPropertiesInternal)Property).RootSquashSettingNoSquashNidList = value ?? null; }
+
+        /// <summary>Group ID to squash to.</summary>
+        [Microsoft.Azure.PowerShell.Cmdlets.StorageCache.Origin(Microsoft.Azure.PowerShell.Cmdlets.StorageCache.PropertyOrigin.Inlined)]
+        [Microsoft.Azure.PowerShell.Cmdlets.StorageCache.DoNotFormat]
+        public long? RootSquashSettingSquashGid { get => ((Microsoft.Azure.PowerShell.Cmdlets.StorageCache.Models.IAmlFilesystemPropertiesInternal)Property).RootSquashSettingSquashGid; set => ((Microsoft.Azure.PowerShell.Cmdlets.StorageCache.Models.IAmlFilesystemPropertiesInternal)Property).RootSquashSettingSquashGid = value ?? default(long); }
+
+        /// <summary>User ID to squash to.</summary>
+        [Microsoft.Azure.PowerShell.Cmdlets.StorageCache.Origin(Microsoft.Azure.PowerShell.Cmdlets.StorageCache.PropertyOrigin.Inlined)]
+        [Microsoft.Azure.PowerShell.Cmdlets.StorageCache.DoNotFormat]
+        public long? RootSquashSettingSquashUid { get => ((Microsoft.Azure.PowerShell.Cmdlets.StorageCache.Models.IAmlFilesystemPropertiesInternal)Property).RootSquashSettingSquashUid; set => ((Microsoft.Azure.PowerShell.Cmdlets.StorageCache.Models.IAmlFilesystemPropertiesInternal)Property).RootSquashSettingSquashUid = value ?? default(long); }
+
+        /// <summary>AML file system squash status.</summary>
+        [Microsoft.Azure.PowerShell.Cmdlets.StorageCache.Origin(Microsoft.Azure.PowerShell.Cmdlets.StorageCache.PropertyOrigin.Inlined)]
+        [Microsoft.Azure.PowerShell.Cmdlets.StorageCache.DoNotFormat]
+        public string RootSquashSettingStatus { get => ((Microsoft.Azure.PowerShell.Cmdlets.StorageCache.Models.IAmlFilesystemPropertiesInternal)Property).RootSquashSettingStatus; }
+
+        /// <summary>
         /// Resource ID of storage container used for hydrating the namespace and archiving from the namespace. The resource provider
         /// must have permission to create SAS tokens on the storage account.
         /// </summary>
@@ -288,11 +341,22 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.StorageCache.Models
         public string SettingContainer { get => ((Microsoft.Azure.PowerShell.Cmdlets.StorageCache.Models.IAmlFilesystemPropertiesInternal)Property).SettingContainer; set => ((Microsoft.Azure.PowerShell.Cmdlets.StorageCache.Models.IAmlFilesystemPropertiesInternal)Property).SettingContainer = value ?? null; }
 
         /// <summary>
-        /// Only blobs in the non-logging container that start with this path/prefix get hydrated into the cluster namespace.
+        /// Only blobs in the non-logging container that start with this path/prefix get imported into the cluster namespace. This
+        /// is only used during initial creation of the AML file system. It automatically creates an import job resource that can
+        /// be deleted.
         /// </summary>
         [Microsoft.Azure.PowerShell.Cmdlets.StorageCache.Origin(Microsoft.Azure.PowerShell.Cmdlets.StorageCache.PropertyOrigin.Inlined)]
         [Microsoft.Azure.PowerShell.Cmdlets.StorageCache.DoNotFormat]
         public string SettingImportPrefix { get => ((Microsoft.Azure.PowerShell.Cmdlets.StorageCache.Models.IAmlFilesystemPropertiesInternal)Property).SettingImportPrefix; set => ((Microsoft.Azure.PowerShell.Cmdlets.StorageCache.Models.IAmlFilesystemPropertiesInternal)Property).SettingImportPrefix = value ?? null; }
+
+        /// <summary>
+        /// Only blobs in the non-logging container that start with one of the paths/prefixes in this array get imported into the
+        /// cluster namespace. This is only used during initial creation of the AML file system and has '/' as the default value.
+        /// It automatically creates an import job resource that can be deleted.
+        /// </summary>
+        [Microsoft.Azure.PowerShell.Cmdlets.StorageCache.Origin(Microsoft.Azure.PowerShell.Cmdlets.StorageCache.PropertyOrigin.Inlined)]
+        [Microsoft.Azure.PowerShell.Cmdlets.StorageCache.DoNotFormat]
+        public System.Collections.Generic.List<string> SettingImportPrefixesInitial { get => ((Microsoft.Azure.PowerShell.Cmdlets.StorageCache.Models.IAmlFilesystemPropertiesInternal)Property).SettingImportPrefixesInitial; set => ((Microsoft.Azure.PowerShell.Cmdlets.StorageCache.Models.IAmlFilesystemPropertiesInternal)Property).SettingImportPrefixesInitial = value ?? null /* arrayOf */; }
 
         /// <summary>
         /// Resource ID of storage container used for logging events and errors. Must be a separate container in the same storage
@@ -469,6 +533,17 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.StorageCache.Models
         SerializedName = @"mountCommand",
         PossibleTypes = new [] { typeof(string) })]
         string ClientInfoMountCommand { get;  }
+        /// <summary>The unique identifier of the AML file system cluster.</summary>
+        [Microsoft.Azure.PowerShell.Cmdlets.StorageCache.Runtime.Info(
+        Required = false,
+        ReadOnly = true,
+        Read = true,
+        Create = false,
+        Update = false,
+        Description = @"The unique identifier of the AML file system cluster.",
+        SerializedName = @"clusterUuid",
+        PossibleTypes = new [] { typeof(string) })]
+        string ClusterUuid { get;  }
         /// <summary>Recommended AKS Persistent Volume for the CSI driver, in Base64 encoded YAML</summary>
         [Microsoft.Azure.PowerShell.Cmdlets.StorageCache.Runtime.Info(
         Required = false,
@@ -505,6 +580,19 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.StorageCache.Models
         PossibleTypes = new [] { typeof(string) })]
         string ContainerStorageInterfaceStorageClass { get;  }
         /// <summary>
+        /// The current storage capacity of the AML file system, in TiB. This reflects the actual capacity including any expansions.
+        /// </summary>
+        [Microsoft.Azure.PowerShell.Cmdlets.StorageCache.Runtime.Info(
+        Required = false,
+        ReadOnly = true,
+        Read = true,
+        Create = false,
+        Update = false,
+        Description = @"The current storage capacity of the AML file system, in TiB. This reflects the actual capacity including any expansions.",
+        SerializedName = @"currentStorageCapacityTiB",
+        PossibleTypes = new [] { typeof(float) })]
+        float? CurrentStorageCapacityTiB { get;  }
+        /// <summary>
         /// Subnet used for managing the AML file system and for client-facing operations. This subnet should have at least a /24
         /// subnet mask within the VNET's address space.
         /// </summary>
@@ -528,7 +616,7 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.StorageCache.Models
         Description = @"List of AML file system health states.",
         SerializedName = @"state",
         PossibleTypes = new [] { typeof(string) })]
-        [global::Microsoft.Azure.PowerShell.Cmdlets.StorageCache.PSArgumentCompleterAttribute("Unavailable", "Available", "Degraded", "Transitioning", "Maintenance")]
+        [global::Microsoft.Azure.PowerShell.Cmdlets.StorageCache.PSArgumentCompleterAttribute("Unavailable", "Available", "Degraded", "Transitioning", "Maintenance", "Expanding")]
         string HealthState { get;  }
         /// <summary>Server-defined error code for the AML file system health</summary>
         [Microsoft.Azure.PowerShell.Cmdlets.StorageCache.Runtime.Info(
@@ -657,6 +745,66 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.StorageCache.Models
         [global::Microsoft.Azure.PowerShell.Cmdlets.StorageCache.PSArgumentCompleterAttribute("Succeeded", "Failed", "Creating", "Deleting", "Updating", "Canceled")]
         string ProvisioningState { get;  }
         /// <summary>
+        /// Squash mode of the AML file system. 'All': User and Group IDs on files will be squashed to the provided values for all
+        /// users on non-trusted systems. 'RootOnly': User and Group IDs on files will be squashed to provided values for solely the
+        /// root user on non-trusted systems. 'None': No squashing of User and Group IDs is performed for any users on any systems.
+        /// </summary>
+        [Microsoft.Azure.PowerShell.Cmdlets.StorageCache.Runtime.Info(
+        Required = false,
+        ReadOnly = false,
+        Read = true,
+        Create = true,
+        Update = true,
+        Description = @"Squash mode of the AML file system. 'All': User and Group IDs on files will be squashed to the provided values for all users on non-trusted systems. 'RootOnly': User and Group IDs on files will be squashed to provided values for solely the root user on non-trusted systems. 'None': No squashing of User and Group IDs is performed for any users on any systems.",
+        SerializedName = @"mode",
+        PossibleTypes = new [] { typeof(string) })]
+        [global::Microsoft.Azure.PowerShell.Cmdlets.StorageCache.PSArgumentCompleterAttribute("None", "RootOnly", "All")]
+        string RootSquashSettingMode { get; set; }
+        /// <summary>Semicolon separated NID IP Address list(s) to be added to the TrustedSystems.</summary>
+        [Microsoft.Azure.PowerShell.Cmdlets.StorageCache.Runtime.Info(
+        Required = false,
+        ReadOnly = false,
+        Read = true,
+        Create = true,
+        Update = true,
+        Description = @"Semicolon separated NID IP Address list(s) to be added to the TrustedSystems.",
+        SerializedName = @"noSquashNidLists",
+        PossibleTypes = new [] { typeof(string) })]
+        string RootSquashSettingNoSquashNidList { get; set; }
+        /// <summary>Group ID to squash to.</summary>
+        [Microsoft.Azure.PowerShell.Cmdlets.StorageCache.Runtime.Info(
+        Required = false,
+        ReadOnly = false,
+        Read = true,
+        Create = true,
+        Update = true,
+        Description = @"Group ID to squash to.",
+        SerializedName = @"squashGID",
+        PossibleTypes = new [] { typeof(long) })]
+        long? RootSquashSettingSquashGid { get; set; }
+        /// <summary>User ID to squash to.</summary>
+        [Microsoft.Azure.PowerShell.Cmdlets.StorageCache.Runtime.Info(
+        Required = false,
+        ReadOnly = false,
+        Read = true,
+        Create = true,
+        Update = true,
+        Description = @"User ID to squash to.",
+        SerializedName = @"squashUID",
+        PossibleTypes = new [] { typeof(long) })]
+        long? RootSquashSettingSquashUid { get; set; }
+        /// <summary>AML file system squash status.</summary>
+        [Microsoft.Azure.PowerShell.Cmdlets.StorageCache.Runtime.Info(
+        Required = false,
+        ReadOnly = true,
+        Read = true,
+        Create = false,
+        Update = false,
+        Description = @"AML file system squash status.",
+        SerializedName = @"status",
+        PossibleTypes = new [] { typeof(string) })]
+        string RootSquashSettingStatus { get;  }
+        /// <summary>
         /// Resource ID of storage container used for hydrating the namespace and archiving from the namespace. The resource provider
         /// must have permission to create SAS tokens on the storage account.
         /// </summary>
@@ -671,7 +819,9 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.StorageCache.Models
         PossibleTypes = new [] { typeof(string) })]
         string SettingContainer { get; set; }
         /// <summary>
-        /// Only blobs in the non-logging container that start with this path/prefix get hydrated into the cluster namespace.
+        /// Only blobs in the non-logging container that start with this path/prefix get imported into the cluster namespace. This
+        /// is only used during initial creation of the AML file system. It automatically creates an import job resource that can
+        /// be deleted.
         /// </summary>
         [Microsoft.Azure.PowerShell.Cmdlets.StorageCache.Runtime.Info(
         Required = false,
@@ -679,10 +829,25 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.StorageCache.Models
         Read = true,
         Create = true,
         Update = true,
-        Description = @"Only blobs in the non-logging container that start with this path/prefix get hydrated into the cluster namespace.",
+        Description = @"Only blobs in the non-logging container that start with this path/prefix get imported into the cluster namespace. This is only used during initial creation of the AML file system. It automatically creates an import job resource that can be deleted.",
         SerializedName = @"importPrefix",
         PossibleTypes = new [] { typeof(string) })]
         string SettingImportPrefix { get; set; }
+        /// <summary>
+        /// Only blobs in the non-logging container that start with one of the paths/prefixes in this array get imported into the
+        /// cluster namespace. This is only used during initial creation of the AML file system and has '/' as the default value.
+        /// It automatically creates an import job resource that can be deleted.
+        /// </summary>
+        [Microsoft.Azure.PowerShell.Cmdlets.StorageCache.Runtime.Info(
+        Required = false,
+        ReadOnly = false,
+        Read = true,
+        Create = true,
+        Update = true,
+        Description = @"Only blobs in the non-logging container that start with one of the paths/prefixes in this array get imported into the cluster namespace. This is only used during initial creation of the AML file system and has '/' as the default value. It automatically creates an import job resource that can be deleted.",
+        SerializedName = @"importPrefixesInitial",
+        PossibleTypes = new [] { typeof(string) })]
+        System.Collections.Generic.List<string> SettingImportPrefixesInitial { get; set; }
         /// <summary>
         /// Resource ID of storage container used for logging events and errors. Must be a separate container in the same storage
         /// account as the hydration and archive container. The resource provider must have permission to create SAS tokens on the
@@ -776,6 +941,8 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.StorageCache.Models
         string ClientInfoMgsAddress { get; set; }
         /// <summary>Recommended command to mount the AML file system</summary>
         string ClientInfoMountCommand { get; set; }
+        /// <summary>The unique identifier of the AML file system cluster.</summary>
+        string ClusterUuid { get; set; }
         /// <summary>Recommended AKS Persistent Volume for the CSI driver, in Base64 encoded YAML</summary>
         string ContainerStorageInterfacePersistentVolume { get; set; }
         /// <summary>
@@ -784,6 +951,10 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.StorageCache.Models
         string ContainerStorageInterfacePersistentVolumeClaim { get; set; }
         /// <summary>Recommended AKS Storage Class for the CSI driver, in Base64 encoded YAML</summary>
         string ContainerStorageInterfaceStorageClass { get; set; }
+        /// <summary>
+        /// The current storage capacity of the AML file system, in TiB. This reflects the actual capacity including any expansions.
+        /// </summary>
+        float? CurrentStorageCapacityTiB { get; set; }
         /// <summary>Specifies encryption settings of the AML file system.</summary>
         Microsoft.Azure.PowerShell.Cmdlets.StorageCache.Models.IAmlFilesystemEncryptionSettings EncryptionSetting { get; set; }
         /// <summary>Specifies the location of the encryption key in Key Vault.</summary>
@@ -796,7 +967,7 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.StorageCache.Models
         /// <summary>Health of the AML file system.</summary>
         Microsoft.Azure.PowerShell.Cmdlets.StorageCache.Models.IAmlFilesystemHealth Health { get; set; }
         /// <summary>List of AML file system health states.</summary>
-        [global::Microsoft.Azure.PowerShell.Cmdlets.StorageCache.PSArgumentCompleterAttribute("Unavailable", "Available", "Degraded", "Transitioning", "Maintenance")]
+        [global::Microsoft.Azure.PowerShell.Cmdlets.StorageCache.PSArgumentCompleterAttribute("Unavailable", "Available", "Degraded", "Transitioning", "Maintenance", "Expanding")]
         string HealthState { get; set; }
         /// <summary>Server-defined error code for the AML file system health</summary>
         string HealthStatusCode { get; set; }
@@ -837,15 +1008,40 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.StorageCache.Models
         /// <summary>ARM provisioning state.</summary>
         [global::Microsoft.Azure.PowerShell.Cmdlets.StorageCache.PSArgumentCompleterAttribute("Succeeded", "Failed", "Creating", "Deleting", "Updating", "Canceled")]
         string ProvisioningState { get; set; }
+        /// <summary>Specifies root squash settings of the AML file system.</summary>
+        Microsoft.Azure.PowerShell.Cmdlets.StorageCache.Models.IAmlFilesystemRootSquashSettings RootSquashSetting { get; set; }
+        /// <summary>
+        /// Squash mode of the AML file system. 'All': User and Group IDs on files will be squashed to the provided values for all
+        /// users on non-trusted systems. 'RootOnly': User and Group IDs on files will be squashed to provided values for solely the
+        /// root user on non-trusted systems. 'None': No squashing of User and Group IDs is performed for any users on any systems.
+        /// </summary>
+        [global::Microsoft.Azure.PowerShell.Cmdlets.StorageCache.PSArgumentCompleterAttribute("None", "RootOnly", "All")]
+        string RootSquashSettingMode { get; set; }
+        /// <summary>Semicolon separated NID IP Address list(s) to be added to the TrustedSystems.</summary>
+        string RootSquashSettingNoSquashNidList { get; set; }
+        /// <summary>Group ID to squash to.</summary>
+        long? RootSquashSettingSquashGid { get; set; }
+        /// <summary>User ID to squash to.</summary>
+        long? RootSquashSettingSquashUid { get; set; }
+        /// <summary>AML file system squash status.</summary>
+        string RootSquashSettingStatus { get; set; }
         /// <summary>
         /// Resource ID of storage container used for hydrating the namespace and archiving from the namespace. The resource provider
         /// must have permission to create SAS tokens on the storage account.
         /// </summary>
         string SettingContainer { get; set; }
         /// <summary>
-        /// Only blobs in the non-logging container that start with this path/prefix get hydrated into the cluster namespace.
+        /// Only blobs in the non-logging container that start with this path/prefix get imported into the cluster namespace. This
+        /// is only used during initial creation of the AML file system. It automatically creates an import job resource that can
+        /// be deleted.
         /// </summary>
         string SettingImportPrefix { get; set; }
+        /// <summary>
+        /// Only blobs in the non-logging container that start with one of the paths/prefixes in this array get imported into the
+        /// cluster namespace. This is only used during initial creation of the AML file system and has '/' as the default value.
+        /// It automatically creates an import job resource that can be deleted.
+        /// </summary>
+        System.Collections.Generic.List<string> SettingImportPrefixesInitial { get; set; }
         /// <summary>
         /// Resource ID of storage container used for logging events and errors. Must be a separate container in the same storage
         /// account as the hydration and archive container. The resource provider must have permission to create SAS tokens on the

@@ -342,6 +342,10 @@ namespace Microsoft.Azure.Management.Sql
         /// </summary>
         public virtual IRecommendedSensitivityLabelsOperations RecommendedSensitivityLabels { get; private set; }
         /// <summary>
+        /// Gets the IFirewallRulesOperations
+        /// </summary>
+        public virtual IFirewallRulesOperations FirewallRules { get; private set; }
+        /// <summary>
         /// Gets the IIPv6FirewallRulesOperations
         /// </summary>
         public virtual IIPv6FirewallRulesOperations IPv6FirewallRules { get; private set; }
@@ -398,6 +402,14 @@ namespace Microsoft.Azure.Management.Sql
         /// </summary>
         public virtual IInstanceFailoverGroupsOperations InstanceFailoverGroups { get; private set; }
         /// <summary>
+        /// Gets the IServersOperations
+        /// </summary>
+        public virtual IServersOperations Servers { get; private set; }
+        /// <summary>
+        /// Gets the IDeletedServersOperations
+        /// </summary>
+        public virtual IDeletedServersOperations DeletedServers { get; private set; }
+        /// <summary>
         /// Gets the IServerConfigurationOptionsOperations
         /// </summary>
         public virtual IServerConfigurationOptionsOperations ServerConfigurationOptions { get; private set; }
@@ -429,10 +441,6 @@ namespace Microsoft.Azure.Management.Sql
         /// Gets the IDatabaseSchemasOperations
         /// </summary>
         public virtual IDatabaseSchemasOperations DatabaseSchemas { get; private set; }
-        /// <summary>
-        /// Gets the IServersOperations
-        /// </summary>
-        public virtual IServersOperations Servers { get; private set; }
         /// <summary>
         /// Initializes a new instance of the SqlManagementClient class.
         /// </summary>
@@ -742,6 +750,7 @@ namespace Microsoft.Azure.Management.Sql
             this.ManagedDatabaseRecommendedSensitivityLabels = new ManagedDatabaseRecommendedSensitivityLabelsOperations(this);
             this.SensitivityLabels = new SensitivityLabelsOperations(this);
             this.RecommendedSensitivityLabels = new RecommendedSensitivityLabelsOperations(this);
+            this.FirewallRules = new FirewallRulesOperations(this);
             this.IPv6FirewallRules = new IPv6FirewallRulesOperations(this);
             this.ReplicationLinks = new ReplicationLinksOperations(this);
             this.VirtualClusters = new VirtualClustersOperations(this);
@@ -756,6 +765,8 @@ namespace Microsoft.Azure.Management.Sql
             this.RecoverableDatabases = new RecoverableDatabasesOperations(this);
             this.RestorableDroppedDatabases = new RestorableDroppedDatabasesOperations(this);
             this.InstanceFailoverGroups = new InstanceFailoverGroupsOperations(this);
+            this.Servers = new ServersOperations(this);
+            this.DeletedServers = new DeletedServersOperations(this);
             this.ServerConfigurationOptions = new ServerConfigurationOptionsOperations(this);
             this.ManagedLedgerDigestUploads = new ManagedLedgerDigestUploadsOperations(this);
             this.ManagedDatabases = new ManagedDatabasesOperations(this);
@@ -764,7 +775,6 @@ namespace Microsoft.Azure.Management.Sql
             this.ManagedInstances = new ManagedInstancesOperations(this);
             this.StartStopManagedInstanceSchedules = new StartStopManagedInstanceSchedulesOperations(this);
             this.DatabaseSchemas = new DatabaseSchemasOperations(this);
-            this.Servers = new ServersOperations(this);
             this.BaseUri = new System.Uri("https://management.azure.com");
             this.AcceptLanguage = "en-US";
             this.LongRunningOperationRetryTimeout = 30;

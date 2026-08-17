@@ -20,7 +20,11 @@ Describe 'New-AzNetworkCloudCluster' {
             $tagHash = @{
                 tag1 = $clusterconfig.tags
             }
-            $password = ConvertTo-SecureString "********" -AsPlainText -Force
+            $password = New-Object System.Security.SecureString
+            "********".ToCharArray() | ForEach-Object {
+                $password.AppendChar($_)
+            }
+            $password.MakeReadOnly()
             $bmmConfigurationData1 = New-AzNetworkCloudBareMetalMachineConfigurationDataObject -BmcCredentialsPassword $password -BmcCredentialsUsername $clusterconfig.bmcCredsUsername -BmcMacAddress $clusterconfig.bmcMacAddress1 -BootMacAddress $clusterconfig.bootMacAddress1 -RackSlot 1 -SerialNumber  $clusterconfig.serialNumber1 -MachineDetail "machineDetail" -MachineName "lab00r750wkr1"
             $bmmConfigurationData2 = New-AzNetworkCloudBareMetalMachineConfigurationDataObject -BmcCredentialsPassword $password -BmcCredentialsUsername $clusterconfig.bmcCredsUsername -BmcMacAddress $clusterconfig.bmcMacAddress2 -BootMacAddress $clusterconfig.bootMacAddress2 -RackSlot 2 -SerialNumber $clusterconfig.serialNumber2 -MachineDetail "machineDetailmgr" -MachineName "lab00r750mgr1"
             $bmmConfigurationData3 = New-AzNetworkCloudBareMetalMachineConfigurationDataObject -BmcCredentialsPassword $password -BmcCredentialsUsername $clusterconfig.bmcCredsUsername -BmcMacAddress $clusterconfig.bmcMacAddress3 -BootMacAddress $clusterconfig.bootMacAddress3 -RackSlot 3 -SerialNumber $clusterconfig.serialNumber3 -MachineDetail "machineDetailmgr" -MachineName "lab00r750mgr2"
@@ -29,7 +33,11 @@ Describe 'New-AzNetworkCloudCluster' {
             $computerackdefinition = New-AzNetworkCloudRackDefinitionObject -NetworkRackId $clusterconfig.aggregatorRack.networkRackId -RackSerialNumber $clusterconfig.computeRack.serialNumber -RackSkuId $clusterconfig.computeRack.rackSkuId -AvailabilityZone "1" -RackLocation $clusterconfig.rackDefinitionRackLocation  -BareMetalMachineConfigurationData $bareMetalMachineConfigurationData
             $baremetalmachineconfigurationdata = @($bmmconfigurationdata1)
 
-            $securePassword = ConvertTo-SecureString $clusterconfig.clusterServicePrincipalPassword -AsPlainText -Force
+            $securePassword = New-Object System.Security.SecureString
+            $clusterconfig.clusterServicePrincipalPassword.ToCharArray() | ForEach-Object {
+                $securePassword.AppendChar($_)
+            }
+            $securePassword.MakeReadOnly()
 
             New-AzNetworkCloudCluster -ResourceGroupName $clusterconfig.clusterRg -Name $clusterconfig.clusterName `
                 -AggregatorOrSingleRackDefinitionNetworkRackId $clusterconfig.aggregatorRack.networkRackId `
@@ -59,9 +67,11 @@ Describe 'New-AzNetworkCloudCluster' {
             $tagHash = @{
                 tag1 = $clusterconfig.tags
             }
-            $identityUserAssignedIdentity = @{}
-            $identityUserAssignedIdentity.Add($clusterconfig.miUserAssignedIdentityResourceId, @{})
-            $password = ConvertTo-SecureString "********" -AsPlainText -Force
+            $password = New-Object System.Security.SecureString
+            "********".ToCharArray() | ForEach-Object {
+                $password.AppendChar($_)
+            }
+            $password.MakeReadOnly()
             $bmmConfigurationData1 = New-AzNetworkCloudBareMetalMachineConfigurationDataObject -BmcCredentialsPassword $password -BmcCredentialsUsername $clusterconfig.bmcCredsUsername -BmcMacAddress $clusterconfig.bmcMacAddress1 -BootMacAddress $clusterconfig.bootMacAddress1 -RackSlot 1 -SerialNumber $clusterconfig.serialNumber1 -MachineDetail "machineDetail" -MachineName "lab00r750wkr1"
             $bmmConfigurationData2 = New-AzNetworkCloudBareMetalMachineConfigurationDataObject -BmcCredentialsPassword $password -BmcCredentialsUsername $clusterconfig.bmcCredsUsername -BmcMacAddress $clusterconfig.bmcMacAddress2 -BootMacAddress $clusterconfig.bootMacAddress2 -RackSlot 2 -SerialNumber $clusterconfig.serialNumber2 -MachineDetail "machineDetailmgr" -MachineName "lab00r750mgr1"
             $bmmConfigurationData3 = New-AzNetworkCloudBareMetalMachineConfigurationDataObject -BmcCredentialsPassword $password -BmcCredentialsUsername $clusterconfig.bmcCredsUsername -BmcMacAddress $clusterconfig.bmcMacAddress3 -BootMacAddress $clusterconfig.bootMacAddress3 -RackSlot 3 -SerialNumber $clusterconfig.serialNumber3 -MachineDetail "machineDetailmgr" -MachineName "lab00r750mgr2"
@@ -70,7 +80,11 @@ Describe 'New-AzNetworkCloudCluster' {
             $computerackdefinition = New-AzNetworkCloudRackDefinitionObject -NetworkRackId $clusterconfig.aggregatorRack.networkRackId -RackSerialNumber $clusterconfig.computeRack.serialNumber -RackSkuId $clusterconfig.computeRack.rackSkuId -AvailabilityZone "1" -RackLocation $clusterconfig.rackDefinitionRackLocation -BareMetalMachineConfigurationData $bareMetalMachineConfigurationData
             $baremetalmachineconfigurationdata = @($bmmconfigurationdata1)
 
-            $securePassword = ConvertTo-SecureString $clusterconfig.clusterServicePrincipalPassword -AsPlainText -Force
+            $securePassword = New-Object System.Security.SecureString
+            $clusterconfig.clusterServicePrincipalPassword.ToCharArray() | ForEach-Object {
+                $securePassword.AppendChar($_)
+            }
+            $securePassword.MakeReadOnly()
 
             New-AzNetworkCloudCluster -ResourceGroupName $clusterconfig.miClusterRg -Name $clusterconfig.miClusterName `
                 -AggregatorOrSingleRackDefinitionNetworkRackId $clusterconfig.aggregatorRack.networkRackId `
@@ -78,8 +92,7 @@ Describe 'New-AzNetworkCloudCluster' {
                 -AggregatorOrSingleRackDefinitionRackSkuId $clusterconfig.aggregatorRack.rackSkuId `
                 -AggregatorOrSingleRackDefinitionAvailabilityZone $clusterconfig.aggregatorRack.availabilityZone `
                 -AggregatorOrSingleRackDefinitionRackLocation "Foo Datacenter, Floor 3, Aisle 9, Rack 2" `
-                -IdentityType $clusterconfig.identityType `
-                -IdentityUserAssignedIdentity $identityUserAssignedIdentity `
+                -UserAssignedIdentity $clusterconfig.miUserAssignedIdentityResourceId `
                 -RuntimeProtectionConfigurationEnforcementLevel $clusterconfig.runtimeProtectionConfigEnforcementLevel `
                 -AnalyticOutputSettingAnalyticsWorkspaceId $clusterconfig.miAnalyticsWorkspaceId `
                 -AnalyticsOutputSettingsAssociatedIdentityType $clusterconfig.identityType `

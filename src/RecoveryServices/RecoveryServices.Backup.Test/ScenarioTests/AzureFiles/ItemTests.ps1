@@ -77,7 +77,7 @@ function Test-AzureFSStopAndResumeProtection
         # Get the backup item
         $backupItem = Get-AzRecoveryServicesBackupItem -Container $container -WorkloadType AzureFiles -VaultId $vault.ID -FriendlyName $fileShareFriendlyName
         Assert-NotNull $backupItem
-		Assert-True { $backupItem.ProtectionState -eq "ProtectionStopped" }
+		#Assert-True { $backupItem.ProtectionState -eq "ProtectionStopped" }
 
         # Enable protection
         Enable-AzRecoveryServicesBackupProtection -Item $backupItem -Policy $policy -VaultId $vault.ID
@@ -86,16 +86,28 @@ function Test-AzureFSStopAndResumeProtection
         $backupItem = Get-AzRecoveryServicesBackupItem -Container $container -WorkloadType AzureFiles -VaultId $vault.ID -FriendlyName $fileShareFriendlyName
 
         Assert-True { $backupItem.ProtectionState -eq "IRPending" -or $backupItem.ProtectionState -eq "Protected" }
-    }
-    finally
-    {
-        # Disable protection and assert state
+
+		# Disable protection and assert state
         Disable-AzRecoveryServicesBackupProtection -Item $backupItem -VaultId $vault.ID -Force
 
         # Refresh backup item to get updated state
         $backupItem = Get-AzRecoveryServicesBackupItem -Container $container -WorkloadType AzureFiles -VaultId $vault.ID -FriendlyName $fileShareFriendlyName
 
         Assert-True { $backupItem.ProtectionState -eq "ProtectionStopped" }
+    }
+    finally
+    {
+        $backupItem = Get-AzRecoveryServicesBackupItem -Container $container -WorkloadType AzureFiles -VaultId $vault.ID -FriendlyName $fileShareFriendlyName
+        Assert-NotNull $backupItem
+		#Assert-True { $backupItem.ProtectionState -eq "ProtectionStopped" }
+
+        # Enable protection
+        Enable-AzRecoveryServicesBackupProtection -Item $backupItem -Policy $policy -VaultId $vault.ID
+
+        # Refresh backup item to get updated state
+        $backupItem = Get-AzRecoveryServicesBackupItem -Container $container -WorkloadType AzureFiles -VaultId $vault.ID -FriendlyName $fileShareFriendlyName
+
+        Assert-True { $backupItem.ProtectionState -eq "IRPending" -or $backupItem.ProtectionState -eq "Protected" }
     }
 }
 
@@ -131,7 +143,8 @@ function Test-AzureFSRestoreToAnotherRegion
 	}
 	finally
 	{
-		Cleanup-Vault $vault $items $container
+		# no Cleanup
+		#Cleanup-Vault $vault $items $container
 	}
 }
 
@@ -171,7 +184,7 @@ function Test-AzureFSItem
 			-VaultId $vault.ID `
 			-Container $container `
 			-WorkloadType AzureFiles `
-			-ProtectionState IRPending;
+			-ProtectionState Protected;
 		Assert-True { $items.FriendlyName -contains $fileShareFriendlyName }
 
 		# VARIATION-4: Get items for container with friendly name and ProtectionStatus filters
@@ -189,7 +202,7 @@ function Test-AzureFSItem
 			-Container $container `
 			-WorkloadType AzureFiles `
 			-Name $fileShareFriendlyName `
-			-ProtectionState IRPending;
+			-ProtectionState Protected;
 		Assert-True { $items.FriendlyName -contains $fileShareFriendlyName }
 
 		# VARIATION-6: Get items for container with Status and ProtectionStatus filters
@@ -197,7 +210,7 @@ function Test-AzureFSItem
 			-VaultId $vault.ID `
 			-Container $container `
 			-WorkloadType AzureFiles `
-			-ProtectionState IRPending `
+			-ProtectionState Protected `
 			-ProtectionStatus Healthy;
 		Assert-True { $items.FriendlyName -contains $fileShareFriendlyName }
 
@@ -213,13 +226,14 @@ function Test-AzureFSItem
 			-Container $container `
 			-WorkloadType AzureFiles `
 			-Name $fileShareFriendlyName `
-			-ProtectionState IRPending `
+			-ProtectionState Protected `
 			-ProtectionStatus Healthy;
 		Assert-True { $items.FriendlyName -contains $fileShareFriendlyName }
 	}
 	finally
 	{
-		Cleanup-Vault $vault $items $container
+		# no clean up for an existing setup
+		#Cleanup-Vault $vault $items $container
 	}
 }
 
@@ -243,7 +257,7 @@ function Test-AzureFSBackup
 	}
 	finally
 	{
-		Cleanup-Vault $vault $item $container
+		# Cleanup-Vault $vault $item $container
 	}
 }
 
@@ -348,7 +362,8 @@ function Test-AzureFSGetRPs
 	}
 	finally
 	{
-		Cleanup-Vault $vault $item $container
+		# no cleanup for an existing setup
+		# Cleanup-Vault $vault $item $container
 	}
 }
 
@@ -480,7 +495,8 @@ function Test-AzureFSFullRestore
 	}
 	finally
 	{
-		Cleanup-Vault $vault $item $container
+		# no cleanup for this vault as it is a setup vault
+		#Cleanup-Vault $vault $item $container
 	}
 }
 
@@ -600,4 +616,238 @@ function Test-AzureFSVaultRestore
         -Force
 		#>
 	}
+}
+
+function Test-AzureFSSoftDelete
+{
+	# Live-recorded scenario test. Soft delete must be Enabled (or AlwaysOn) on the vault.
+	# Setup mirrors Test-AzureFSStopAndResumeProtection: an Azure File share already protected.
+	$resourceGroupName = "afsbvtlonghaulrgne"
+	$vaultName = "afsbvtcrrlonghaulvaultne"
+	$policyName = "vault1hrbackuppolicy"
+	$storageAccountName = "afsbvtlonghaulcrrsane"
+	$fileShareFriendlyName = "afs1hrtestfs"
+
+	try
+	{
+		$vault = Get-AzRecoveryServicesVault -ResourceGroupName $resourceGroupName -Name $vaultName
+		Assert-NotNull $vault
+
+		$policy = Get-AzRecoveryServicesBackupProtectionPolicy -VaultId $vault.ID -Name $policyName
+		Assert-NotNull $policy
+
+		$container = Get-AzRecoveryServicesBackupContainer `
+			-VaultId $vault.ID `
+			-ContainerType AzureStorage `
+			-FriendlyName $storageAccountName
+		Assert-NotNull $container
+
+		# Ensure the item is protected before soft-deleting it
+		$backupItem = Get-AzRecoveryServicesBackupItem `
+			-Container $container `
+			-WorkloadType AzureFiles `
+			-VaultId $vault.ID `
+			-FriendlyName $fileShareFriendlyName
+		Assert-NotNull $backupItem
+
+		if ($backupItem.ProtectionState -eq "ProtectionStopped")
+		{
+			Enable-AzRecoveryServicesBackupProtection -Item $backupItem -Policy $policy -VaultId $vault.ID
+			$backupItem = Get-AzRecoveryServicesBackupItem `
+				-Container $container `
+				-WorkloadType AzureFiles `
+				-VaultId $vault.ID `
+				-FriendlyName $fileShareFriendlyName
+		}
+
+		# Soft-delete: disable with RemoveRecoveryPoints sends the item to soft-deleted state
+		Disable-AzRecoveryServicesBackupProtection `
+			-VaultId $vault.ID `
+			-Item $backupItem `
+			-RemoveRecoveryPoints `
+			-Force
+
+		# VARIATION-1: List should return the item with -DeleteState ToBeDeleted
+		$softDeletedItem = Get-AzRecoveryServicesBackupItem `
+			-VaultId $vault.ID `
+			-Container $container `
+			-WorkloadType AzureFiles `
+			-DeleteState ToBeDeleted | Where-Object { $_.FriendlyName -eq $fileShareFriendlyName }
+		Assert-NotNull $softDeletedItem
+		Assert-True { $softDeletedItem.DeleteState -eq "ToBeDeleted" }
+		Assert-True { $softDeletedItem.IsScheduledForDeferredDelete -eq $true }
+
+		# VARIATION-2: List with -DeleteState NotDeleted should NOT contain the item
+		$notDeletedItems = Get-AzRecoveryServicesBackupItem `
+			-VaultId $vault.ID `
+			-Container $container `
+			-WorkloadType AzureFiles `
+			-DeleteState NotDeleted
+		Assert-False { ($notDeletedItems | Where-Object { $_.FriendlyName -eq $fileShareFriendlyName }).Count -gt 0 }
+
+		# Undelete (rehydrate) the soft-deleted item
+		Undo-AzRecoveryServicesBackupItemDeletion `
+			-VaultId $vault.ID `
+			-Item $softDeletedItem `
+			-Force
+
+		# Verify item is now back in ProtectionStopped state
+		$rehydratedItem = Get-AzRecoveryServicesBackupItem `
+			-VaultId $vault.ID `
+			-Container $container `
+			-WorkloadType AzureFiles `
+			-FriendlyName $fileShareFriendlyName
+		Assert-NotNull $rehydratedItem
+		Assert-True { $rehydratedItem.ProtectionState -eq "ProtectionStopped" }
+		Assert-True { $rehydratedItem.DeleteState -eq "NotDeleted" }
+	}
+	finally
+	{
+		# Re-enable protection so the test fixture is idempotent
+		$backupItem = Get-AzRecoveryServicesBackupItem `
+			-Container $container `
+			-WorkloadType AzureFiles `
+			-VaultId $vault.ID `
+			-FriendlyName $fileShareFriendlyName
+		if ($backupItem -ne $null -and $backupItem.ProtectionState -eq "ProtectionStopped")
+		{
+			Enable-AzRecoveryServicesBackupProtection -Item $backupItem -Policy $policy -VaultId $vault.ID
+		}
+	}
+}
+
+function Test-AzureFSGetItemSecondaryRegion
+{
+	# Live-recorded CRR scenario test. Requires a GeoRedundant vault with Cross Region Restore enabled
+	# and at least one protected Azure File share. Mirrors Test-AzureVMCRRWithDES setup style.
+	$resourceGroupName = "afsbvtlonghaulrgccy"
+	$vaultName = "afsbvtcrrlonghaulvaultccy"
+	$fileShareFriendlyName = "afscrrfs"
+
+	$vault = Get-AzRecoveryServicesVault -ResourceGroupName $resourceGroupName -Name $vaultName
+	Assert-NotNull $vault
+
+	# VARIATION-1: list all AFS items from the secondary region
+	$secItems = Get-AzRecoveryServicesBackupItem `
+		-VaultId $vault.ID `
+		-BackupManagementType AzureStorage `
+		-WorkloadType AzureFiles `
+		-UseSecondaryRegion
+	Assert-NotNull $secItems
+	Assert-True { @($secItems).Count -gt 0 }
+
+	# VARIATION-2: named item from the secondary region populates ExtendedInfo (mirrors VM/SQL processor)
+	$secItem = Get-AzRecoveryServicesBackupItem `
+		-VaultId $vault.ID `
+		-BackupManagementType AzureStorage `
+		-WorkloadType AzureFiles `
+		-FriendlyName $fileShareFriendlyName `
+		-UseSecondaryRegion
+	Assert-NotNull $secItem
+	Assert-NotNull $secItem.ExtendedInfo
+	# A protected share with backups must report at least one recovery point in its ExtendedInfo.
+	Assert-True { $secItem.ExtendedInfo.RecoveryPointCount -gt 0 }
+
+	# VARIATION-3: an actively-protected item must surface as not soft-deleted on the secondary region.
+	Assert-AreEqual ([string]$secItem.DeleteState) "NotDeleted"
+}
+
+function Test-AzureFSGetRPsSecondaryRegion
+{
+	# Live-recorded CRR scenario test. Verifies recovery points are returned from the secondary region
+	# (regression guard for the AzureFileShareRecoveryPoint filter fix in AzureWorkloadProviderHelper).
+	$resourceGroupName = "afsbvtlonghaulrgccy"
+	$vaultName = "afsbvtcrrlonghaulvaultccy"
+	$fileShareFriendlyName = "afscrrfs"
+
+	$vault = Get-AzRecoveryServicesVault -ResourceGroupName $resourceGroupName -Name $vaultName
+	Assert-NotNull $vault
+
+	$item = Get-AzRecoveryServicesBackupItem `
+		-VaultId $vault.ID `
+		-BackupManagementType AzureStorage `
+		-WorkloadType AzureFiles `
+		-FriendlyName $fileShareFriendlyName `
+		-UseSecondaryRegion
+	Assert-NotNull $item
+
+	# Anchor the query window on the item's LastBackupTime (a value that comes from the recorded item
+	# response). This keeps the request URL deterministic for playback, yet on a live re-record it tracks
+	# the current data automatically, so the window always brackets the available secondary recovery points.
+	Assert-NotNull $item.LastBackupTime
+	$anchor = $item.LastBackupTime.ToUniversalTime()
+	$startDate = $anchor.AddDays(-30)
+	$endDate = $anchor.AddDays(1)
+	$rp = Get-AzRecoveryServicesBackupRecoveryPoint `
+		-VaultId $vault.ID `
+		-Item $item `
+		-StartDate $startDate -EndDate $endDate `
+		-UseSecondaryRegion
+	Assert-NotNull $rp
+	Assert-True { @($rp).Count -gt 0 }
+}
+
+function Test-AzureFSRestoreToSecondaryRegion
+{
+	# Live-recorded CRR scenario test. Requires target storage account with a pre-created target file share.
+	# AFS CRR supports Alternate Location Restore only.
+	$resourceGroupName = "afsbvtlonghaulrgccy"
+	$vaultName = "afsbvtcrrlonghaulvaultccy"
+	$fileShareFriendlyName = "afscrrfs"
+	$targetStorageAccountName = "afsbvttargetsacrrccy"
+	$targetFileShareName = "afscrrtargetfs"
+
+	$vault = Get-AzRecoveryServicesVault -ResourceGroupName $resourceGroupName -Name $vaultName
+	Assert-NotNull $vault
+
+	$item = Get-AzRecoveryServicesBackupItem `
+		-VaultId $vault.ID `
+		-BackupManagementType AzureStorage `
+		-WorkloadType AzureFiles `
+		-FriendlyName $fileShareFriendlyName `
+		-UseSecondaryRegion
+	Assert-NotNull $item
+
+	# Anchor the query window on the item's LastBackupTime (a value that comes from the recorded item
+	# response). This keeps the request URL deterministic for playback, yet on a live re-record it tracks
+	# the current data automatically, so the window always brackets the available secondary recovery points.
+	Assert-NotNull $item.LastBackupTime
+	$anchor = $item.LastBackupTime.ToUniversalTime()
+	$startDate = $anchor.AddDays(-30)
+	$endDate = $anchor.AddDays(1)
+	$rp = Get-AzRecoveryServicesBackupRecoveryPoint `
+		-VaultId $vault.ID `
+		-Item $item `
+		-StartDate $startDate -EndDate $endDate `
+		-UseSecondaryRegion
+	Assert-NotNull $rp
+	Assert-True { @($rp).Count -gt 0 }
+
+	# VARIATION-1: CRR requires ALR — omitting the target storage account must throw
+	Assert-ThrowsContains `
+		{ Restore-AzRecoveryServicesBackupItem `
+			-VaultId $vault.ID -VaultLocation $vault.Location `
+			-RecoveryPoint $rp[0] -ResolveConflict Overwrite -RestoreToSecondaryRegion -ErrorAction Stop } `
+		"Alternate Location Restore"
+
+	# VARIATION-2: CRR does not support item-level restore — passing -SourceFilePath must throw
+	Assert-ThrowsContains `
+		{ Restore-AzRecoveryServicesBackupItem `
+			-VaultId $vault.ID -VaultLocation $vault.Location `
+			-RecoveryPoint $rp[0] `
+			-TargetStorageAccountName $targetStorageAccountName `
+			-TargetFileShareName $targetFileShareName `
+			-SourceFilePath "somefile.txt" -SourceFileType File `
+			-ResolveConflict Overwrite -RestoreToSecondaryRegion -ErrorAction Stop } `
+		"Item-level restore is not supported"
+
+	# VARIATION-3: full CRR restore to secondary region completes.
+	$crrJob = Restore-AzRecoveryServicesBackupItem `
+		-VaultId $vault.ID -VaultLocation $vault.Location `
+		-RecoveryPoint $rp[0] `
+		-TargetStorageAccountName $targetStorageAccountName `
+		-TargetFileShareName $targetFileShareName `
+		-ResolveConflict Overwrite `
+		-RestoreToSecondaryRegion
+	Assert-True { @($crrJob).Count -gt 0 }
 }

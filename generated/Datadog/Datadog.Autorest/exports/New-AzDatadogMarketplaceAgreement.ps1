@@ -16,9 +16,9 @@
 
 <#
 .Synopsis
-create Datadog marketplace agreement in the subscription.
+Create Datadog marketplace agreement in the subscription.
 .Description
-create Datadog marketplace agreement in the subscription.
+Create Datadog marketplace agreement in the subscription.
 .Example
 New-AzDatadogMarketplaceAgreement -Accepted
 
@@ -161,8 +161,7 @@ begin {
 
         $context = Get-AzContext
         if (-not $context -and -not $testPlayback) {
-            Write-Error "No Azure login detected. Please run 'Connect-AzAccount' to log in."
-            exit
+            throw "No Azure login detected. Please run 'Connect-AzAccount' to log in."
         }
 
         if ($null -eq [Microsoft.WindowsAzure.Commands.Utilities.Common.AzurePSCmdlet]::PowerShellVersion) {

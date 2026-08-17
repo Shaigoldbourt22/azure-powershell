@@ -918,7 +918,18 @@ namespace Microsoft.Azure.Commands.Network.Properties
                 return ResourceManager.GetString("FlowLogFilteringCriteriaExceedsLimit", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to RecordType string can be maximum of 20 characters in length..
+        /// </summary>
+        internal static string FlowLogRecordTypeExceedsLimit
+        {
+            get
+            {
+                return ResourceManager.GetString("FlowLogRecordTypeExceedsLimit", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to A hub is required for HubAndSpoke connectivity topology..
         /// </summary>
@@ -1851,6 +1862,28 @@ namespace Microsoft.Azure.Commands.Network.Properties
             get
             {
                 return ResourceManager.GetString("RoutingIntentNotFound", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to The connection policy resource could not be found.
+        /// </summary>
+        internal static string ConnectionPolicyNotFound
+        {
+            get
+            {
+                return ResourceManager.GetString("ConnectionPolicyNotFound", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to InputObject.Id cannot be null or empty.
+        /// </summary>
+        internal static string ConnectionPolicyInputObjectIdEmpty
+        {
+            get
+            {
+                return ResourceManager.GetString("ConnectionPolicyInputObjectIdEmpty", resourceCulture);
             }
         }
 

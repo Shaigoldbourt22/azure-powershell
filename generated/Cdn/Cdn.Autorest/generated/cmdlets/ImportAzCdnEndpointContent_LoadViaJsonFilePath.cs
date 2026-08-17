@@ -18,7 +18,7 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Cdn.Cmdlets
     [global::System.Management.Automation.OutputType(typeof(bool))]
     [global::Microsoft.Azure.PowerShell.Cmdlets.Cdn.Description(@"Pre-loads a content to CDN. Available for Verizon Profiles.")]
     [global::Microsoft.Azure.PowerShell.Cmdlets.Cdn.Generated]
-    [global::Microsoft.Azure.PowerShell.Cmdlets.Cdn.HttpPath(Path = "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/load", ApiVersion = "2025-04-15")]
+    [global::Microsoft.Azure.PowerShell.Cmdlets.Cdn.HttpPath(Path = "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/load", ApiVersion = "2026-04-01-preview")]
     [global::Microsoft.Azure.PowerShell.Cmdlets.Cdn.NotSuggestDefaultParameterSet]
     public partial class ImportAzCdnEndpointContent_LoadViaJsonFilePath : global::System.Management.Automation.PSCmdlet,
         Microsoft.Azure.PowerShell.Cmdlets.Cdn.Runtime.IEventListener,
@@ -145,12 +145,14 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Cdn.Cmdlets
         /// <summary>Backing field for <see cref="ProfileName" /> property.</summary>
         private string _profileName;
 
-        /// <summary>Name of the CDN profile which is unique within the resource group.</summary>
-        [global::System.Management.Automation.Parameter(Mandatory = true, HelpMessage = "Name of the CDN profile which is unique within the resource group.")]
+        /// <summary>
+        /// Name of the Azure Front Door Standard or Azure Front Door Premium or CDN profile which is unique within the resource group.
+        /// </summary>
+        [global::System.Management.Automation.Parameter(Mandatory = true, HelpMessage = "Name of the Azure Front Door Standard or Azure Front Door Premium or CDN profile which is unique within the resource group.")]
         [Microsoft.Azure.PowerShell.Cmdlets.Cdn.Runtime.Info(
         Required = true,
         ReadOnly = false,
-        Description = @"Name of the CDN profile which is unique within the resource group.",
+        Description = @"Name of the Azure Front Door Standard or Azure Front Door Premium or CDN profile which is unique within the resource group.",
         SerializedName = @"profileName",
         PossibleTypes = new [] { typeof(string) })]
         [global::Microsoft.Azure.PowerShell.Cmdlets.Cdn.Category(global::Microsoft.Azure.PowerShell.Cmdlets.Cdn.ParameterCategory.Path)]
@@ -175,12 +177,12 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Cdn.Cmdlets
         /// <summary>Backing field for <see cref="ResourceGroupName" /> property.</summary>
         private string _resourceGroupName;
 
-        /// <summary>Name of the Resource group within the Azure subscription.</summary>
-        [global::System.Management.Automation.Parameter(Mandatory = true, HelpMessage = "Name of the Resource group within the Azure subscription.")]
+        /// <summary>The name of the resource group. The name is case insensitive.</summary>
+        [global::System.Management.Automation.Parameter(Mandatory = true, HelpMessage = "The name of the resource group. The name is case insensitive.")]
         [Microsoft.Azure.PowerShell.Cmdlets.Cdn.Runtime.Info(
         Required = true,
         ReadOnly = false,
-        Description = @"Name of the Resource group within the Azure subscription.",
+        Description = @"The name of the resource group. The name is case insensitive.",
         SerializedName = @"resourceGroupName",
         PossibleTypes = new [] { typeof(string) })]
         [global::Microsoft.Azure.PowerShell.Cmdlets.Cdn.Category(global::Microsoft.Azure.PowerShell.Cmdlets.Cdn.ParameterCategory.Path)]
@@ -189,12 +191,12 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Cdn.Cmdlets
         /// <summary>Backing field for <see cref="SubscriptionId" /> property.</summary>
         private string _subscriptionId;
 
-        /// <summary>Azure Subscription ID.</summary>
-        [global::System.Management.Automation.Parameter(Mandatory = true, HelpMessage = "Azure Subscription ID.")]
+        /// <summary>The ID of the target subscription. The value must be an UUID.</summary>
+        [global::System.Management.Automation.Parameter(Mandatory = true, HelpMessage = "The ID of the target subscription. The value must be an UUID.")]
         [Microsoft.Azure.PowerShell.Cmdlets.Cdn.Runtime.Info(
         Required = true,
         ReadOnly = false,
-        Description = @"Azure Subscription ID.",
+        Description = @"The ID of the target subscription. The value must be an UUID.",
         SerializedName = @"subscriptionId",
         PossibleTypes = new [] { typeof(string) })]
         [Microsoft.Azure.PowerShell.Cmdlets.Cdn.Runtime.DefaultInfo(
@@ -584,7 +586,7 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Cdn.Cmdlets
                     return ;
                 }
                 // onOk - response for 200 /
-                if (true == MyInvocation?.BoundParameters?.ContainsKey("PassThru"))
+                if (true == InvocationInformation?.BoundParameters?.ContainsKey("PassThru"))
                 {
                     WriteObject(true);
                 }

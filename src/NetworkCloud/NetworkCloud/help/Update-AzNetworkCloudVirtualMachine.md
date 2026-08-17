@@ -8,32 +8,30 @@ schema: 2.0.0
 # Update-AzNetworkCloudVirtualMachine
 
 ## SYNOPSIS
-Patch the properties of the provided virtual machine, or update the tags associated with the virtual machine.
-Properties and tag updates can be done independently.
+Update a new virtual machine or update the properties of the existing virtual machine.
 
 ## SYNTAX
 
 ### UpdateExpanded (Default)
 ```
 Update-AzNetworkCloudVirtualMachine -Name <String> -ResourceGroupName <String> [-SubscriptionId <String>]
- [-IfMatch <String>] [-IfNoneMatch <String>] [-Tag <Hashtable>]
- [-VMImageRepositoryCredentialsPassword <SecureString>] [-VMImageRepositoryCredentialsRegistryUrl <String>]
- [-VMImageRepositoryCredentialsUsername <String>] [-DefaultProfile <PSObject>] [-AsJob] [-NoWait]
- [-WhatIf] [-Confirm] [<CommonParameters>]
+ [-IfMatch <String>] [-IfNoneMatch <String>] [-EnableSystemAssignedIdentity <Boolean>] [-Tag <Hashtable>]
+ [-UserAssignedIdentity <String[]>] [-VMImageRepositoryCredentialsPassword <SecureString>]
+ [-VMImageRepositoryCredentialsRegistryUrl <String>] [-VMImageRepositoryCredentialsUsername <String>]
+ [-DefaultProfile <PSObject>] [-AsJob] [-NoWait] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ### UpdateViaIdentityExpanded
 ```
 Update-AzNetworkCloudVirtualMachine -InputObject <INetworkCloudIdentity> [-IfMatch <String>]
- [-IfNoneMatch <String>] [-Tag <Hashtable>] [-VMImageRepositoryCredentialsPassword <SecureString>]
+ [-IfNoneMatch <String>] [-EnableSystemAssignedIdentity <Boolean>] [-Tag <Hashtable>]
+ [-UserAssignedIdentity <String[]>] [-VMImageRepositoryCredentialsPassword <SecureString>]
  [-VMImageRepositoryCredentialsRegistryUrl <String>] [-VMImageRepositoryCredentialsUsername <String>]
- [-DefaultProfile <PSObject>] [-AsJob] [-NoWait] [-WhatIf] [-Confirm]
- [<CommonParameters>]
+ [-DefaultProfile <PSObject>] [-AsJob] [-NoWait] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Patch the properties of the provided virtual machine, or update the tags associated with the virtual machine.
-Properties and tag updates can be done independently.
+Update a new virtual machine or update the properties of the existing virtual machine.
 
 ## EXAMPLES
 
@@ -91,6 +89,21 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -EnableSystemAssignedIdentity
+Determines whether to enable a system-assigned identity for the resource.
+
+```yaml
+Type: System.Nullable`1[System.Boolean]
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -IfMatch
 The ETag of the transformation.
 Omit this value to always overwrite the current resource.
@@ -126,7 +139,6 @@ Accept wildcard characters: False
 
 ### -InputObject
 Identity Parameter
-To construct, see NOTES section for INPUTOBJECT properties and create a hash table.
 
 ```yaml
 Type: Microsoft.Azure.PowerShell.Cmdlets.NetworkCloud.Models.INetworkCloudIdentity
@@ -203,10 +215,26 @@ Accept wildcard characters: False
 ```
 
 ### -Tag
-The Azure resource tags that will replace the existing ones.
+Resource tags.
 
 ```yaml
 Type: System.Collections.Hashtable
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -UserAssignedIdentity
+The array of user assigned identities associated with the resource.
+The elements in array will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}.'
+
+```yaml
+Type: System.String[]
 Parameter Sets: (All)
 Aliases:
 
@@ -302,7 +330,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## OUTPUTS
 
-### Microsoft.Azure.PowerShell.Cmdlets.NetworkCloud.Models.Api20250201.IVirtualMachine
+### Microsoft.Azure.PowerShell.Cmdlets.NetworkCloud.Models.IVirtualMachine
 
 ## NOTES
 

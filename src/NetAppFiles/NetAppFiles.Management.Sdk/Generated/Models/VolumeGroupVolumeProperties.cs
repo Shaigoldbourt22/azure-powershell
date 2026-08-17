@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.NetApp.Models
     /// Volume resource
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class VolumeGroupVolumeProperties : Microsoft.Rest.Azure.IResource
+    public partial class VolumeGroupVolumeProperties
     {
         /// <summary>
         /// Initializes a new instance of the VolumeGroupVolumeProperties class.
@@ -53,7 +53,21 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// protocol or CIFS protocol
         /// Possible values include: &#39;ntfs&#39;, &#39;unix&#39;</param>
 
+        /// <param name="unixPermissions">UNIX permissions for NFS volume accepted in octal 4 digit format. First
+        /// digit selects the set user ID(4), set group ID (2) and sticky (1)
+        /// attributes. Second digit selects permission for the owner of the file: read
+        /// (4), write (2) and execute (1). Third selects permissions for other users
+        /// in the same group. the fourth for other users not in the group. 0755 -
+        /// gives read/write/execute permissions to owner and read/execute to group and
+        /// other users.
+        /// </param>
+
         /// <param name="enableSubvolumes">Flag indicating whether subvolume operations are enabled on the volume
+        /// Deprecated. Subvolume operations and this flag will be removed in a future
+        /// API version.
+        /// Possible values include: &#39;Enabled&#39;, &#39;Disabled&#39;</param>
+
+        /// <param name="breakthroughMode">Specifies whether the volume operates in Breakthrough Mode.
         /// Possible values include: &#39;Enabled&#39;, &#39;Disabled&#39;</param>
 
         /// <param name="fileSystemId">Unique FileSystem Identifier.
@@ -112,7 +126,8 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// </param>
 
         /// <param name="volumeType">What type of volume is this. For destination volumes in Cross Region
-        /// Replication, set type to DataProtection
+        /// Replication, set type to DataProtection. For creating clone volume, set
+        /// type to ShortTermClone
         /// </param>
 
         /// <param name="dataProtection">DataProtection type volumes include an object containing details of the
@@ -200,15 +215,6 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// active file system to the cool tier.
         /// Possible values include: &#39;Auto&#39;, &#39;SnapshotOnly&#39;</param>
 
-        /// <param name="unixPermissions">UNIX permissions for NFS volume accepted in octal 4 digit format. First
-        /// digit selects the set user ID(4), set group ID (2) and sticky (1)
-        /// attributes. Second digit selects permission for the owner of the file: read
-        /// (4), write (2) and execute (1). Third selects permissions for other users
-        /// in the same group. the fourth for other users not in the group. 0755 -
-        /// gives read/write/execute permissions to owner and read/execute to group and
-        /// other users.
-        /// </param>
-
         /// <param name="cloneProgress">When a volume is being restored from another volume&#39;s snapshot, will show
         /// the percentage completion of this cloning process. When this value is
         /// empty/null there is no cloning process currently happening on this volume.
@@ -276,7 +282,7 @@ namespace Microsoft.Azure.Management.NetApp.Models
 
         /// <param name="inheritedSizeInBytes">Space shared by short term clone volume with parent volume in bytes.
         /// </param>
-        public VolumeGroupVolumeProperties(string creationToken, long usageThreshold, string subnetId, string id = default(string), string name = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), System.Collections.Generic.IList<string> zones = default(System.Collections.Generic.IList<string>), string serviceLevel = default(string), string networkFeatures = default(string), string securityStyle = default(string), string enableSubvolumes = default(string), string fileSystemId = default(string), VolumePropertiesExportPolicy exportPolicy = default(VolumePropertiesExportPolicy), System.Collections.Generic.IList<string> protocolTypes = default(System.Collections.Generic.IList<string>), string provisioningState = default(string), string snapshotId = default(string), bool? deleteBaseSnapshot = default(bool?), string backupId = default(string), string baremetalTenantId = default(string), string effectiveNetworkFeatures = default(string), string networkSiblingSetId = default(string), string storageToNetworkProximity = default(string), System.Collections.Generic.IList<MountTargetProperties> mountTargets = default(System.Collections.Generic.IList<MountTargetProperties>), string volumeType = default(string), VolumePropertiesDataProtection dataProtection = default(VolumePropertiesDataProtection), string acceptGrowCapacityPoolForShortTermCloneSplit = default(string), bool? isRestoring = default(bool?), bool? snapshotDirectoryVisible = default(bool?), bool? kerberosEnabled = default(bool?), bool? smbEncryption = default(bool?), string smbAccessBasedEnumeration = default(string), string smbNonBrowsable = default(string), bool? smbContinuouslyAvailable = default(bool?), double? throughputMibps = default(double?), double? actualThroughputMibps = default(double?), string encryptionKeySource = default(string), string keyVaultPrivateEndpointResourceId = default(string), bool? ldapEnabled = default(bool?), bool? coolAccess = default(bool?), int? coolnessPeriod = default(int?), string coolAccessRetrievalPolicy = default(string), string coolAccessTieringPolicy = default(string), string unixPermissions = default(string), int? cloneProgress = default(int?), string fileAccessLogs = default(string), string avsDataStore = default(string), System.Collections.Generic.IList<string> dataStoreResourceId = default(System.Collections.Generic.IList<string>), bool? isDefaultQuotaEnabled = default(bool?), long? defaultUserQuotaInKiBs = default(long?), long? defaultGroupQuotaInKiBs = default(long?), long? maximumNumberOfFiles = default(long?), string volumeGroupName = default(string), string capacityPoolResourceId = default(string), string proximityPlacementGroup = default(string), string t2Network = default(string), string volumeSpecName = default(string), bool? encrypted = default(bool?), System.Collections.Generic.IList<PlacementKeyValuePairs> placementRules = default(System.Collections.Generic.IList<PlacementKeyValuePairs>), string provisionedAvailabilityZone = default(string), bool? isLargeVolume = default(bool?), string originatingResourceId = default(string), long? inheritedSizeInBytes = default(long?))
+        public VolumeGroupVolumeProperties(string creationToken, long usageThreshold, string subnetId, string id = default(string), string name = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), System.Collections.Generic.IList<string> zones = default(System.Collections.Generic.IList<string>), string serviceLevel = default(string), string networkFeatures = default(string), string securityStyle = default(string), string unixPermissions = default(string), string enableSubvolumes = default(string), string breakthroughMode = default(string), string fileSystemId = default(string), VolumePropertiesExportPolicy exportPolicy = default(VolumePropertiesExportPolicy), System.Collections.Generic.IList<string> protocolTypes = default(System.Collections.Generic.IList<string>), string provisioningState = default(string), string snapshotId = default(string), bool? deleteBaseSnapshot = default(bool?), string backupId = default(string), string baremetalTenantId = default(string), string effectiveNetworkFeatures = default(string), string networkSiblingSetId = default(string), string storageToNetworkProximity = default(string), System.Collections.Generic.IList<MountTargetProperties> mountTargets = default(System.Collections.Generic.IList<MountTargetProperties>), string volumeType = default(string), VolumePropertiesDataProtection dataProtection = default(VolumePropertiesDataProtection), string acceptGrowCapacityPoolForShortTermCloneSplit = default(string), bool? isRestoring = default(bool?), bool? snapshotDirectoryVisible = default(bool?), bool? kerberosEnabled = default(bool?), bool? smbEncryption = default(bool?), string smbAccessBasedEnumeration = default(string), string smbNonBrowsable = default(string), bool? smbContinuouslyAvailable = default(bool?), double? throughputMibps = default(double?), double? actualThroughputMibps = default(double?), string encryptionKeySource = default(string), string keyVaultPrivateEndpointResourceId = default(string), bool? ldapEnabled = default(bool?), bool? coolAccess = default(bool?), int? coolnessPeriod = default(int?), string coolAccessRetrievalPolicy = default(string), string coolAccessTieringPolicy = default(string), int? cloneProgress = default(int?), string fileAccessLogs = default(string), string avsDataStore = default(string), System.Collections.Generic.IList<string> dataStoreResourceId = default(System.Collections.Generic.IList<string>), bool? isDefaultQuotaEnabled = default(bool?), long? defaultUserQuotaInKiBs = default(long?), long? defaultGroupQuotaInKiBs = default(long?), long? maximumNumberOfFiles = default(long?), string volumeGroupName = default(string), string capacityPoolResourceId = default(string), string proximityPlacementGroup = default(string), string t2Network = default(string), string volumeSpecName = default(string), bool? encrypted = default(bool?), System.Collections.Generic.IList<PlacementKeyValuePairs> placementRules = default(System.Collections.Generic.IList<PlacementKeyValuePairs>), string provisionedAvailabilityZone = default(string), bool? isLargeVolume = default(bool?), string originatingResourceId = default(string), long? inheritedSizeInBytes = default(long?))
 
         {
             this.Id = id;
@@ -287,7 +293,9 @@ namespace Microsoft.Azure.Management.NetApp.Models
             this.ServiceLevel = serviceLevel;
             this.NetworkFeatures = networkFeatures;
             this.SecurityStyle = securityStyle;
+            this.UnixPermissions = unixPermissions;
             this.EnableSubvolumes = enableSubvolumes;
+            this.BreakthroughMode = breakthroughMode;
             this.FileSystemId = fileSystemId;
             this.CreationToken = creationToken;
             this.UsageThreshold = usageThreshold;
@@ -322,7 +330,6 @@ namespace Microsoft.Azure.Management.NetApp.Models
             this.CoolnessPeriod = coolnessPeriod;
             this.CoolAccessRetrievalPolicy = coolAccessRetrievalPolicy;
             this.CoolAccessTieringPolicy = coolAccessTieringPolicy;
-            this.UnixPermissions = unixPermissions;
             this.CloneProgress = cloneProgress;
             this.FileAccessLogs = fileAccessLogs;
             this.AvsDataStore = avsDataStore;
@@ -402,11 +409,31 @@ namespace Microsoft.Azure.Management.NetApp.Models
         public string SecurityStyle {get; set; }
 
         /// <summary>
+        /// Gets or sets uNIX permissions for NFS volume accepted in octal 4 digit
+        /// format. First digit selects the set user ID(4), set group ID (2) and sticky
+        /// (1) attributes. Second digit selects permission for the owner of the file:
+        /// read (4), write (2) and execute (1). Third selects permissions for other
+        /// users in the same group. the fourth for other users not in the group. 0755
+        /// - gives read/write/execute permissions to owner and read/execute to group
+        /// and other users.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.unixPermissions")]
+        public string UnixPermissions {get; set; }
+
+        /// <summary>
         /// Gets or sets flag indicating whether subvolume operations are enabled on
-        /// the volume Possible values include: &#39;Enabled&#39;, &#39;Disabled&#39;
+        /// the volume
+        /// Deprecated. Subvolume operations and this flag will be removed in a future
+        /// API version. Possible values include: &#39;Enabled&#39;, &#39;Disabled&#39;
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.enableSubvolumes")]
         public string EnableSubvolumes {get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies whether the volume operates in Breakthrough Mode. Possible values include: &#39;Enabled&#39;, &#39;Disabled&#39;
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.breakthroughMode")]
+        public string BreakthroughMode {get; set; }
 
         /// <summary>
         /// Gets unique FileSystem Identifier.
@@ -510,7 +537,8 @@ namespace Microsoft.Azure.Management.NetApp.Models
 
         /// <summary>
         /// Gets or sets what type of volume is this. For destination volumes in Cross
-        /// Region Replication, set type to DataProtection
+        /// Region Replication, set type to DataProtection. For creating clone volume,
+        /// set type to ShortTermClone
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.volumeType")]
         public string VolumeType {get; set; }
@@ -656,18 +684,6 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.coolAccessTieringPolicy")]
         public string CoolAccessTieringPolicy {get; set; }
-
-        /// <summary>
-        /// Gets or sets uNIX permissions for NFS volume accepted in octal 4 digit
-        /// format. First digit selects the set user ID(4), set group ID (2) and sticky
-        /// (1) attributes. Second digit selects permission for the owner of the file:
-        /// read (4), write (2) and execute (1). Third selects permissions for other
-        /// users in the same group. the fourth for other users not in the group. 0755
-        /// - gives read/write/execute permissions to owner and read/execute to group
-        /// and other users.
-        /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.unixPermissions")]
-        public string UnixPermissions {get; set; }
 
         /// <summary>
         /// Gets when a volume is being restored from another volume&#39;s snapshot, will
@@ -818,6 +834,18 @@ namespace Microsoft.Azure.Management.NetApp.Models
 
 
 
+            if (this.UnixPermissions != null)
+            {
+                if (this.UnixPermissions.Length > 4)
+                {
+                    throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.MaxLength, "UnixPermissions", 4);
+                }
+                if (this.UnixPermissions.Length < 4)
+                {
+                    throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.MinLength, "UnixPermissions", 4);
+                }
+            }
+
 
             if (this.FileSystemId != null)
             {
@@ -844,9 +872,9 @@ namespace Microsoft.Azure.Management.NetApp.Models
                 {
                     throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.MinLength, "CreationToken", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(this.CreationToken, "^[a-zA-Z][a-zA-Z0-9\\-]{0,79}$"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(this.CreationToken, "^[a-zA-Z][a-zA-Z0-9\\-_]{0,79}$"))
                 {
-                    throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.Pattern, "CreationToken", "^[a-zA-Z][a-zA-Z0-9\\-]{0,79}$");
+                    throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.Pattern, "CreationToken", "^[a-zA-Z][a-zA-Z0-9\\-_]{0,79}$");
                 }
             }
             if (this.UsageThreshold > 2638827906662400)
@@ -914,17 +942,6 @@ namespace Microsoft.Azure.Management.NetApp.Models
             }
 
 
-            if (this.UnixPermissions != null)
-            {
-                if (this.UnixPermissions.Length > 4)
-                {
-                    throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.MaxLength, "UnixPermissions", 4);
-                }
-                if (this.UnixPermissions.Length < 4)
-                {
-                    throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.MinLength, "UnixPermissions", 4);
-                }
-            }
 
 
 

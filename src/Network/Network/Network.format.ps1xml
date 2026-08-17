@@ -5495,6 +5495,10 @@
 							  <Label>Tag</Label>
 							  <PropertyName>Tag</PropertyName>
 						  </ListItem>
+							<ListItem>
+								<Label>NvaInterfaceConfigurations</Label>
+								<PropertyName>NvaInterfaceConfigurations</PropertyName>
+							</ListItem>
 					  </ListItems>
 				  </ListEntry>
 			  </ListEntries>
@@ -7502,6 +7506,28 @@
               <ListItem>
                 <Label>AssociatedOutboundConnections</Label>
                 <PropertyName>AssociatedOutboundConnectionsText</PropertyName>
+              </ListItem>
+            </ListItems>
+          </ListEntry>
+        </ListEntries>
+      </ListControl>
+    </View>
+    <View>
+      <Name>Microsoft.Azure.Commands.Network.Models.RadiusAuthServer</Name>
+      <ViewSelectedBy>
+        <TypeName>Microsoft.Azure.Commands.Network.Models.RadiusAuthServer</TypeName>
+      </ViewSelectedBy>
+      <ListControl>
+        <ListEntries>
+          <ListEntry>
+            <ListItems>
+              <ListItem>
+                <Label>RadiusServerAddress</Label>
+                <PropertyName>RadiusServerAddress</PropertyName>
+              </ListItem>
+              <ListItem>
+                <Label>RadiusServerSecret</Label>
+                <PropertyName>RadiusServerSecret</PropertyName>
               </ListItem>
             </ListItems>
           </ListEntry>

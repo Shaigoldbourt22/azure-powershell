@@ -56,6 +56,9 @@ Get Service Fabric managed application type details. Only supports ARM deployed 
 ### [Get-AzServiceFabricManagedClusterApplicationTypeVersion](Get-AzServiceFabricManagedClusterApplicationTypeVersion.md)
 Get Service Fabric managed application type version details. Only supports ARM deployed application type versions.
 
+### [Get-AzServiceFabricManagedClusterMaintenanceWindowStatus](Get-AzServiceFabricManagedClusterMaintenanceWindowStatus.md)
+Get the maintenance window status of a Service Fabric Managed Cluster.
+
 ### [Get-AzServiceFabricManagedClusterService](Get-AzServiceFabricManagedClusterService.md)
 Get Service Fabric managed service details under the specified application and cluster. Only supports ARM deployed services.
 
@@ -64,6 +67,18 @@ Get the managed node type resource details.
 
 ### [Get-AzServiceFabricService](Get-AzServiceFabricService.md)
 Get Service Fabric service details under the specified application and cluster. Only supports ARM deployed services.
+
+### [Enable-AzServiceFabricManagedClusterMaintenanceWindow](Enable-AzServiceFabricManagedClusterMaintenanceWindow.md)
+Apply the maintenance window on a Service Fabric Managed Cluster.
+
+### [Invoke-AzServiceFabricDeallocateManagedNodeType](Invoke-AzServiceFabricDeallocateManagedNodeType.md)
+Deallocate specific nodes from the node type.
+
+### [Invoke-AzServiceFabricRedeployManagedNodeType](Invoke-AzServiceFabricRedeployManagedNodeType.md)
+Redeploy nodes from the node type.
+
+### [Invoke-AzServiceFabricReimageManagedNodeType](Invoke-AzServiceFabricReimageManagedNodeType.md)
+Reimage nodes from the node type. On reimage operation the service fabric nodes will be disabled before reimaging the vms and enabled them back again once they come back. If this is done on primary node types it might take a while as it might not reimage all the nodes at the same time. Use -ForceReimage to force the operation even if service fabric is unable to disable the nodes but use with caution as this might cause data loss if stateful workloads are running on the node.
 
 ### [New-AzServiceFabricApplication](New-AzServiceFabricApplication.md)
 Create new service fabric application under the specified resource group and cluster.
@@ -147,7 +162,7 @@ Remove a service from the cluster. Only supports ARM deployed services.
 Remove one or multiple Service Fabric setting from the cluster.
 
 ### [Restart-AzServiceFabricManagedNodeType](Restart-AzServiceFabricManagedNodeType.md)
-Restart specific nodes from the node type.
+Restart nodes from the node type.
 
 ### [Set-AzServiceFabricManagedCluster](Set-AzServiceFabricManagedCluster.md)
 Set cluster resource properties.
@@ -165,13 +180,16 @@ Update a service fabric managed application type version. This allows you to upd
 Update a managed service from the cluster. Only supports ARM deployed services.
 
 ### [Set-AzServiceFabricManagedNodeType](Set-AzServiceFabricManagedNodeType.md)
-Sets node type resource properties or run reimage actions on specific nodes of the node type with -Reimage parameter.
+Sets node type resource properties.
 
 ### [Set-AzServiceFabricSetting](Set-AzServiceFabricSetting.md)
 Add or update one or multiple Service Fabric settings to the cluster.
 
 ### [Set-AzServiceFabricUpgradeType](Set-AzServiceFabricUpgradeType.md)
 Change the Service Fabric upgrade type of the cluster.
+
+### [Start-AzServiceFabricManagedNodeType](Start-AzServiceFabricManagedNodeType.md)
+Start specific nodes from the node type.
 
 ### [Update-AzServiceFabricApplication](Update-AzServiceFabricApplication.md)
 Update a service fabric application. This allows to update the application parameters and/or upgrade the application type version which will trigger an application upgrade. Only supports ARM deployed applications.

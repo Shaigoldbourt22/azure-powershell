@@ -157,5 +157,14 @@ namespace Microsoft.Azure.Commands.Compute.Models
         public string Etag { get; private set; }
 
         public Placement Placement { get; set; }
+
+        // Gets or sets the AddProxyAgentExtension
+        public bool? AddProxyAgentExtension { get; set; }
+
+        // Gets or sets the ScheduledEventsPolicy
+        public ScheduledEventsPolicy ScheduledEventsPolicy { get; set; }
+
+        // Gets or sets the ResiliencyProfile.
+        public ResiliencyProfile ResiliencyProfile { get; set; }
     }
 }

@@ -18,6 +18,25 @@
         - Additional information about change #1
 -->
 ## Upcoming Release
+
+## Version 5.2.0
+* Added ChangeSafety Support
+* Added `Enable-AzServiceFabricManagedClusterMaintenanceWindow`, `Get-AzServiceFabricManagedClusterMaintenanceWindowStatus`
+
+## Version 5.1.0
+* Added new OS options to `New-AzServiceFabricCluster` `-OS` parameter: `WindowsServer2019Datacenter`, `WindowsServer2019DatacenterGen2`, `WindowsServer2022Standard`, `WindowsServer2022Core`, `WindowsServer2022Gen2`, `WindowsServer2022Hotpatch`, `WindowsServer2025`, `WindowsServer2025AzureEdition`, `WindowsServer2025AzureEditionCore`, `WindowsServer2025Gen2`, `UbuntuServer2204`, and `UbuntuServer2404`
+* Updated SFMC to latest api general version "2026-02-01"
+
+## Version 5.0.0
+* Removed `ReimageByName`, `ReimageById`, and `ReimageByObj` parameter sets from `Set-AzServiceFabricManagedNodeType`.
+
+## Version 3.8.0
+* Changed from `Basic` to `Standard` SKUs for loadbalancers and public IP addresses for `New-AzServiceFabricCluster` and `Add-AzServiceFabricNodeType` as `Basic` SKUs are being deprecated.
+* Added parameters `-EnableAutoOsUpgrade` and `-AllowRdpAccess` to `New-AzServiceFabricManagedCluster` and `Set-AzServiceFabricManagedCluster`.
+* Added parameters `-ZoneBalance`, `-AllowOverProvisioning`, and `-Zone` to `New-AzServiceFabricManagedNodeType` and `Set-AzServiceFabricManagedNodeType`.
+* Added preannoucement for removing Reimage parameters from `Set-AzServiceFabricManagedNodeType`.
+* Added new cmdlets for managed node types: `Invoke-AzServiceFabricDeallocateManagedNodeType`, `Invoke-AzServiceFabricRedeployManagedNodeType`, `Invoke-AzServiceFabricReimageManagedNodeType`, `Start-AzServiceFabricManagedNodeType`
+* Marked `NodeName` as non-required and added parameter `-UpdateType` in `Restart-AzServiceFabricManagedNodeType` to allow UD by UD restarts of all nodes in node type.
 * Renamed Remove-AzServiceFabricManagedNodeType parameter sets to use "Remove" instead of "Delete" for consistency with cmdlet name.
 
 ## Version 3.7.0

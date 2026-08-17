@@ -1,6 +1,6 @@
 ### Example 1: Create a Multi-Cloud Connector endpoint
 ```powershell
-New-AzStorageMoverMultiCloudConnectorEndpoint -Name "my-mc-endpoint" -ResourceGroupName "my-resource-group" -StorageMoverName "my-storage-mover" -AWSS3BucketId "my-s3-bucket" -Description "My Multi-Cloud endpoint"
+New-AzStorageMoverMultiCloudConnectorEndpoint -Name "my-mc-endpoint" -ResourceGroupName "my-resource-group" -StorageMoverName "my-storage-mover" -AWSS3BucketId "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/my-resource-group/providers/Microsoft.AWSConnector/s3Buckets/testBucket" -MultiCloudConnectorId "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/my-resource-group/providers/Microsoft.HybridConnectivity/publicCloudConnectors/TestConnector" -Description "Example multi cloud connector resource id"
 ```
 
 ```output
@@ -13,7 +13,6 @@ Property                     : {
                                  "awsS3BucketId": "my-s3-bucket",
                                  "multiCloudConnectorId": "samplearmid"
                                }
-Identity                     : "SystemAssigned"
 SystemDataCreatedAt          : 6/27/2023 4:30:13 AM
 SystemDataCreatedBy          : 00000000-0000-0000-0000-000000000000
 SystemDataCreatedByType      : Application

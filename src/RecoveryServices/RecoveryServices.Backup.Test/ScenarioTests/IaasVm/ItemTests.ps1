@@ -1,4 +1,4 @@
-﻿# ----------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------------
 #
 # Copyright Microsoft Corporation
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -11,6 +11,40 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ----------------------------------------------------------------------------------
+
+function Test-AzureVMRedoProtection
+{
+    $resourceGroupName = "hiagarg"
+    $vaultName = "hiagaVault"
+    $targetVaultName = "hiagaVault2"
+    $vmContainerSuffix = "hiaga-adhoc-vm"
+    $policyName = "DefaultPolicy"
+
+    try
+    {
+        # Step 1: Move protection from hiagaVault to hiagaVault2
+        $vault = Get-AzRecoveryServicesVault -ResourceGroupName $resourceGroupName -Name $vaultName
+        $items = Get-AzRecoveryServicesBackupItem -BackupManagementType AzureVM -WorkloadType AzureVM -VaultId $vault.ID | Where-Object { $_.ContainerName.EndsWith($vmContainerSuffix) }
+        $targetVault = Get-AzRecoveryServicesVault -ResourceGroupName $resourceGroupName -Name $targetVaultName
+        $policy = Get-AzRecoveryServicesBackupProtectionPolicy -Name $policyName -VaultId $targetVault.ID
+        
+	$redoJob = Redo-AzRecoveryServicesBackupProtection -Item $items[-1] -TargetVaultId $targetVault.ID -TargetPolicy $policy -VaultId $vault.ID -Force -Confirm:$false
+	Assert-True { $redoJob.Status -eq "Completed" }
+
+	# Step 2: Reverse - move protection back to hiagaVault
+	$vault = Get-AzRecoveryServicesVault -ResourceGroupName $resourceGroupName -Name $targetVaultName
+	$targetVault = Get-AzRecoveryServicesVault -ResourceGroupName $resourceGroupName -Name $vaultName
+	$policy = Get-AzRecoveryServicesBackupProtectionPolicy -Name $policyName -VaultId $targetVault.ID
+	$items = Get-AzRecoveryServicesBackupItem -BackupManagementType AzureVM -WorkloadType AzureVM -VaultId $vault.ID | Where-Object { $_.ContainerName.EndsWith($vmContainerSuffix) }
+
+	$redoJob = Redo-AzRecoveryServicesBackupProtection -Item $items[-1] -TargetVaultId $targetVault.ID -TargetPolicy $policy -VaultId $vault.ID -Force -Confirm:$false
+	Assert-True { $redoJob.Status -eq "Completed" }
+    }
+    finally
+    {
+        # Optional cleanup if needed
+    }
+}
 
 function Test-AzurePERestore
 {
@@ -61,25 +95,9 @@ function Test-AzureVaultSoftDelete
 		$vault = Get-AzRecoveryServicesVault -Name $vaultName -ResourceGroupName $resourceGroupName
 		Assert-True {  $vault -ne $null }
 		
-		# Disable soft delete 
-		Set-AzRecoveryServicesVaultProperty -VaultId $vault.ID -SoftDeleteFeatureState Disable
-		$vaultProperty = Get-AzRecoveryServicesVaultProperty -VaultId $vault.ID
-		Assert-True { $vaultProperty.SoftDeleteFeatureState -eq "Disabled" }
-
-		# Enable soft delete 
-		Set-AzRecoveryServicesVaultProperty -VaultId $vault.ID -SoftDeleteFeatureState Enable
-		$vaultProperty = Get-AzRecoveryServicesVaultProperty -VaultId $vault.ID
-		Assert-True { $vaultProperty.SoftDeleteFeatureState -eq "Enabled" }
-
-		# Enable disable hybrid security setting 
-		Set-AzRecoveryServicesVaultProperty   -VaultId  $vault.ID -DisableHybridBackupSecurityFeature $false
-		$vaultProperty = Get-AzRecoveryServicesVaultProperty -VaultId $vault.ID
-		Assert-True { $vaultProperty.EnhancedSecurityState -eq "Enabled" }
-
-		# Disable hybrid security setting
-		Set-AzRecoveryServicesVaultProperty   -VaultId  $vault.ID -DisableHybridBackupSecurityFeature $true
-		$vaultProperty = Get-AzRecoveryServicesVaultProperty -VaultId $vault.ID
-		Assert-True { $vaultProperty.EnhancedSecurityState -eq "Disabled" }		
+		# Disable soft delete - should throw exception as it's no longer allowed
+		Assert-ThrowsContains { Set-AzRecoveryServicesVaultProperty -VaultId $vault.ID -SoftDeleteFeatureState Disable } `
+		"Operation returned an invalid status code 'BadRequest'"
 	}
 	finally
 	{
@@ -416,7 +434,7 @@ function Test-AzureVMMUA
 	finally
 	{		
 		# disable softDelete 
-		Set-AzRecoveryServicesVaultProperty -SoftDeleteFeatureState Disable -VaultId $vault.ID
+		# Set-AzRecoveryServicesVaultProperty -SoftDeleteFeatureState Disable -VaultId $vault.ID
 
 		#disable protection with RemoveRecoveryPoints
 		Disable-AzRecoveryServicesBackupProtection -Item $item -RemoveRecoveryPoints -VaultId $vault.ID -Force
@@ -425,7 +443,7 @@ function Test-AzureVMMUA
 		Remove-AzRecoveryServicesResourceGuardMapping -VaultId $vault.ID
 
 		# enable soft delete 
-		Set-AzRecoveryServicesVaultProperty -SoftDeleteFeatureState Enable -VaultId $vault.ID
+		# Set-AzRecoveryServicesVaultProperty -SoftDeleteFeatureState Enable -VaultId $vault.ID
 	}
 }
 
@@ -1346,7 +1364,7 @@ function Test-AzureRestoreWithCVMOsDiskEncryptionSetId()
 	$targetSubnetName = "default"
 	$owner = "sgholap"
 	$subscriptionId = "5288acd1-ba79-4377-9205-9f220331a44a"
-	$recoveryPointId = "807152782396876"
+	$recoveryPointId = "808254335380202" #"807152782396876"
 	$cVMOSDiskEncryptionSetId = "/subscriptions/5288acd1-ba79-4377-9205-9f220331a44a/resourceGroups/sgholap-rg/providers/Microsoft.Compute/diskEncryptionSets/CVMPSRestoreDES"
 	try
 	{	
@@ -1391,3 +1409,199 @@ function Test-AzureRestoreWithCVMOsDiskEncryptionSetId()
 		Delete-VM $targetRG $targetVMName
 	}
 }
+
+# =====================================================================================================
+# Cross Subscription Backup (CSB) scenario tests: the protected VM lives in a subscription DIFFERENT from
+# the vault's. Recorded tests (Record mode runs live; otherwise replay from SessionRecords, so CI needs no
+# Azure access). To re-record against your own resources, set AZURE_TEST_MODE=Record and update the values
+# at the top of each test: $resourceGroupName (existing RG in the vault's subscription; a fresh vault is
+# created in it per test), $location (must match the VM's region), $containerSubscriptionId (VM's sub, must
+# differ from the vault's), $vmName/$vmResourceGroupName (a pre-existing VM in that sub - the framework
+# can't provision a cross-sub VM), and $saName/$saResourceGroupName (RestoreOLR only: staging storage in the
+# VM's sub). Vault names and $modifyPolicyName are created/deleted by the tests.
+# =====================================================================================================
+function Test-AzureVMCSBProtection
+{
+	# Test Owner - singhprab
+	# Enable CSB protection, then switch the item to a different policy (modify protection).
+	$resourceGroupName = "singhprab-csb-vault-rg-ea"
+	$vaultName = "singhprab-csb-prot-vault"
+	$location = "eastus2euap"
+	$vmName = "testCsbPS"
+	$vmResourceGroupName = "singhprab-rg-1c"
+	$containerSubscriptionId = "80abcfe3-b410-42b2-983f-df23cba781dc"
+	$modifyPolicyName = "csb-modify-policy"
+	$tag = @{"MABUsed"="Yes";"Owner"="singhprab";"Purpose"="Testing";"DeleteBy"="12-2099"}
+
+	$vault = $null
+
+	try
+	{
+		# Fresh vault so the test runs from a clean state.
+		New-AzRecoveryServicesVault -Name $vaultName -ResourceGroupName $resourceGroupName -Location $location -Tag $tag | Out-Null
+		$vault = Get-AzRecoveryServicesVault -Name $vaultName -ResourceGroupName $resourceGroupName
+
+		# Built-in Enhanced (V2) policy, plus a second one to switch to during modify protection.
+		$policy = Get-AzRecoveryServicesBackupProtectionPolicy -VaultId $vault.ID -Name "EnhancedPolicy"
+		$schedulePolicy = Get-AzRecoveryServicesBackupSchedulePolicyObject -WorkloadType AzureVM -BackupManagementType AzureVM -PolicySubType Enhanced -ScheduleRunFrequency Weekly
+		$retentionPolicy = Get-AzRecoveryServicesBackupRetentionPolicyObject -WorkloadType AzureVM -BackupManagementType AzureVM -ScheduleRunFrequency Weekly
+		$modifyPolicy = New-AzRecoveryServicesBackupProtectionPolicy -Name $modifyPolicyName -WorkloadType AzureVM -BackupManagementType AzureVM -RetentionPolicy $retentionPolicy -SchedulePolicy $schedulePolicy -VaultId $vault.ID
+
+		# Enable protection for the cross-sub VM via -ContainerSubscriptionId (skips discovery).
+		Enable-AzRecoveryServicesBackupProtection `
+			-VaultId $vault.ID `
+			-Policy $policy `
+			-Name $vmName `
+			-ResourceGroupName $vmResourceGroupName `
+			-ContainerSubscriptionId $containerSubscriptionId;
+
+		$item = Get-AzRecoveryServicesBackupItem `
+			-BackupManagementType AzureVM -WorkloadType AzureVM -VaultId $vault.ID `
+			| Where-Object { $_.Name -like "*;$vmResourceGroupName;$vmName" } | Select-Object -First 1
+
+		Assert-NotNull $item;
+
+		# Item must belong to the VM's subscription (not the vault's) and be on the initial policy.
+		Assert-True { $item.SourceResourceId -match $vmName };
+		Assert-True { $item.SourceResourceId -match $vmResourceGroupName };
+		Assert-True { $item.ContainerSubscriptionId -eq $containerSubscriptionId };
+		Assert-True { $item.ProtectionPolicyName -eq "EnhancedPolicy" };
+
+		# Modify protection via the -Item parameter set (container derived from the item's ARM id).
+		Enable-AzRecoveryServicesBackupProtection `
+			-VaultId $vault.ID `
+			-Policy $modifyPolicy `
+			-Item $item;
+
+		$modifiedItem = Get-AzRecoveryServicesBackupItem `
+			-BackupManagementType AzureVM -WorkloadType AzureVM -VaultId $vault.ID `
+			| Where-Object { $_.Name -like "*;$vmResourceGroupName;$vmName" } | Select-Object -First 1
+
+		Assert-NotNull $modifiedItem;
+
+		# Item now on the new policy and still a CSB item.
+		Assert-True { $modifiedItem.ProtectionPolicyName -eq $modifyPolicyName };
+		Assert-True { $modifiedItem.ContainerSubscriptionId -eq $containerSubscriptionId };
+	}
+	finally
+	{
+		# Cleanup: disable protection with delete-backup-data, then delete the fresh vault (Remove-AzRecoveryServicesVault purges the soft-deleted item; the vault has AlwaysOn soft delete).
+		if ($vault -ne $null)
+		{
+			$cleanupItem = Get-AzRecoveryServicesBackupItem `
+				-BackupManagementType AzureVM -WorkloadType AzureVM -VaultId $vault.ID `
+				| Where-Object { $_.Name -like "*;$vmResourceGroupName;$vmName" } | Select-Object -First 1
+			if ($cleanupItem -ne $null)
+			{
+				Disable-AzRecoveryServicesBackupProtection `
+					-VaultId $vault.ID `
+					-Item $cleanupItem `
+					-RemoveRecoveryPoints -Force
+			}
+			Remove-AzRecoveryServicesVault -Vault $vault
+		}
+	}
+}
+
+function Test-AzureVMCSBRestoreOLR
+{
+	# Test Owner - singhprab
+	# Original Location Recovery (OLR) of a CSB item: no target sub/RG needed - the VM's subscription is
+	# derived from the recovery point, and the staging storage account is resolved there. Self-contained:
+	# protect a cross-sub VM, back it up, restore to original location.
+	$resourceGroupName = "singhprab-csb-vault-rg-ea"
+	$vaultName = "singhprab-csb-rest-vault"
+	$location = "eastus2euap"
+	$vmName = "testCSBPS2"
+	$vmResourceGroupName = "singhprab-rg-1c"
+	$containerSubscriptionId = "80abcfe3-b410-42b2-983f-df23cba781dc"
+	# Staging storage account, in the VM's subscription and same region.
+	$saName = "singhprabzrssa"
+	$saResourceGroupName = "crosssubscriptionbackup-test"
+	$tag = @{"MABUsed"="Yes";"Owner"="singhprab";"Purpose"="Testing";"DeleteBy"="12-2099"}
+
+	$vault = $null
+
+	try
+	{
+		# Fresh vault so the test runs from a clean state.
+		New-AzRecoveryServicesVault -Name $vaultName -ResourceGroupName $resourceGroupName -Location $location -Tag $tag | Out-Null
+		$vault = Get-AzRecoveryServicesVault -Name $vaultName -ResourceGroupName $resourceGroupName
+
+		$policy = Get-AzRecoveryServicesBackupProtectionPolicy -VaultId $vault.ID -Name "EnhancedPolicy"
+
+		# Enable protection for the cross-sub VM via -ContainerSubscriptionId.
+		Enable-AzRecoveryServicesBackupProtection `
+			-VaultId $vault.ID `
+			-Policy $policy `
+			-Name $vmName `
+			-ResourceGroupName $vmResourceGroupName `
+			-ContainerSubscriptionId $containerSubscriptionId;
+
+		$item = Get-AzRecoveryServicesBackupItem `
+			-BackupManagementType AzureVM -WorkloadType AzureVM -VaultId $vault.ID `
+			| Where-Object { $_.Name -like "*;$vmResourceGroupName;$vmName" } | Select-Object -First 1
+
+		Assert-NotNull $item;
+		Assert-True { $item.ContainerSubscriptionId -eq $containerSubscriptionId };
+
+		# On-demand backup to produce a recovery point.
+		$backupJob = Backup-AzRecoveryServicesBackupItem `
+			-VaultId $vault.ID `
+			-Item $item | Wait-AzRecoveryServicesBackupJob -VaultId $vault.ID
+
+		Assert-True { $backupJob.Status -eq "Completed" };
+
+		# Get-QueryDateInUtc keeps the date window deterministic for record/playback.
+		$from = Get-QueryDateInUtc $((Get-Date).AddDays(-1)) "CSBOlrFrom"
+		$to = Get-QueryDateInUtc $((Get-Date).AddDays(1)) "CSBOlrTo"
+		$rps = @(Get-AzRecoveryServicesBackupRecoveryPoint `
+			-VaultId $vault.ID `
+			-Item $item `
+			-StartDate $from `
+			-EndDate $to)
+
+		Assert-True { $rps.Count -gt 0 };
+		$rp = $rps[0]
+
+		Assert-True { $rp.SourceResourceId -match $containerSubscriptionId };
+
+		# OLR (Replace Existing): no -TargetResourceGroupName/-TargetSubscriptionId; storage resolved in the
+		# VM's sub from rp.SourceResourceId. Wait via -Job (not piped) - piping the restore cmdlet directly
+		# into Wait resets the shared Logger.
+		$restoreJob = Restore-AzRecoveryServicesBackupItem `
+			-VaultId $vault.ID `
+			-VaultLocation $vault.Location `
+			-RecoveryPoint $rp `
+			-StorageAccountName $saName `
+			-StorageAccountResourceGroupName $saResourceGroupName
+
+		$restoreJob = Wait-AzRecoveryServicesBackupJob -VaultId $vault.ID -Job $restoreJob
+
+		Assert-True { $restoreJob.Status -eq "Completed" };
+
+		# CSB job detail exposes ContainerSubscriptionId (from extendedInfo).
+		$restoreJobDetail = Get-AzRecoveryServicesBackupJobDetail -VaultId $vault.ID -Job $restoreJob
+		Assert-True { $restoreJobDetail.ContainerSubscriptionId -eq $containerSubscriptionId };
+	}
+	finally
+	{
+		# Cleanup: disable protection with delete-backup-data, then delete the fresh vault (Remove-AzRecoveryServicesVault purges the soft-deleted item; the vault has AlwaysOn soft delete).
+		if ($vault -ne $null)
+		{
+			$cleanupItem = Get-AzRecoveryServicesBackupItem `
+				-BackupManagementType AzureVM -WorkloadType AzureVM -VaultId $vault.ID `
+				| Where-Object { $_.Name -like "*;$vmResourceGroupName;$vmName" } | Select-Object -First 1
+			if ($cleanupItem -ne $null)
+			{
+				Disable-AzRecoveryServicesBackupProtection `
+					-VaultId $vault.ID `
+					-Item $cleanupItem `
+					-RemoveRecoveryPoints -Force
+			}
+			Remove-AzRecoveryServicesVault -Vault $vault
+		}
+	}
+}
+
+

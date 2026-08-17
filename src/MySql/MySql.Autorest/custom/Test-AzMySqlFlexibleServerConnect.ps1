@@ -16,6 +16,11 @@ function Test-AzMySqlFlexibleServerConnect {
     [OutputType([System.String])]
     [CmdletBinding(DefaultParameterSetName = 'Test', PositionalBinding = $false)]
     [Microsoft.Azure.PowerShell.Cmdlets.MySql.Description('Test out the connection to the database server')]
+    [Microsoft.Azure.PowerShell.Cmdlets.MySql.Runtime.PreviewMessage("**********************************************************************************************`n
+    * This cmdlet will undergo a breaking change in Az v16.0.0, to be released on May 2026. *`n
+    * At least one change applies to this cmdlet.                                                     *`n
+    * See all possible breaking changes at https://go.microsoft.com/fwlink/?linkid=2333486            *`n
+    ***************************************************************************************************")]
     param(
         [Parameter(ParameterSetName = 'Test', Mandatory, HelpMessage = 'The name of the server to connect.')]
         [Parameter(ParameterSetName = 'TestAndQuery', Mandatory, HelpMessage = 'The name of the server to connect.')]
@@ -143,8 +148,18 @@ function Test-AzMySqlFlexibleServerConnect {
             $AdministratorUserName = $PSBoundParameters.AdministratorUserName
             $null = $PSBoundParameters.Remove('AdministratorUserName')
         }
-
-        $Server = Az.MySql\Get-AzMySqlFlexibleServer @PSBoundParameters
+        
+        if ($PSBoundParameters.ContainsKey('InputObject')) {
+            Write-Host $PSBoundParameters
+            $Server = Az.MySql.private\Get-AzMySqlFlexibleServer_GetViaIdentity @PSBoundParameters
+        }
+        else {
+            $SubscriptionId = (Get-AzContext).Subscription.Id
+            $PSBoundParameters['SubscriptionId'] = $SubscriptionId
+            Write-Host $PSBoundParameters
+            $Server = Az.MySql.private\Get-AzMySqlFlexibleServer_Get @PSBoundParameters
+        }
+        # $Server = Az.MySql\Get-AzMySqlFlexibleServer @PSBoundParameters
         $HostAddr = $Server.FullyQualifiedDomainName
 
         if ($Server.NetworkPublicNetworkAccess -eq 'Disabled') {
@@ -170,15 +185,17 @@ function Test-AzMySqlFlexibleServerConnect {
             if ($TimeoutValue -gt 0) {
                 $OpenConnParams['CommandTimeout'] = $TimeoutValue
             }
+            Write-Host "Trying to connect to server $HostAddr ..."
             Open-MySqlConnection @OpenConnParams
         }
         catch {
             Write-Host $_.Exception.GetType().FullName
             Write-Host $_.Exception.Message
-            exit
+            throw
         }
 
         if (![string]::IsNullOrEmpty($Query)) {
+            Write-Host "Connection to $HostAddr was successful! Now executing query..."
             Invoke-SqlQuery -Query $Query -WarningAction 'silentlycontinue'           
         }
         else {

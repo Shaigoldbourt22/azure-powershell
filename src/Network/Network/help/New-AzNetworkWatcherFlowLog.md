@@ -15,58 +15,64 @@ Create or update a flow log resource for the specified network security group.
 ### SetByName (Default)
 ```
 New-AzNetworkWatcherFlowLog -NetworkWatcherName <String> -ResourceGroupName <String> -Name <String>
- -TargetResourceId <String> -StorageId <String> [-EnabledFilteringCriteria <String>] -Enabled <Boolean>
- [-EnableRetention <Boolean>] [-RetentionPolicyDays <Int32>] [-FormatType <String>] [-FormatVersion <Int32>]
- [-Tag <Hashtable>] [-UserAssignedIdentityId <String>] [-Force] [-DefaultProfile <IAzureContextContainer>]
- [-WhatIf] [-Confirm] [<CommonParameters>]
+ -TargetResourceId <String> -StorageId <String> [-EnabledFilteringCriteria <String>] [-RecordType <String>]
+ -Enabled <Boolean> [-EnableRetention <Boolean>] [-RetentionPolicyDays <Int32>] [-FormatType <String>]
+ [-FormatVersion <Int32>] [-Tag <Hashtable>] [-UserAssignedIdentityId <String>] [-Force]
+ [-DefaultProfile <IAzureContextContainer>] [-WhatIf] [-Confirm]
+ [-AcquirePolicyToken] [-ChangeReference <String>] [<CommonParameters>]
 ```
 
 ### SetByResource
 ```
 New-AzNetworkWatcherFlowLog -NetworkWatcher <PSNetworkWatcher> -Name <String> -TargetResourceId <String>
- -StorageId <String> [-EnabledFilteringCriteria <String>] -Enabled <Boolean> [-EnableRetention <Boolean>]
- [-RetentionPolicyDays <Int32>] [-FormatType <String>] [-FormatVersion <Int32>] [-Tag <Hashtable>]
- [-UserAssignedIdentityId <String>] [-Force] [-DefaultProfile <IAzureContextContainer>]
- [-WhatIf] [-Confirm] [<CommonParameters>]
+ -StorageId <String> [-EnabledFilteringCriteria <String>] [-RecordType <String>] -Enabled <Boolean>
+ [-EnableRetention <Boolean>] [-RetentionPolicyDays <Int32>] [-FormatType <String>] [-FormatVersion <Int32>]
+ [-Tag <Hashtable>] [-UserAssignedIdentityId <String>] [-Force] [-DefaultProfile <IAzureContextContainer>]
+ [-WhatIf] [-Confirm] [-AcquirePolicyToken] [-ChangeReference <String>]
+ [<CommonParameters>]
 ```
 
 ### SetByResourceWithTA
 ```
 New-AzNetworkWatcherFlowLog -NetworkWatcher <PSNetworkWatcher> -Name <String> -TargetResourceId <String>
- -StorageId <String> [-EnabledFilteringCriteria <String>] -Enabled <Boolean> [-EnableRetention <Boolean>]
- [-RetentionPolicyDays <Int32>] [-FormatType <String>] [-FormatVersion <Int32>] [-EnableTrafficAnalytics]
- [-TrafficAnalyticsWorkspaceId <String>] [-TrafficAnalyticsInterval <Int32>] [-Tag <Hashtable>]
- [-UserAssignedIdentityId <String>] [-Force] [-DefaultProfile <IAzureContextContainer>]
- [-WhatIf] [-Confirm] [<CommonParameters>]
+ -StorageId <String> [-EnabledFilteringCriteria <String>] [-RecordType <String>] -Enabled <Boolean>
+ [-EnableRetention <Boolean>] [-RetentionPolicyDays <Int32>] [-FormatType <String>] [-FormatVersion <Int32>]
+ [-EnableTrafficAnalytics] [-TrafficAnalyticsWorkspaceId <String>] [-TrafficAnalyticsInterval <Int32>]
+ [-Tag <Hashtable>] [-UserAssignedIdentityId <String>] [-Force] [-DefaultProfile <IAzureContextContainer>]
+ [-WhatIf] [-Confirm] [-AcquirePolicyToken] [-ChangeReference <String>]
+ [<CommonParameters>]
 ```
 
 ### SetByNameWithTA
 ```
 New-AzNetworkWatcherFlowLog -NetworkWatcherName <String> -ResourceGroupName <String> -Name <String>
- -TargetResourceId <String> -StorageId <String> [-EnabledFilteringCriteria <String>] -Enabled <Boolean>
- [-EnableRetention <Boolean>] [-RetentionPolicyDays <Int32>] [-FormatType <String>] [-FormatVersion <Int32>]
- [-EnableTrafficAnalytics] [-TrafficAnalyticsWorkspaceId <String>] [-TrafficAnalyticsInterval <Int32>]
- [-Tag <Hashtable>] [-UserAssignedIdentityId <String>] [-Force] [-DefaultProfile <IAzureContextContainer>]
- [-WhatIf] [-Confirm] [<CommonParameters>]
+ -TargetResourceId <String> -StorageId <String> [-EnabledFilteringCriteria <String>] [-RecordType <String>]
+ -Enabled <Boolean> [-EnableRetention <Boolean>] [-RetentionPolicyDays <Int32>] [-FormatType <String>]
+ [-FormatVersion <Int32>] [-EnableTrafficAnalytics] [-TrafficAnalyticsWorkspaceId <String>]
+ [-TrafficAnalyticsInterval <Int32>] [-Tag <Hashtable>] [-UserAssignedIdentityId <String>] [-Force]
+ [-DefaultProfile <IAzureContextContainer>] [-WhatIf] [-Confirm]
+ [-AcquirePolicyToken] [-ChangeReference <String>] [<CommonParameters>]
 ```
 
 ### SetByLocation
 ```
 New-AzNetworkWatcherFlowLog -Location <String> -Name <String> -TargetResourceId <String> -StorageId <String>
- [-EnabledFilteringCriteria <String>] -Enabled <Boolean> [-EnableRetention <Boolean>]
+ [-EnabledFilteringCriteria <String>] [-RecordType <String>] -Enabled <Boolean> [-EnableRetention <Boolean>]
  [-RetentionPolicyDays <Int32>] [-FormatType <String>] [-FormatVersion <Int32>] [-Tag <Hashtable>]
  [-UserAssignedIdentityId <String>] [-Force] [-DefaultProfile <IAzureContextContainer>]
- [-WhatIf] [-Confirm] [<CommonParameters>]
+ [-WhatIf] [-Confirm] [-AcquirePolicyToken] [-ChangeReference <String>]
+ [<CommonParameters>]
 ```
 
 ### SetByLocationWithTA
 ```
 New-AzNetworkWatcherFlowLog -Location <String> -Name <String> -TargetResourceId <String> -StorageId <String>
- [-EnabledFilteringCriteria <String>] -Enabled <Boolean> [-EnableRetention <Boolean>]
+ [-EnabledFilteringCriteria <String>] [-RecordType <String>] -Enabled <Boolean> [-EnableRetention <Boolean>]
  [-RetentionPolicyDays <Int32>] [-FormatType <String>] [-FormatVersion <Int32>] [-EnableTrafficAnalytics]
  [-TrafficAnalyticsWorkspaceId <String>] [-TrafficAnalyticsInterval <Int32>] [-Tag <Hashtable>]
  [-UserAssignedIdentityId <String>] [-Force] [-DefaultProfile <IAzureContextContainer>]
- [-WhatIf] [-Confirm] [<CommonParameters>]
+ [-WhatIf] [-Confirm] [-AcquirePolicyToken] [-ChangeReference <String>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -156,6 +162,36 @@ FlowAnalyticsConfiguration : {
 If you want to disable flowLog resource for which TrafficAnalytics is configured, it is necessary to disable TrafficAnalytics as well. It can be done like in the example 2.
 
 ## PARAMETERS
+
+### -AcquirePolicyToken
+Acquire an Azure Policy token automatically for this resource operation.
+
+```yaml
+Type: System.Management.Automation.SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ChangeReference
+The change reference resource ID for this resource operation.
+
+```yaml
+Type: System.String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
 
 ### -DefaultProfile
 The credentials, account, tenant, and subscription used for communication with Azure.
@@ -332,6 +368,24 @@ Parameter Sets: SetByName, SetByNameWithTA
 Aliases:
 
 Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -RecordType
+Optional field to filter network traffic logs based on flow states.
+Specify one or more flow record state codes as a comma-separated list (example: B,E).
+Use empty string ("") to collect all records.
+`RecordTypes` is an alias of `RecordType`; both map to the same underlying parameter.
+
+```yaml
+Type: System.String
+Parameter Sets: (All)
+Aliases: RecordTypes
+
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False

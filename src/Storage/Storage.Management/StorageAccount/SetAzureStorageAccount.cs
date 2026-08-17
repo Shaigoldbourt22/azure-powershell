@@ -106,6 +106,7 @@ namespace Microsoft.Azure.Commands.Management.Storage
         [ValidateSet(AccountAccessTier.Hot,
             AccountAccessTier.Cool,
             AccountAccessTier.Cold,
+            AccountAccessTier.Smart,
             IgnoreCase = true)]
         public string AccessTier { get; set; }
 
@@ -401,6 +402,24 @@ namespace Microsoft.Azure.Commands.Management.Storage
 
         [Parameter(
             Mandatory = false,
+            HelpMessage = "Specifies if managed identities can access SMB shares using OAuth.")]
+        [ValidateNotNullOrEmpty]
+        public bool EnableSmbOAuth
+        {
+            get
+            {
+                return enableSmbOAuth.Value;
+            }
+            set
+            {
+                enableSmbOAuth = value;
+            }
+        }
+        private bool? enableSmbOAuth = null;
+
+
+        [Parameter(
+            Mandatory = false,
             HelpMessage = "Allow or disallow anonymous access to all blobs or containers in the storage account.")]
         [ValidateNotNullOrEmpty]
         public bool AllowBlobPublicAccess
@@ -418,7 +437,7 @@ namespace Microsoft.Azure.Commands.Management.Storage
 
         [Parameter(
             Mandatory = false,
-            HelpMessage = "The minimum TLS version to be permitted on requests to storage.")]
+            HelpMessage = "The minimum TLS version to be permitted on requests to storage. TLS 1.3 is not yet supported.")]
         [ValidateSet(StorageModels.MinimumTlsVersion.TLS10,
             StorageModels.MinimumTlsVersion.TLS11,
             StorageModels.MinimumTlsVersion.TLS12,
@@ -583,10 +602,40 @@ namespace Microsoft.Azure.Commands.Management.Storage
         }
         private bool? enableLocalUser = null;
 
-        [Parameter(Mandatory = false, HelpMessage = "Set restrict copy to and from Storage Accounts within a Microsoft Entra tenant or with Private Links to the same VNet. Possible values include: 'PrivateLink', 'AAD'")]
-        [PSArgumentCompleter("PrivateLink", "AAD")]
+        [Parameter(Mandatory = false, HelpMessage = "Set restrict copy to and from Storage Accounts within a Microsoft Entra tenant or with Private Links to the same VNet. Possible values include: 'PrivateLink', 'AAD', 'All'")]
+        [PSArgumentCompleter("PrivateLink", "AAD", "All")]
         [ValidateNotNullOrEmpty]
         public string AllowedCopyScope { get; set; }
+
+        [Parameter(
+            Mandatory = false,
+            HelpMessage = "Describes the available zones for the product where storage account resource can be created")]
+        [ValidateNotNullOrEmpty]
+        public string[] Zone { get; set; }
+
+        [Parameter(
+            Mandatory = false,
+            HelpMessage = "The availability zone pinning policy for the storage account.")]
+        [PSArgumentCompleter("None", "Any")]
+        [ValidateNotNullOrEmpty]
+        public string ZonePlacementPolicy { get; set; }
+
+        [Parameter(
+            Mandatory = false,
+            HelpMessage = "Status indicating whether Geo Priority Replication is enabled for the account.")]
+        [ValidateNotNullOrEmpty]
+        public bool EnableBlobGeoPriorityReplication
+        {
+            get
+            {
+                return enableBlobGeoPriorityReplication != null ? enableBlobGeoPriorityReplication.Value : false;
+            }
+            set
+            {
+                enableBlobGeoPriorityReplication = value;
+            }
+        }
+        private bool? enableBlobGeoPriorityReplication = null;
 
         [Parameter(Mandatory = false, HelpMessage = "Run cmdlet in the background")]
         public SwitchParameter AsJob { get; set; }
@@ -661,7 +710,7 @@ namespace Microsoft.Azure.Commands.Management.Storage
 
                     if (AssignIdentity.IsPresent || this.UserAssignedIdentityId != null || this.IdentityType != null)
                     {
-                        updateParameters.Identity = new Identity() { Type = StorageModels.IdentityType.SystemAssigned };
+                        updateParameters.Identity = new StorageModels.Identity() { Type = StorageModels.IdentityType.SystemAssigned };
                         if (this.IdentityType != null)
                         {
                             updateParameters.Identity.Type = GetIdentityTypeString(this.IdentityType);
@@ -869,12 +918,28 @@ namespace Microsoft.Azure.Commands.Management.Storage
                         }
                         updateParameters.AzureFilesIdentityBasedAuthentication.DefaultSharePermission = this.DefaultSharePermission;
                     }
+                    if (this.enableSmbOAuth != null)
+                    {
+                        if (updateParameters.AzureFilesIdentityBasedAuthentication == null)
+                        {
+                            updateParameters.AzureFilesIdentityBasedAuthentication = new AzureFilesIdentityBasedAuthentication();
+                        }
+                        updateParameters.AzureFilesIdentityBasedAuthentication.SmbOAuthSettings = new SmbOAuthSettings
+                        {
+                            IsSmbOAuthEnabled = this.enableSmbOAuth.Value
+                        };
+                    }
                     if (this.EnableLargeFileShare.IsPresent)
                     {
                         updateParameters.LargeFileSharesState = LargeFileSharesState.Enabled;
                     }
                     if (this.minimumTlsVersion != null)
                     {
+                        if (this.minimumTlsVersion == StorageModels.MinimumTlsVersion.TLS10 || this.minimumTlsVersion == StorageModels.MinimumTlsVersion.TLS11)
+                        {
+                            WriteWarning("TLS 1.0 and TLS 1.1 are retired, so will use TLS 1.2");
+                            this.minimumTlsVersion = StorageModels.MinimumTlsVersion.TLS12;
+                        }
                         updateParameters.MinimumTlsVersion = this.minimumTlsVersion;
                     }
                     if (this.allowBlobPublicAccess != null)
@@ -946,6 +1011,18 @@ namespace Microsoft.Azure.Commands.Management.Storage
                     if (this.AllowedCopyScope != null)
                     {
                         updateParameters.AllowedCopyScope = this.AllowedCopyScope;
+                    }
+                    if (this.Zone != null)
+                    {
+                        updateParameters.Zones = new List<string>(this.Zone);
+                    }
+                    if (this.ZonePlacementPolicy != null)
+                    {
+                        updateParameters.Placement = new Placement(this.ZonePlacementPolicy);
+                    }
+                    if (this.enableBlobGeoPriorityReplication != null)
+                    {
+                        updateParameters.GeoPriorityReplicationStatus = new GeoPriorityReplicationStatus(this.enableBlobGeoPriorityReplication);
                     }
 
                     var updatedAccountResponse = this.StorageClient.StorageAccounts.Update(

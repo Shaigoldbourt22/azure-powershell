@@ -11,8 +11,7 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models
     public partial class Profile :
         Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IProfile,
         Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IProfileInternal,
-        Microsoft.Azure.PowerShell.Cmdlets.Cdn.Runtime.IValidates,
-        Microsoft.Azure.PowerShell.Cmdlets.Cdn.Runtime.IHeaderSerializable
+        Microsoft.Azure.PowerShell.Cmdlets.Cdn.Runtime.IValidates
     {
         /// <summary>
         /// Backing field for Inherited model <see cref= "Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.ITrackedResource" />
@@ -27,14 +26,16 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models
         [Microsoft.Azure.PowerShell.Cmdlets.Cdn.Origin(Microsoft.Azure.PowerShell.Cmdlets.Cdn.PropertyOrigin.Inlined)]
         public string FrontDoorId { get => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IProfilePropertiesInternal)Property).FrontDoorId; }
 
-        /// <summary>Resource ID.</summary>
+        /// <summary>
+        /// Fully qualified resource ID for the resource. E.g. "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}"
+        /// </summary>
         [Microsoft.Azure.PowerShell.Cmdlets.Cdn.Origin(Microsoft.Azure.PowerShell.Cmdlets.Cdn.PropertyOrigin.Inherited)]
         public string Id { get => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IResourceInternal)__trackedResource).Id; }
 
         /// <summary>Backing field for <see cref="Identity" /> property.</summary>
         private Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IManagedServiceIdentity _identity;
 
-        /// <summary>Managed service identity (system assigned and/or user assigned identities).</summary>
+        /// <summary>The managed service identities assigned to this resource.</summary>
         [Microsoft.Azure.PowerShell.Cmdlets.Cdn.Origin(Microsoft.Azure.PowerShell.Cmdlets.Cdn.PropertyOrigin.Owned)]
         internal Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IManagedServiceIdentity Identity { get => (this._identity = this._identity ?? new Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.ManagedServiceIdentity()); set => this._identity = value; }
 
@@ -62,7 +63,7 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models
         /// The dictionary values can be empty objects ({}) in requests.
         /// </summary>
         [Microsoft.Azure.PowerShell.Cmdlets.Cdn.Origin(Microsoft.Azure.PowerShell.Cmdlets.Cdn.PropertyOrigin.Inlined)]
-        public Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IUserAssignedIdentities IdentityUserAssignedIdentity { get => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IManagedServiceIdentityInternal)Identity).UserAssignedIdentity; set => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IManagedServiceIdentityInternal)Identity).UserAssignedIdentity = value ?? null /* model class */; }
+        public Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IManagedServiceIdentityUserAssignedIdentities IdentityUserAssignedIdentity { get => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IManagedServiceIdentityInternal)Identity).UserAssignedIdentity; set => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IManagedServiceIdentityInternal)Identity).UserAssignedIdentity = value ?? null /* model class */; }
 
         /// <summary>Backing field for <see cref="Kind" /> property.</summary>
         private string _kind;
@@ -73,9 +74,9 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models
         [Microsoft.Azure.PowerShell.Cmdlets.Cdn.Origin(Microsoft.Azure.PowerShell.Cmdlets.Cdn.PropertyOrigin.Owned)]
         public string Kind { get => this._kind; }
 
-        /// <summary>Resource location.</summary>
+        /// <summary>The geo-location where the resource lives</summary>
         [Microsoft.Azure.PowerShell.Cmdlets.Cdn.Origin(Microsoft.Azure.PowerShell.Cmdlets.Cdn.PropertyOrigin.Inherited)]
-        public string Location { get => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.ITrackedResourceInternal)__trackedResource).Location; set => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.ITrackedResourceInternal)__trackedResource).Location = value ; }
+        public string Location { get => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.ITrackedResourceInternal)__trackedResource).Location; set => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.ITrackedResourceInternal)__trackedResource).Location = value ?? null; }
 
         /// <summary>List of log scrubbing rules applied to the Azure Front Door profile logs.</summary>
         [Microsoft.Azure.PowerShell.Cmdlets.Cdn.Origin(Microsoft.Azure.PowerShell.Cmdlets.Cdn.PropertyOrigin.Inlined)]
@@ -148,7 +149,7 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models
         /// <summary>Internal Acessors for Type</summary>
         string Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IResourceInternal.Type { get => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IResourceInternal)__trackedResource).Type; set => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IResourceInternal)__trackedResource).Type = value ?? null; }
 
-        /// <summary>Resource name.</summary>
+        /// <summary>The name of the resource</summary>
         [Microsoft.Azure.PowerShell.Cmdlets.Cdn.Origin(Microsoft.Azure.PowerShell.Cmdlets.Cdn.PropertyOrigin.Inherited)]
         public string Name { get => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IResourceInternal)__trackedResource).Name; }
 
@@ -191,22 +192,24 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models
         [Microsoft.Azure.PowerShell.Cmdlets.Cdn.Origin(Microsoft.Azure.PowerShell.Cmdlets.Cdn.PropertyOrigin.Inlined)]
         public string SkuName { get => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.ISkuInternal)Sku).Name; set => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.ISkuInternal)Sku).Name = value ?? null; }
 
-        /// <summary>Read only system data</summary>
+        /// <summary>
+        /// Azure Resource Manager metadata containing createdBy and modifiedBy information.
+        /// </summary>
         [Microsoft.Azure.PowerShell.Cmdlets.Cdn.Origin(Microsoft.Azure.PowerShell.Cmdlets.Cdn.PropertyOrigin.Inherited)]
         [Microsoft.Azure.PowerShell.Cmdlets.Cdn.DoNotFormat]
         internal Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.ISystemData SystemData { get => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IResourceInternal)__trackedResource).SystemData; set => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IResourceInternal)__trackedResource).SystemData = value ?? null /* model class */; }
 
-        /// <summary>The timestamp of resource creation (UTC)</summary>
+        /// <summary>The timestamp of resource creation (UTC).</summary>
         [Microsoft.Azure.PowerShell.Cmdlets.Cdn.Origin(Microsoft.Azure.PowerShell.Cmdlets.Cdn.PropertyOrigin.Inherited)]
         [Microsoft.Azure.PowerShell.Cmdlets.Cdn.DoNotFormat]
         public global::System.DateTime? SystemDataCreatedAt { get => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IResourceInternal)__trackedResource).SystemDataCreatedAt; }
 
-        /// <summary>An identifier for the identity that created the resource</summary>
+        /// <summary>The identity that created the resource.</summary>
         [Microsoft.Azure.PowerShell.Cmdlets.Cdn.Origin(Microsoft.Azure.PowerShell.Cmdlets.Cdn.PropertyOrigin.Inherited)]
         [Microsoft.Azure.PowerShell.Cmdlets.Cdn.DoNotFormat]
         public string SystemDataCreatedBy { get => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IResourceInternal)__trackedResource).SystemDataCreatedBy; }
 
-        /// <summary>The type of identity that created the resource</summary>
+        /// <summary>The type of identity that created the resource.</summary>
         [Microsoft.Azure.PowerShell.Cmdlets.Cdn.Origin(Microsoft.Azure.PowerShell.Cmdlets.Cdn.PropertyOrigin.Inherited)]
         [Microsoft.Azure.PowerShell.Cmdlets.Cdn.DoNotFormat]
         public string SystemDataCreatedByType { get => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IResourceInternal)__trackedResource).SystemDataCreatedByType; }
@@ -216,12 +219,12 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models
         [Microsoft.Azure.PowerShell.Cmdlets.Cdn.DoNotFormat]
         public global::System.DateTime? SystemDataLastModifiedAt { get => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IResourceInternal)__trackedResource).SystemDataLastModifiedAt; }
 
-        /// <summary>An identifier for the identity that last modified the resource</summary>
+        /// <summary>The identity that last modified the resource.</summary>
         [Microsoft.Azure.PowerShell.Cmdlets.Cdn.Origin(Microsoft.Azure.PowerShell.Cmdlets.Cdn.PropertyOrigin.Inherited)]
         [Microsoft.Azure.PowerShell.Cmdlets.Cdn.DoNotFormat]
         public string SystemDataLastModifiedBy { get => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IResourceInternal)__trackedResource).SystemDataLastModifiedBy; }
 
-        /// <summary>The type of identity that last modified the resource</summary>
+        /// <summary>The type of identity that last modified the resource.</summary>
         [Microsoft.Azure.PowerShell.Cmdlets.Cdn.Origin(Microsoft.Azure.PowerShell.Cmdlets.Cdn.PropertyOrigin.Inherited)]
         [Microsoft.Azure.PowerShell.Cmdlets.Cdn.DoNotFormat]
         public string SystemDataLastModifiedByType { get => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IResourceInternal)__trackedResource).SystemDataLastModifiedByType; }
@@ -230,18 +233,11 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models
         [Microsoft.Azure.PowerShell.Cmdlets.Cdn.Origin(Microsoft.Azure.PowerShell.Cmdlets.Cdn.PropertyOrigin.Inherited)]
         public Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.ITrackedResourceTags Tag { get => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.ITrackedResourceInternal)__trackedResource).Tag; set => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.ITrackedResourceInternal)__trackedResource).Tag = value ?? null /* model class */; }
 
-        /// <summary>Resource type.</summary>
+        /// <summary>
+        /// The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
+        /// </summary>
         [Microsoft.Azure.PowerShell.Cmdlets.Cdn.Origin(Microsoft.Azure.PowerShell.Cmdlets.Cdn.PropertyOrigin.Inherited)]
         public string Type { get => ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IResourceInternal)__trackedResource).Type; }
-
-        /// <param name="headers"></param>
-        void Microsoft.Azure.PowerShell.Cmdlets.Cdn.Runtime.IHeaderSerializable.ReadHeaders(global::System.Net.Http.Headers.HttpResponseHeaders headers)
-        {
-            if (headers.TryGetValues("location", out var __locationHeader0))
-            {
-                ((Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.ITrackedResourceInternal)this).Location = System.Linq.Enumerable.FirstOrDefault(__locationHeader0) is string __headerLocationHeader0 ? __headerLocationHeader0 : (string)null;
-            }
-        }
 
         /// <summary>Creates an new <see cref="Profile" /> instance.</summary>
         public Profile()
@@ -326,7 +322,7 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models
         Description = @"Type of managed service identity (where both SystemAssigned and UserAssigned types are allowed).",
         SerializedName = @"type",
         PossibleTypes = new [] { typeof(string) })]
-        [global::Microsoft.Azure.PowerShell.Cmdlets.Cdn.PSArgumentCompleterAttribute("None", "SystemAssigned", "UserAssigned", "SystemAssigned, UserAssigned")]
+        [global::Microsoft.Azure.PowerShell.Cmdlets.Cdn.PSArgumentCompleterAttribute("None", "SystemAssigned", "UserAssigned", "SystemAssigned,UserAssigned")]
         string IdentityType { get; set; }
         /// <summary>
         /// The set of user assigned identities associated with the resource. The userAssignedIdentities dictionary keys will be ARM
@@ -341,8 +337,8 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models
         Update = true,
         Description = @"The set of user assigned identities associated with the resource. The userAssignedIdentities dictionary keys will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}. The dictionary values can be empty objects ({}) in requests.",
         SerializedName = @"userAssignedIdentities",
-        PossibleTypes = new [] { typeof(Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IUserAssignedIdentities) })]
-        Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IUserAssignedIdentities IdentityUserAssignedIdentity { get; set; }
+        PossibleTypes = new [] { typeof(Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IManagedServiceIdentityUserAssignedIdentities) })]
+        Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IManagedServiceIdentityUserAssignedIdentities IdentityUserAssignedIdentity { get; set; }
         /// <summary>
         /// Kind of the profile. Used by portal to differentiate traditional CDN profile and new AFD profile.
         /// </summary>
@@ -438,7 +434,7 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models
         Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IProfilePropertiesExtendedProperties ExtendedProperty { get; set; }
         /// <summary>The Id of the frontdoor.</summary>
         string FrontDoorId { get; set; }
-        /// <summary>Managed service identity (system assigned and/or user assigned identities).</summary>
+        /// <summary>The managed service identities assigned to this resource.</summary>
         Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IManagedServiceIdentity Identity { get; set; }
         /// <summary>
         /// The service principal ID of the system assigned identity. This property will only be provided for a system assigned identity.
@@ -451,14 +447,14 @@ namespace Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models
         /// <summary>
         /// Type of managed service identity (where both SystemAssigned and UserAssigned types are allowed).
         /// </summary>
-        [global::Microsoft.Azure.PowerShell.Cmdlets.Cdn.PSArgumentCompleterAttribute("None", "SystemAssigned", "UserAssigned", "SystemAssigned, UserAssigned")]
+        [global::Microsoft.Azure.PowerShell.Cmdlets.Cdn.PSArgumentCompleterAttribute("None", "SystemAssigned", "UserAssigned", "SystemAssigned,UserAssigned")]
         string IdentityType { get; set; }
         /// <summary>
         /// The set of user assigned identities associated with the resource. The userAssignedIdentities dictionary keys will be ARM
         /// resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}.
         /// The dictionary values can be empty objects ({}) in requests.
         /// </summary>
-        Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IUserAssignedIdentities IdentityUserAssignedIdentity { get; set; }
+        Microsoft.Azure.PowerShell.Cmdlets.Cdn.Models.IManagedServiceIdentityUserAssignedIdentities IdentityUserAssignedIdentity { get; set; }
         /// <summary>
         /// Kind of the profile. Used by portal to differentiate traditional CDN profile and new AFD profile.
         /// </summary>

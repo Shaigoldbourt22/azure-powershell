@@ -15,8 +15,9 @@ Creates a health probe.
 ```
 New-AzApplicationGatewayProbeConfig -Name <String> -Protocol <String> [-HostName <String>] [-Path <String>]
  -Interval <Int32> -Timeout <Int32> -UnhealthyThreshold <Int32> [-PickHostNameFromBackendHttpSettings]
- [-MinServers <Int32>] [-Port <Int32>] [-Match <PSApplicationGatewayProbeHealthResponseMatch>]
- [-DefaultProfile <IAzureContextContainer>] [<CommonParameters>]
+ [-MinServers <Int32>] [-Port <Int32>] [-EnableProbeProxyProtocolHeader <Boolean>]
+ [-Match <PSApplicationGatewayProbeHealthResponseMatch>] [-DefaultProfile <IAzureContextContainer>]
+ [-AcquirePolicyToken] [-ChangeReference <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -44,6 +45,36 @@ New-AzApplicationGatewayProbeConfig -Interval 30 -Match <PSApplicationGatewayPro
 
 ## PARAMETERS
 
+### -AcquirePolicyToken
+Acquire an Azure Policy token automatically for this resource operation.
+
+```yaml
+Type: System.Management.Automation.SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ChangeReference
+The change reference resource ID for this resource operation.
+
+```yaml
+Type: System.String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -DefaultProfile
 The credentials, account, tenant, and subscription used for communication with azure.
 
@@ -55,6 +86,21 @@ Aliases: AzContext, AzureRmContext, AzureCredential
 Required: False
 Position: Named
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -EnableProbeProxyProtocolHeader
+Whether to send Proxy Protocol header along with the Health Probe over TCP or TLS protocol. Default value is false.
+
+```yaml
+Type: System.Nullable`1[System.Boolean]
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

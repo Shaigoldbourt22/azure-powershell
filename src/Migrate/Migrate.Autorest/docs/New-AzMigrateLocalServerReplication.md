@@ -138,7 +138,7 @@ Accept wildcard characters: False
 Specifies the disks on the source server to be included for replication.
 
 ```yaml
-Type: Microsoft.Azure.PowerShell.Cmdlets.Migrate.Models.Api20240901.AzLocalDiskInput[]
+Type: Microsoft.Azure.PowerShell.Cmdlets.Migrate.Models.AzLocalDiskInput[]
 Parameter Sets: ByIdPowerUser
 Aliases:
 
@@ -183,7 +183,7 @@ Accept wildcard characters: False
 Specifies the NICs on the source server to be included for replication.
 
 ```yaml
-Type: Microsoft.Azure.PowerShell.Cmdlets.Migrate.Models.Api20240901.AzLocalNicInput[]
+Type: Microsoft.Azure.PowerShell.Cmdlets.Migrate.Models.AzLocalNicInput[]
 Parameter Sets: ByIdPowerUser
 Aliases:
 
@@ -195,7 +195,7 @@ Accept wildcard characters: False
 ```
 
 ### -OSDiskID
-Specifies the Operating System disk for the source server to be migrated.
+Specifies the operating system disk for the source server to be migrated.
 
 ```yaml
 Type: System.String
@@ -255,7 +255,7 @@ Accept wildcard characters: False
 ```
 
 ### -TargetResourceGroupId
-Specifies the target Resource Group Id where the migrated VM resources will reside.
+Specifies the target resource group ARM ID where the migrated VM resources will reside.
 
 ```yaml
 Type: System.String
@@ -397,7 +397,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## OUTPUTS
 
-### Microsoft.Azure.PowerShell.Cmdlets.Migrate.Models.Api20240901.IJobModel
+### Microsoft.Azure.PowerShell.Cmdlets.Migrate.Models.IJobModel
 
 ## NOTES
 

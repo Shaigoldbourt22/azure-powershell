@@ -44,7 +44,7 @@ Gets the NSP logging configuration.
 
 ## EXAMPLES
 
-### Example 1: Get NetworkSecurityPerimeter LoggingConfiguration
+### Example 1: Get NetworkSsecurityPerimeter LoggingConfiguration
 ```powershell
 Get-AzNetworkSecurityPerimeterLoggingConfiguration -ResourceGroupName rg-test-1 -SecurityPerimeterName nsp-test-1
 ```
@@ -65,7 +65,7 @@ Type                         : Microsoft.Network/networkSecurityPerimeters/loggi
 Version                      : 4
 ```
 
-Get NetworkSecurityPerimeter LoggingConfiguration
+Get NetworkSsecurityPerimeter LoggingConfiguration
 
 ## PARAMETERS
 
@@ -133,6 +133,7 @@ Accept wildcard characters: False
 
 ### -ResourceGroupName
 The name of the resource group.
+The name is case insensitive.
 
 ```yaml
 Type: System.String
@@ -162,8 +163,8 @@ Accept wildcard characters: False
 ```
 
 ### -SubscriptionId
-The subscription credentials which uniquely identify the Microsoft Azure subscription.
-The subscription ID forms part of the URI for every service call.
+The ID of the target subscription.
+The value must be an UUID.
 
 ```yaml
 Type: System.String[]

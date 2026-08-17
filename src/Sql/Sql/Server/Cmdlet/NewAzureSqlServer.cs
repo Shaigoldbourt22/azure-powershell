@@ -159,6 +159,13 @@ namespace Microsoft.Azure.Commands.Sql.Server.Cmdlet
         public Guid? FederatedClientId { get; set; }
 
         /// <summary>
+        /// Soft-delete retention days for the server
+        /// </summary>
+        [Parameter(Mandatory = false,
+            HelpMessage = "[Public Preview] Specifies the number of days to retain a deleted server for possible restoration. Valid values are 0-7. A value of 0 disables soft-delete retention.")]
+        public int? SoftDeleteRetentionDays { get; set; }
+
+        /// <summary>
         /// Overriding to add warning message
         /// </summary>
         public override void ExecuteCmdlet()
@@ -172,6 +179,8 @@ namespace Microsoft.Azure.Commands.Sql.Server.Cmdlet
             {
                 throw new PSArgumentException(Properties.Resources.MissingSQLAdministratorCredentials, "SqlAdministratorCredentials");
             }
+
+            ValidateSoftDeleteRetentionDays(SoftDeleteRetentionDays);
 
             base.ExecuteCmdlet();
         }
@@ -238,7 +247,8 @@ namespace Microsoft.Azure.Commands.Sql.Server.Cmdlet
                     AzureAdOnlyAuthentication = (this.EnableActiveDirectoryOnlyAuthentication.IsPresent) ? (bool?)true : null,
                     Login = this.ExternalAdminName,
                     Sid = this.ExternalAdminSID
-                }              
+                },
+                SoftDeleteRetentionDays = this.SoftDeleteRetentionDays
             });
             return newEntity;
         }
